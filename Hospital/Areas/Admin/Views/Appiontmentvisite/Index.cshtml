@@ -1,0 +1,388 @@
+﻿@*@model PagedList.IPagedList<hospitalVm.ApointmentVm>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All Patients";
+}
+
+    <form id="search-form" method="get" asp-action="Index">
+        <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
+    </form>
+
+<a asp-controller="Appiontmentvisite" asp-action="Save" id="Add">
+        <i class="fas fa-plus-circle"></i> Add New visite
+    </a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>visite date</th>
+                <th>doctorName</th>
+                <th>VisitStatus</th>
+                <th>VisitType</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="patientTableBody">
+            @foreach (var patient in Model)
+            {
+                <tr id="@patient.doctorid" class="row-style" data-visit-id="@patient.DoctorAppointmentVIsitid">
+                    <td>@patient.CreateDate</td>
+                    <td>@patient.doctorName</td>
+                    <td class="visit-status-cell">@patient.VisitStatus</td>
+                    <td>@patient.VisitType</td>
+                <td>
+                    <input  value="@patient.id" type="hidden" />
+                    <input value="@patient.doctorid" type="hidden" />
+                    <input value="@patient.DoctorAppointmentVIsitid" type="hidden" />
+                </td>
+                    <td>@patient.VisitType</td>
+                    <td>
+                        <a asp-controller="Appiontmentvisite" asp-action="Details" asp-route-id="@patient.DoctorAppointmentVIsitid">
+                            <i class="fas fa-info-circle" title="Details"></i>
+                        </a>
+                        <a asp-controller="Appiontmentvisite" asp-action="Save" asp-route-id="@patient.DoctorAppointmentVIsitid" data-action="edit">
+                            <i class="fas fa-edit" title="Edit"></i>
+                        </a> 
+                        
+                        <a asp-controller="Appiontmentvisite" asp-action="Delete" asp-route-id="@patient.DoctorAppointmentVIsitid" data-action="delete">
+                            <i class="fas fa-trash-alt" title="Delete"></i>
+                        </a>
+
+
+                
+                    </td>
+                    <td>
+                        <a class="btn btn-success arrive-button"
+                           asp-controller="Appiontmentvisite" asp-action="ArrivedVisit"
+                           asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" onclick="addstyle(this)">
+                            Arrive
+                        </a>
+                    <a class="btn btn-danger cancel-button" 
+                          asp-controller="Appiontmentvisite" asp-action="CancelledVisitSt"
+asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" onclick="addstyle(this)">
+                        Cancel
+                    </a>
+                    <button class="btn btn-danger cancel-button"
+                       
+                       onclick="changeVisitDate(this)">
+                        Change Visit Date
+                    </button>
+                        
+                 @*       asp-area="Doctor" asp-controller="Apointment" asp-action="Save"
+                     asp-route-id="@patient.id"*  
+                        <a class="btn btn-primary cancel-button"
+                       asp-controller="Appiontmentvisite" asp-action="completed"
+                           asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid">
+                            Cancel
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@Model.PageCount" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+*@
+    @*<script>
+        function addstyle(button) {
+            const row = button.closest(".row-style");
+            const isArriveButton = button.classList.contains("arrive-button");
+            const bgColorClass = isArriveButton ? "green-bg" : "red-bg";
+
+            row.classList.toggle(bgColorClass, true);
+            row.querySelector(".visit-status-cell").classList.toggle(bgColorClass, true);
+
+            const oppositeButton = row.querySelector(isArriveButton ? ".cancel-button" : ".arrive-button");
+            const currentButton = row.querySelector(isArriveButton ? ".arrive-button" : ".cancel-button");
+
+            currentButton.style.display = "none";
+            oppositeButton.style.display = "block";
+
+            const bgColor = isArriveButton ? "aquamarine" : "red";
+            localStorage.setItem(`background_color_${row.id}`, bgColor);
+        }
+
+        // On page load
+        document.addEventListener("DOMContentLoaded", function () {
+            const rows = document.querySelectorAll(".row-style");
+            rows.forEach(row => {
+                const storedColor = localStorage.getItem(`background_color_${row.id}`);
+                if (storedColor) {
+                    row.style.backgroundColor = storedColor;
+                    row.querySelector(".visit-status-cell").style.backgroundColor = storedColor;
+                }
+
+                const arriveButton = row.querySelector(".arrive-button");
+                const cancelButton = row.querySelector(".cancel-button");
+
+                if (arriveButton.style.display === "none") {
+                    cancelButton.style.display = "none";
+                } else if (cancelButton.style.display === "none") {
+                    arriveButton.style.display = "none";
+                }
+            });
+        });
+
+        // Update table visibility based on search input
+        function updateTableVisibility(searchTerm) {
+            const rows = document.querySelectorAll(".row-style");
+            rows.forEach(row => {
+                const doctorNameCell = row.querySelector("td:nth-child(2)"); // Adjust this selector as needed
+                if (doctorNameCell.textContent.toLowerCase().includes(searchTerm.toLowerCase()) || doctorNameCell.textContent.toUpperCase().includes(searchTerm.toUpperCase())) {
+                    row.style.display = "table-row";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        const searchInput = document.getElementById("search-input");
+        searchInput.addEventListener("input", function () {
+            updateTableVisibility(this.value);
+        });
+   
+            
+                function changeVisitDate(button) {
+                    const row = button.closest(".row-style");
+                    const visitId = row.getAttribute("data-visit-id");
+                    const patientId = row.querySelector("input[type='hidden'][value]").value;
+
+                    // Construct the data object with input values
+                    const data = {
+                        patientId: patientId,
+                        doctorid: visitId,
+                        DoctorAppointmentVIsitid: visitId
+                        // Add more properties here if needed
+                    };
+
+                    // Send an AJAX request using the Fetch API
+                    fetch("/Doctor/Appiontment/Save", {
+                        method: "POST", // Use POST method for sending data
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data) // Convert data to JSON string
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Handle the response if needed
+                            // For example, you can update the UI to reflect the change
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
+                }
+
+        // Rest of your code
+</script>
+*@
+
+
+
+
+@model PagedList.IPagedList<hospitalVm.ApointmentVm>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All Patients";
+}
+    //
+<partial name="_AlertMessage" />
+
+    <form id="search-form" method="get" asp-action="Index">
+        <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
+    </form>
+
+    <a asp-controller="Patient" asp-action="Save" id="Add">
+        <i class="fas fa-plus-circle"></i> Add New Patient
+    </a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>visite date</th>
+                <th>doctorName</th>
+                <th>VisitStatus</th>
+                <th>VisitType</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="patientTableBody">
+            @foreach (var patient in Model)
+        {
+            
+                <tr id="@patient.doctorid" class="row-style" data-visit-id="@patient.DoctorAppointmentVIsitid">
+                    <td>@patient.CreateDate</td>
+                    <td>@patient.DoctorName</td>
+                    <td class="visit-status-cell">@patient.VisitStatus</td>
+                    <td>@patient.VisitType</td>
+                <td>
+                    <input value="@patient.id" type="hidden" />
+                    <input value="@patient.doctorid" type="hidden" />
+                    <input value="@patient.DoctorAppointmentVIsitid" type="hidden" />
+                </td>
+                    <td>
+                    <a asp-controller="Appiontmentvisite" asp-action="Details" asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid">
+                            <i class="fas fa-info-circle" title="Details"></i>
+                        </a>
+                    <a asp-controller="Appiontmentvisite" asp-action="Save" asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" data-action="edit">
+                            <i class="fas fa-edit" title="Edit">Eidtvist </i>
+                        </a>
+                    <a asp-controller="Appiontmentvisite" asp-action="Delete" asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" data-action="delete">
+                            <i class="fas fa-trash-alt" title="Delete"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-success arrive-button"
+                           asp-controller="Appiontmentvisite" asp-action="ArrivedVisit"
+                           asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" onclick="addstyle(this)">
+                            Arrive
+                        </a>
+                        <a class="btn btn-danger cancel-button"
+                           asp-controller="Appiontmentvisite" asp-action="CancelledVisitSt"
+                           asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" onclick="addstyle(this)">
+                            Cancel
+                        </a>
+                      
+                        <a class="btn btn-primary cancel-button"
+                           asp-controller="Appiontmentvisite" asp-action="completed"
+                           asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid">
+                            Complete
+                        </a>
+                    </td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+<partial name="_PaginationPartial" />
+
+    <script>
+        function addstyle(button) {
+            const row = button.closest(".row-style");
+            const isArriveButton = button.classList.contains("arrive-button");
+            const bgColorClass = isArriveButton ? "green-bg" : "red-bg";
+
+            row.classList.toggle(bgColorClass, true);
+            row.querySelector(".visit-status-cell").classList.toggle(bgColorClass, true);
+
+            const oppositeButton = row.querySelector(isArriveButton ? ".cancel-button" : ".arrive-button");
+            const currentButton = row.querySelector(isArriveButton ? ".arrive-button" : ".cancel-button");
+
+            currentButton.style.display = "none";
+            oppositeButton.style.display = "block";
+
+            const bgColor = isArriveButton ? "aquamarine" : "red";
+            localStorage.setItem(`background_color_${row.id}`, bgColor);
+        }
+
+        // On page load
+        document.addEventListener("DOMContentLoaded", function () {
+            const rows = document.querySelectorAll(".row-style");
+            rows.forEach(row => {
+                const storedColor = localStorage.getItem(`background_color_${row.id}`);
+                if (storedColor) {
+                    row.style.backgroundColor = storedColor;
+                    row.querySelector(".visit-status-cell").style.backgroundColor = storedColor;
+                }
+
+                const arriveButton = row.querySelector(".arrive-button");
+                const cancelButton = row.querySelector(".cancel-button");
+
+                if (arriveButton.style.display === "none") {
+                    cancelButton.style.display = "none";
+                } else if (cancelButton.style.display === "none") {
+                    arriveButton.style.display = "none";
+                }
+            });
+        });
+
+        // Update table visibility based on search input
+        function updateTableVisibility(searchTerm) {
+            const rows = document.querySelectorAll(".row-style");
+            rows.forEach(row => {
+                const doctorNameCell = row.querySelector("td:nth-child(2)"); // Adjust this selector as needed
+                if (doctorNameCell.textContent.toLowerCase().includes(searchTerm.toLowerCase()) || doctorNameCell.textContent.toUpperCase().includes(searchTerm.toUpperCase())) {
+                    row.style.display = "table-row";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        const searchInput = document.getElementById("search-input");
+        searchInput.addEventListener("input", function () {
+            updateTableVisibility(this.value);
+        });
+    //function changeVisitDate(button) {
+    //    const row = button.closest(".row-style");
+    //    const visitId = row.getAttribute("data-visit-id");
+    //    const patientIdInput = row.querySelector("input[type='hidden'][name='patientId']");
+    //    const doctorIdInput = row.querySelector("input[type='hidden'][name='doctorId']");
+
+    //    // Check if the input elements were found before trying to access their values
+    //    if (patientIdInput && doctorIdInput) {
+    //        const patientId = patientIdInput.value;
+    //        const doctorId = doctorIdInput.value;
+
+    //        // Construct the data object with input values
+    //        const data = {
+    //            patientId: patientId,
+    //            doctorid: doctorId,
+    //            DoctorAppointmentVIsitid: visitId
+    //            // Add more properties here if needed
+    //        };
+
+    //        // Send an AJAX request using the Fetch API
+    //        fetch("/Doctor/Apointment/Save", {
+    //            method: "POST", // Use POST method for sending data
+    //            headers: {
+    //                "Content-Type": "application/json"
+    //            },
+    //            body: JSON.stringify(data) // Convert data to JSON string
+    //        })
+    //            .then(response => {
+    //                if (!response.ok) {
+    //                    throw new Error(`Network response was not ok, status: ${response.status}`);
+    //                }
+    //                return response.json();
+    //            })
+    //            .then(data => {
+    //                // Handle the response if needed
+    //                // For example, you can update the UI to reflect the change
+    //            })
+    //            .catch(error => {
+    //                console.error("Error:", error);
+    //            });
+    //    } else {
+    //        console.error("Input elements not found");
+    //    }
+    //}
+
+
+    </script>

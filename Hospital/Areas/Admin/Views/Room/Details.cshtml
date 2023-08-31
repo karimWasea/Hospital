@@ -1,0 +1,27 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+@model hospitalVm.RoomVm
+
+
+<h1>Room Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.RoomName</h5>
+        <p class="card-text">
+            <strong>Stuts:</strong> @Model.Stuts<br />
+            <strong>hospitalname:</strong> @Model.hospitalid<br />
+            <strong>Stuts:</strong> @Model.Stuts<br />
+            <strong>type:</strong> @Model.type
+        </p>
+        <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
+    </div>
+</div>

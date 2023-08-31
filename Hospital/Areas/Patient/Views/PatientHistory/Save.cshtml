@@ -1,0 +1,155 @@
+﻿
+            @{
+    ViewData["Title"] = "Save";
+    Layout = "_Layout";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
+
+@model hospitalVm.PatientHistoryVm
+
+<h1>Edit Patient History</h1>
+
+<form id="saveform" asp-area="Patient" asp-controller="PatientHistory" method="post" >
+    <input type="hidden" asp-for="Id" />
+
+   
+
+    <div class="form-group">
+        <label asp-for="PatientName">Patient Name:</label>
+        <input asp-for="PatientName" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VisitDate">Visit Date:</label>
+        <input asp-for="VisitDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ChiefComplaint">Chief Complaint:</label>
+        <input asp-for="ChiefComplaint" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HistoryOfPresentIllness">History Of Present Illness:</label>
+        <input asp-for="HistoryOfPresentIllness" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PastMedicalHistory">Past Medical History:</label>
+        <input asp-for="PastMedicalHistory" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FamilyHistory">Family History:</label>
+        <input asp-for="FamilyHistory" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhysicalExamination">Physical Examination:</label>
+        <input asp-for="PhysicalExamination" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Assessment">Assessment:</label>
+        <input asp-for="Assessment" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Plan">Plan:</label>
+        <input asp-for="Plan" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Medications">Medications:</label>
+        <input asp-for="Medications" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Allergies">Allergies:</label>
+        <input asp-for="Allergies" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LabResults">Lab Results:</label>
+        <input asp-for="LabResults" class="form-control" />
+    </div>
+
+    <div>
+        <label asp-for="IsFollowUp">Is Follow Up:</label>
+        <input asp-for="IsFollowUp" type="checkbox"  />
+    </div>
+    <label asp-for="PatientId">patient</label>
+    <select asp-for="PatientId" class="form-control" asp-items="@ViewBag.allpatient">
+        <option value="">Select Patient </option>
+        @foreach (var item in ViewBag.allpatient)
+        {
+            <option value="@item.Value" selected>@item.Text</option>
+        }
+    </select>
+
+    <button type="submit" id="savedata" class="btn btn-primary">Save</button>
+</form>
+<a asp-area="Patient" asp-controller="PatientHistory" asp-action="Index" id="Add">
+    <i class="fas fa-plus-circle"></i> back
+</a>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var saveForm = document.getElementById("saveform");
+        var saveButton = document.getElementById("savedata");
+
+        saveForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You are about to update the patient's information.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, update it!",
+                cancelButtonText: "No, cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // You can also add additional form validation here
+                    saveForm.submit();
+                }
+            });
+        });
+
+        // After form submission, show a success message if desired
+        var urlParams = new URLSearchParams(window.location.search);
+        var successParam = urlParams.get("success");
+        if (successParam === "true") {
+            Swal.fire({
+                title: "Success!",
+                text: "Patient's information has been updated.",
+                icon: "success"
+            });
+        }
+    });
+
+    //function SaveStudent() {
+    //    var studentForm = document.getElementById("saveform");
+
+    //    if (studentForm.checkValidity()) {
+    //        var formData = new FormData(saveform);
+
+    //        fetch("/Patient/PatientHistory/Save", {
+    //            method: "POST",
+    //            body: formData
+    //        })
+    //            .then(response => response.text())
+    //            .then(response => {
+    //                alert(response);
+    //            })
+    //            .catch(error => {
+    //                // alert("su");
+    //            });
+    //    } else {
+    //        // If the form is invalid, display error messages (if any)
+    //        studentForm.reportValidity();
+    //    }
+    //}
+
+</script>

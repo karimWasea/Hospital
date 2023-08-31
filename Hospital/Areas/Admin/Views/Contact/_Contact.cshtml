@@ -1,0 +1,31 @@
+﻿@*@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All Contacts";
+}
+
+*@
+
+
+
+@model PagedList.IPagedList<hospitalVm.ContactVm>
+
+
+    *   @foreach (var patient in Model)
+    {
+        <tr>
+            <td>@patient.Id</td>
+            <td>@patient.Email</td>
+            <td>@patient.phone</td>
+            <td>
+                <a asp-controller="Patient" asp-action="Details" asp-route-id="@patient.Id">
+                    <i class="fas fa-info-circle" title="Details"></i>
+                </a>
+                <a asp-controller="Patient" asp-action="Save" asp-route-id="@patient.Id" data-action="edit">
+                    <i class="fas fa-edit" title="Edit"></i>
+                </a>
+                <a asp-controller="Patient" asp-action="Delete" asp-route-id="@patient.Id" data-action="delete">
+                    <i class="fas fa-trash-alt" title="Delete"></i>
+                </a>
+            </td>
+        </tr>
+    }

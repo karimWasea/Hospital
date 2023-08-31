@@ -1,0 +1,63 @@
+﻿@using hospitalUtilities
+
+@model IEnumerable<hospitalVm.patientreportVm>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+
+@{
+    ViewData["Title"] = "ConfimedApiontmentfordoctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ConfimedApiontmentfordoctor</h1>
+<style>
+    /* Style for rows marked as not confirmed */
+    .not-confirmed-row {
+        background-color: red; /* You can customize this color */
+        color: white; /* You can customize the text color */
+    }
+
+</style>
+
+
+<div class="container mt-4">
+    <h2 class="mb-4">Doctor List</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>dignouses</th>
+                    <th>patientName</th>
+                    <th>patientName</th>
+                    <th>Reportdate</th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var doctor in Model)
+                {
+                    <tr class="appointment-row">
+                        <td>@doctor.dignouses</td>
+                        <td>@doctor.patientName</td>
+                        <td>@doctor.patientName</td>
+                        <td>@doctor.Reportdate</td>
+
+
+                        <td>
+                            <button class="btn btn-sm btn-success confirm-btn">Confirm</button>
+
+                            <a asp-controller="PatientReport" asp-action="Save" asp-route-id="@doctor.id" class="btn btn-sm btn-info">update</a>
+                            <a asp-controller="PatientReport" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">details</a>
+                            <a asp-controller="PatientReport" asp-action="Details" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Details</a>
+
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,24 @@
+﻿@model PagedList.IPagedList<hospitalVm.PatientVm>
+
+<tbody id="patientTableBody">
+    @foreach (var patient in Model)
+    {
+        <tr>
+            <td>@patient.id</td>
+            <td>@patient.Dateofbarth</td>
+            <td>@patient.Email</td>
+            <td>@patient.City</td>
+            <td>
+                <a asp-controller="Patient" asp-action="Details" asp-route-id="@patient.id">
+                    <i class="fas fa-info-circle" title="Details"></i>
+                </a>
+                <a asp-controller="Patient" asp-action="Save" asp-route-id="@patient.id" data-action="edit">
+                    <i class="fas fa-edit" title="Edit"></i>
+                </a>
+                <a asp-controller="Patient" asp-action="Delete" asp-route-id="@patient.id" data-action="delete">
+                    <i class="fas fa-trash-alt" title="Delete"></i>
+                </a>
+            </td>
+        </tr>
+    }
+</tbody>

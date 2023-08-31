@@ -1,0 +1,54 @@
+﻿@using hospitalUtilities 
+
+@model IEnumerable<hospitalVm.HospitalVm>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<a asp-controller="Hospitail" asp-action="Save">
+    <i class="fas fa-plus-circle"></i> Add New Hospital
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Pincode</th>
+            <th>Country</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hospital in Model)
+        {
+            <tr>
+                <td>@hospital.id</td>
+                <td>@hospital.Name</td>
+                <td>@hospital.City</td>
+                <td>@hospital.Pincode</td>
+                <td>@hospital.Country</td>
+                <td>@hospital.Type</td>
+                <td>
+                    <a asp-controller="Hospitail" asp-action="Details" asp-route-id="@hospital.id">
+                        <i class="fas fa-info-circle" title="Details"></i>
+                    </a>
+                    <a asp-controller="Hospitail" asp-action="Save" asp-route-id="@hospital.id">
+                        <i class="fas fa-edit" title="Edit"></i>
+                    </a>
+                    <a asp-controller="Hospitail" asp-action="Delete" asp-route-id="@hospital.id">
+                        <i class="fas fa-trash-alt" title="Delete"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<hospitalVm.PatientVm>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All Patients";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+
+<!-- Add the search input form -->
+<form id="search-form" method="get" action="@Url.Action("Index")">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
+</form>
+
+<a asp-controller="Patient" asp-action="Save" id="Add">
+    <i class="fas fa-plus-circle"></i> Add New Patient
+</a>
+<div id="search-results">
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Create Date</th>
+            <th>Description</th>
+            <th>Confirmation</th>
+            <th>Action</th>
+            <th>Addinfo</th>
+        </tr>
+    </thead>
+        <tbody id="patientTableBody">
+            *   @foreach (var patient in Model)
+                {
+                <tr>
+                    <td>@patient.id</td>
+                    <td>@patient.Dateofbarth</td>
+                    <td>@patient.Email</td>
+                    <td>@patient.City</td>
+                    <td>
+                        <a asp-controller="Patient" asp-action="Details" asp-route-id="@patient.id">
+                            <i class="fas fa-info-circle" title="Details"></i>
+                        </a>
+                        <a asp-controller="Patient" asp-action="Save" asp-route-id="@patient.id" data-action="edit">
+                            <i class="fas fa-edit" title="Edit"></i>
+                        </a>
+                        <a asp-controller="Patient" asp-action="Delete" asp-route-id="@patient.id" data-action="delete">
+                            <i class="fas fa-trash-alt" title="Delete"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Patient" asp-action="gethistory" asp-route-id="@patient.id">
+                            <i class="fas fa-info-circle" title="Details"></i>
+                        </a>
+                        <a asp-controller="Patient" asp-action="getvisits" asp-route-id="@patient.id" >
+                            <i class="fas fa-info-circle" title="Details"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                }
+           </tbody>
+</table>
+</div>
+<partial name="_PaginationPartial" model="Model" />
+
+
+<!-- Add the search input form --
+
+<!-- Display the search results -->
+!-<!-- JavaScript to handle search input -->
+<script>
+    // Get the search input element
+    const searchInput = document.getElementById('search-input');
+
+    // Get the patient elements
+    const patientElements = document.querySelectorAll('.patient');
+
+    // Function to update the search results
+    function updateSearchResults() {
+        const searchText = searchInput.value.toLowerCase();
+
+        patientElements.forEach(patient => {
+            const patientText = patient.textContent.toLowerCase();
+            if (patientText.includes(searchText)) {
+                patient.style.display = 'block';
+            } else {
+                patient.style.display = 'none';
+            }
+        });
+    }
+
+    // Add an event listener to the search input to listen for input changes
+    searchInput.addEventListener('input', function () {
+        updateSearchResults();
+    });
+
+    // Initial call to populate search results
+    updateSearchResults();
+</script>
+

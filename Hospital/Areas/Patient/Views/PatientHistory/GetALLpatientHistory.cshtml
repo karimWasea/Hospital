@@ -1,0 +1,149 @@
+﻿@model PagedList.IPagedList<hospitalVm.PatientHistoryVm>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All pagtienthistory";
+}
+
+<h2>@ViewData["Title"]</h2>
+@if (!Model.Any())
+{
+    <h1>No PatientHistory</h1>
+}
+else
+{
+    
+
+<form id="search-form" method="get" action="@Url.Action("Index")">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
+</form>
+
+<a asp-area="Patient" asp-controller="PatientHistory" asp-action="Save" id="Add">
+    <i class="fas fa-plus-circle"></i> Add New Add nistory
+</a>
+
+<div id="search-results">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>PatientName</th>
+                <th>Assessment</th>
+                <th>IsFollowUp</th>
+                <th>Confirmation</th>
+                <th>FamilyHistory</th>
+                <th>HistoryOfPresentIllness</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="patientTableBody">
+            @foreach (var patient in Model)
+            {
+                <tr class="patient">
+                    <td>@patient.PatientName</td>
+                    <td>@patient.Assessment</td>
+                    <td>@patient.IsFollowUp</td>
+                    <td>@patient.ChiefComplaint</td>
+                    <td>@patient.FamilyHistory</td>
+                    <td>@patient.HistoryOfPresentIllness</td>
+                    <td>
+                        <!-- Initial action button -->
+                        <a @* asp-controller="Room" asp-action="Details" asp-route-id="@hospital.id"
+                       *@ onclick="executeInitialAction('@Url.Action("Details", "PatientHistory", new { id = patient.Id })')">
+                            <i class="fas fa-info-circle" title="Details"></i>
+                        </a>
+                        <!-- Subsequent action button -->
+                        <a @* asp-controller="Room" asp-action="Save" asp-route-id="@hospital.id"
+                       *@ onclick="return showEditConfirmation('@Url.Action("Save", "PatientHistory", new { id = patient.Id })')">
+                            <i class="fas fa-edit" title="Edit"></i>
+                        </a>
+                        <a @* asp-controller="Room" asp-action="Save" asp-route-id="@hospital.id"
+                       *@ onclick="return DeletEditConfirmation('@Url.Action("Delete", "PatientHistory", new
+                   { id = patient.Id })')">
+                            <i class="fas fa-trash-alt" title="Delete"></i>
+                        </a>
+                        <!-- ... -->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+    <partial name="_PaginationPartial" model="Model" />
+
+}
+<a  asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="Getalldoctorvisit">BackToApointment</a>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    async function executeInitialAction(url) {
+        try {
+            // Execute the initial action using Ajax
+            const response = await fetch(url, { method: 'POST' });
+
+            // Check if the response is successful or handle errors
+            if (response.ok) {
+                // Perform the subsequent action after the initial action
+                showEditConfirmation(url);
+            } else {
+                console.error('Initial action failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async function showEditConfirmation(url) {
+        const confirmed = await showConfirmation('Edit', 'Are you sure you want to edit?');
+        if (confirmed) {
+            // Perform the subsequent action
+            window.location.href = url;
+        }
+    } async function DeletEditConfirmation(url) {
+        const confirmed = await showConfirmation('Delet', 'Are you sure you want to Delet?');
+        if (confirmed) {
+            // Perform the subsequent action
+            window.location.href = url;
+        }
+    }
+
+    async function showConfirmation(action, message) {
+        const result = await Swal.fire({
+            title: `Confirm ${action}`,
+            text: message,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: `Yes, ${action} it!`,
+            cancelButtonText: 'No, cancel',
+        });
+        return result.isConfirmed;
+    }
+
+    // Get the search input element
+    const searchInput = document.getElementById('search-input');
+
+    // Get the patient elements
+    const patientElements = document.querySelectorAll('.patient');
+
+    // Function to update the search results
+    function updateSearchResults() {
+        const searchText = searchInput.value.toLowerCase();
+
+        patientElements.forEach(patient => {
+            const patientText = patient.textContent.toLowerCase();
+            if (patientText.includes(searchText)) {
+                patient.style.display = 'table-row';
+            } else {
+                patient.style.display = 'none';
+            }
+        });
+    }
+
+    // Add an event listener to the search input to listen for input changes
+    searchInput.addEventListener('input', function () {
+        updateSearchResults();
+    });
+
+    // Initial call to populate search results
+    updateSearchResults();
+</script>

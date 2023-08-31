@@ -1,0 +1,84 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
+
+@model hospitalVm.patientreportVm
+@{
+    ViewData["Title"] = "Save";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">Create Prescription</h2>
+            
+            <form asp-controller="PatientReport" asp-action="Save" method="post" id="saveform">
+                <input asp-for="patientid" type="hidden" id="patientid" value="@ViewBag.patientid" class="form-control">
+                <input asp-for="doctorid" type="hidden" id="doctorid" value="@ViewBag.doctorid" class="form-control">
+                <input asp-for="DoctorAppointmentVIsitid" type="hidden" id="doctorid" value="@ViewBag.DoctorAppointmentVIsitid" class="form-control">
+    
+               @* <div class="form-group">
+                    <label asp-for="Reportdate">Report Date:</label>
+                    <input asp-for="Reportdate" class="form-control" value="@ViewBag.Appiontmentvisiid" readonly>
+                    <span asp-validation-for="Reportdate" class="text-danger"></span>
+                </div>*@
+    
+                <div class="form-group">
+                    <label asp-for="dignouses">Prescription:</label>
+                    <textarea asp-for="dignouses" class="form-control" rows="6" required></textarea>
+                    <span asp-validation-for="dignouses" class="text-danger"></span>
+                </div>
+                <hr/>
+                <div class="text-center">
+                    <button type="submit" id="savedata" class="btn btn-primary">Create Prescription</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <a asp-area="Admin" asp-controller="Appiontmentvisite"
+               asp-action="Getalldoctorvisit" class="btn btn-sm btn-info"> AllBooking</a>
+          
+            <a asp-area="Admin"
+               asp-controller="Appiontmentvisite"
+               asp-action="AddDoctorNoteForVisit"
+               asp-route-DoctorAppointmentVisitid="@ViewBag.DoctorAppointmentVisitid"
+               class="btn btn-sm btn-info">Visit Note</a>
+
+        </div>
+        <div class="col-md-6 text-md-right">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var saveForm = document.getElementById("saveform");
+            var saveButton = document.getElementById("savedata");
+
+            saveForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You are about to update the patient's information.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, update it!",
+                    cancelButtonText: "No, cancel",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // You can also add additional form validation here
+                        saveForm.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}
+

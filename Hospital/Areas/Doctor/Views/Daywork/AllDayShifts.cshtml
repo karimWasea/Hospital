@@ -1,0 +1,604 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+ <head>
+    <title>Doctor Daywork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/simplePagination.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .table th,
+            .table td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .table thead th {
+                background-color: #f5f5f5;
+            }
+
+        .sortable {
+            cursor: pointer;
+        }
+
+        .sort-arrow {
+            margin-left: 5px;
+        }
+
+        .pagination-container {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .pagination {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
+
+            .pagination li {
+                display: inline;
+                margin-right: 5px;
+            }
+
+                .pagination li a {
+                    border: 1px solid #ddd;
+                    padding: 5px 10px;
+                    text-decoration: none;
+                    color: #333;
+                }
+
+                .pagination li.active a {
+                    background-color: #007bff;
+                    color: #fff;
+                }
+
+        .page-number {
+            font-weight: bold;
+        }
+
+        .current-page {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a asp-controller="Daywork" asp-action="Index">
+            <i class="fas fa-info-circle" title="Mangshifts">MangsDoctorifts</i>
+        </a>
+        <div>
+            <input type="text" id="searchFilter" name="searchFilter" placeholder="Search">
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="sortable" data-column="dayname">Day Name <span class="sort-arrow"></span></th>
+                    <th class="sortable" data-column="DoctorName">Doctor Name <span class="sort-arrow"></span></th>
+                    <th class="sortable" data-column="Hifts">Shifts <span class="sort-arrow"></span></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @foreach (var hospital in Model)
+                {
+                    <tr>
+                        <td>@hospital.dayname</td>
+                        <td>@hospital.DoctorName</td>
+                        <td>@hospital.Hifts</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="pagination" class="pagination-container">
+            <ul id="paginationButtons" class="pagination"></ul>
+        </div>
+    </div>
+    <script>
+        const searchInput = document.getElementById('searchFilter');
+        const headerCells = document.querySelectorAll('.sortable');
+        const tableBody = document.getElementById('tableBody');
+        const paginationContainer = document.getElementById('pagination');
+        const paginationButtons = document.getElementById('paginationButtons');
+        let currentPage = 1;
+
+        function displayRows(rows) {
+            const rowsPerPage = 7;
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+
+            rows.forEach(function (row, index) {
+                if (index >= startIndex && index < endIndex) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function setupPagination(rows) {
+            const totalPages = Math.ceil(rows.length / 7);
+
+            if (totalPages > 1) {
+                paginationContainer.style.display = 'block';
+
+                paginationButtons.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageItem = document.createElement('li');
+                    pageItem.classList.add('page-item');
+                    const pageLink = document.createElement('a');
+                    pageLink.classList.add('page-link', 'page-number');
+                    pageLink.textContent = i;
+                    pageLink.href = '#';
+                    if (i === currentPage) {
+                        pageLink.classList.add('current-page');
+                    }
+                    pageItem.appendChild(pageLink);
+                    paginationButtons.appendChild(pageItem);
+                }
+
+                paginationButtons.addEventListener('click', function (event) {
+                    if (event.target.classList.contains('page-number')) {
+                        currentPage = parseInt(event.target.textContent);
+                        displayRows(rows);
+                        updatePaginationNumbers();
+                    }
+                });
+
+                updatePaginationNumbers();
+            } else {
+                paginationContainer.style.display = 'none';
+            }
+        }
+
+        function updatePaginationNumbers() {
+            const pageLinks = paginationButtons.querySelectorAll('.page-number');
+            pageLinks.forEach(function (link) {
+                if (parseInt(link.textContent) === currentPage) {
+                    link.classList.add('current-page');
+                } else {
+                    link.classList.remove('current-page');
+                }
+            });
+        }
+
+        function filterAndSortTable() {
+            const searchValue = searchInput.value.toLowerCase();
+            const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+            rows.forEach(function (row) {
+                const cells = row.getElementsByTagName('td');
+                const match = Array.from(cells).some(function (cell) {
+                    return cell.textContent.toLowerCase().includes(searchValue);
+                });
+
+                row.style.display = match ? '' : 'none';
+            });
+
+            const visibleRows = Array.from(tableBody.getElementsByTagName('tr')).filter(function (row) {
+                return row.style.display !== 'none';
+            });
+
+            currentPage = 1;
+            displayRows(visibleRows);
+            setupPagination(visibleRows);
+        }
+
+        function sortTable(clickedHeaderCell) {
+            // ... (existing sortTable code)
+        }
+
+        searchInput.addEventListener('input', filterAndSortTable);
+
+        headerCells.forEach(function (cell) {
+            cell.addEventListener('click', function () {
+                sortTable(cell);
+            });
+        });
+
+        const initialRows = Array.from(tableBody.getElementsByTagName('tr'));
+        displayRows(initialRows);
+        setupPagination(initialRows);
+    </script>
+    </body>
+
+@*
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Daywork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/simplePagination.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .table th,
+            .table td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .table thead th {
+                background-color: #f5f5f5;
+            }
+
+        .sortable {
+            cursor: pointer;
+        }
+
+        .sort-arrow {
+            margin-left: 5px;
+        }
+
+        .pagination-container {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .pagination {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
+
+            .pagination li {
+                display: inline;
+                margin-right: 5px;
+            }
+
+                .pagination li a {
+                    border: 1px solid #ddd;
+                    padding: 5px 10px;
+                    text-decoration: none;
+                    color: #333;
+                }
+
+                .pagination li.active a {
+                    background-color: #007bff;
+                    color: #fff;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a asp-controller="Daywork" asp-action="Index">
+            <i class="fas fa-info-circle" title="Mangshifts">MangsDoctorifts</i>
+        </a>
+        <div>
+            <input type="text" id="searchFilter" name="searchFilter" placeholder="Search">
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="sortable" data-column="dayname">Day Name <span class="sort-arrow"></span></th>
+                    <th class="sortable" data-column="DoctorName">Doctor Name <span class="sort-arrow"></span></th>
+                    <th class="sortable" data-column="Hifts">Shifts <span class="sort-arrow"></span></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @foreach (var hospital in Model)
+                {
+                    <tr>
+                        <td>@hospital.dayname</td>
+                        <td>@hospital.DoctorName</td>
+                        <td>@hospital.Hifts</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="pagination" class="pagination-container">
+            <div id="paginationButtons"></div>
+        </div>
+    </div>
+    <script>
+        const searchInput = document.getElementById('searchFilter');
+        const headerCells = document.querySelectorAll('.sortable');
+        const tableBody = document.getElementById('tableBody');
+        const paginationContainer = document.getElementById('pagination');
+        let currentPage = 1;
+
+        function displayRows(rows) {
+            const rowsPerPage = 7;
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+
+            rows.forEach(function (row, index) {
+                if (index >= startIndex && index < endIndex) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function setupPagination(rows) {
+            const totalPages = Math.ceil(rows.length / 7);
+
+            if (totalPages > 1) {
+                paginationContainer.style.display = 'block';
+
+                paginationContainer.pagination({
+                    items: rows.length,
+                    itemsOnPage: 7,
+                    currentPage: currentPage,
+                    cssStyle: 'light-theme',
+                    onPageClick: function (pageNumber) {
+                        currentPage = pageNumber;
+                        displayRows(rows);
+                    }
+                });
+            } else {
+                paginationContainer.style.display = 'none';
+            }
+        }
+
+        function filterAndSortTable() {
+            const searchValue = searchInput.value.toLowerCase();
+            const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+            rows.forEach(function (row) {
+                const cells = row.getElementsByTagName('td');
+                const match = Array.from(cells).some(function (cell) {
+                    return cell.textContent.toLowerCase().includes(searchValue);
+                });
+
+                row.style.display = match ? '' : 'none';
+            });
+
+            const visibleRows = Array.from(tableBody.getElementsByTagName('tr')).filter(function (row) {
+                return row.style.display !== 'none';
+            });
+
+            displayRows(visibleRows);
+            setupPagination(visibleRows);
+        }
+
+        function sortTable(clickedHeaderCell) {
+            const column = clickedHeaderCell.dataset.column;
+            const columnIndex = Array.from(headerCells).findIndex(function (cell) {
+                return cell.dataset.column === column;
+            });
+
+            if (columnIndex === -1) {
+                return;
+            }
+
+            const sortArrow = clickedHeaderCell.querySelector('.sort-arrow');
+            const sortOrder = sortArrow.classList.contains('asc') ? 'desc' : 'asc';
+
+            headerCells.forEach(function (cell) {
+                cell.classList.remove('asc', 'desc');
+                cell.querySelector('.sort-arrow').classList.remove('asc', 'desc');
+            });
+
+            sortArrow.classList.add(sortOrder);
+            clickedHeaderCell.classList.add(sortOrder);
+
+            const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+            rows.sort(function (rowA, rowB) {
+                const cellA = rowA.querySelectorAll('td')[columnIndex].textContent;
+                const cellB = rowB.querySelectorAll('td')[columnIndex].textContent;
+                return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
+            });
+
+            tableBody.innerHTML = '';
+
+            rows.forEach(function (row) {
+                tableBody.appendChild(row);
+            });
+
+            const visibleRows = Array.from(tableBody.getElementsByTagName('tr')).filter(function (row) {
+                return row.style.display !== 'none';
+            });
+
+            displayRows(visibleRows);
+            setupPagination(visibleRows);
+        }
+
+        searchInput.addEventListener('input', filterAndSortTable);
+
+        headerCells.forEach(function (cell) {
+            cell.addEventListener('click', function () {
+                sortTable(cell);
+            });
+        });
+
+        const initialRows = Array.from(tableBody.getElementsByTagName('tr'));
+        displayRows(initialRows);
+        setupPagination(initialRows);
+    </script>
+</body>
+</html>
+
+*@
+
+<!-- ... Previous HTML code ... -->
+<!-- ... Previous HTML code ... -->
+
+@*<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchFilter");
+        const searchForm = document.getElementById("searchForm");
+        const headerCells = document.querySelectorAll(".sortable");
+        const tableBody = document.getElementById("tableBody");
+        const paginationContainer = document.getElementById("pagination");
+        const rowsPerPage = 7; // Number of rows to show per page
+        let currentPage = 1;
+        let currentSortColumnIndex = -1;
+        let currentSortOrder = "asc";
+
+        searchInput.addEventListener("input", filterAndSortTable);
+        searchForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            filterAndSortTable();
+        });
+
+        headerCells.forEach(function (cell) {
+            cell.addEventListener("click", function () {
+                sortTable(cell);
+            });
+        });
+
+        function displayRows(rows) {
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+
+            rows.forEach(function (row, index) {
+                if (index >= startIndex && index < endIndex) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        function setupPagination(rows) {
+            const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+            if (totalPages > 1) {
+                paginationContainer.style.display = "block";
+                paginationContainer.innerHTML = "";
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement("button");
+                    pageButton.textContent = i;
+                    pageButton.classList.add("page-button");
+
+                    pageButton.addEventListener("click", function () {
+                        currentPage = i;
+                        displayRows(rows);
+                        updatePaginationButtons();
+                    });
+
+                    paginationContainer.appendChild(pageButton);
+                }
+
+                updatePaginationButtons();
+            } else {
+                paginationContainer.style.display = "none";
+            }
+        }
+
+        function updatePaginationButtons() {
+            const pageButtons = document.querySelectorAll(".page-button");
+
+            pageButtons.forEach(function (button, index) {
+                if (index + 1 === currentPage) {
+                    button.classList.add("active");
+                } else {
+                    button.classList.remove("active");
+                }
+            });
+        }
+
+        function filterAndSortTable() {
+            const searchValue = searchInput.value.toLowerCase();
+            let rows = Array.from(tableBody.getElementsByTagName("tr"));
+
+            rows.forEach(function (row) {
+                const cells = row.getElementsByTagName("td");
+                const match = Array.from(cells).some(function (cell) {
+                    return cell.textContent.toLowerCase().includes(searchValue);
+                });
+
+                row.style.display = match ? "" : "none";
+            });
+
+            rows = rows.filter(function (row) {
+                return row.style.display !== "none";
+            });
+
+            currentPage = 1;
+            displayRows(rows);
+            setupPagination(rows);
+            if (currentSortColumnIndex !== -1) {
+                sortTable(headerCells[currentSortColumnIndex]);
+            }
+        }
+
+        function sortTable(clickedHeaderCell) {
+            const column = clickedHeaderCell.dataset.column;
+            const columnIndex = Array.from(headerCells).findIndex(function (cell) {
+                return cell.dataset.column === column;
+            });
+
+            if (columnIndex === -1) {
+                return;
+            }
+
+            if (currentSortColumnIndex === columnIndex) {
+                currentSortOrder = currentSortOrder === "asc" ? "desc" : "asc";
+            } else {
+                currentSortOrder = "asc";
+                currentSortColumnIndex = columnIndex;
+            }
+
+            headerCells.forEach(function (cell) {
+                cell.classList.remove("asc", "desc");
+            });
+
+            clickedHeaderCell.classList.add(currentSortOrder);
+
+            const sortArrow = clickedHeaderCell.querySelector(".sort-arrow");
+            sortArrow.classList.remove("asc", "desc");
+            sortArrow.classList.add(currentSortOrder);
+
+            const rows = Array.from(tableBody.getElementsByTagName("tr"));
+
+            rows.sort(function (rowA, rowB) {
+                const cellA = rowA.querySelectorAll("td")[columnIndex].textContent;
+                const cellB = rowB.querySelectorAll("td")[columnIndex].textContent;
+
+                if (currentSortOrder === "asc") {
+                    return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: "base" });
+                } else {
+                    return cellB.localeCompare(cellA, undefined, { numeric: true, sensitivity: "base" });
+                }
+            });
+
+            tableBody.innerHTML = "";
+
+            rows.forEach(function (row) {
+                tableBody.appendChild(row);
+            });
+
+            displayRows(rows);
+            setupPagination(rows);
+            updatePaginationButtons();
+        }
+
+        // Initial setup
+        const initialVisibleRows = Array.from(tableBody.getElementsByTagName("tr"));
+        displayRows(initialVisibleRows);
+        setupPagination(initialVisibleRows);
+    });
+</script>
+*@

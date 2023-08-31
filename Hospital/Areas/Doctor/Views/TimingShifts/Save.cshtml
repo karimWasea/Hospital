@@ -1,0 +1,188 @@
+﻿@{
+    ViewData["Title"] = "Save";
+    Layout = "_Layout";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+
+@model hospitalVm.timingshiftVm
+
+<h1>Edit  Shift</h1>
+
+<form asp-action="Save" method="post" id="saveform">
+    <input type="hidden" asp-for="id" />
+
+
+
+  
+
+    <div class="form-group">
+        <label asp-for="startshift">Shift Start Date:</label>
+        <input asp-for="startshift" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Endsifit">Shift End Date:</label>
+        <input asp-for="Endsifit" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input id="durationInput" class="form-control" readonly style="background-color: transparent; border: none; width: auto; display: inline-block;" />
+        <label asp-for="Duration" style="display: inline-block; margin-left: 10px;">Duration:</label>
+    </div>
+
+
+
+
+    <label asp-for="Stutus">Stuts</label>
+    <select asp-for="Stutus" class="form-control" asp-items="@ViewBag.avilabledoctoronsift">
+        <option value="">Select Stutus</option>
+        @foreach (var item in ViewBag.avilabledoctoronsift)
+        {
+            <option value="@item.Value" selected>@item.Text  </option>
+        }
+    </select>
+
+
+    <label asp-for="applicatinUserdictorid">doctorname</label>
+    <select asp-for="applicatinUserdictorid" class="form-control" asp-items="@ViewBag.getdoctorfromapplicationuserid">
+        <option value="">Select doctorName</option>
+        @foreach (var item in ViewBag.getdoctorfromapplicationuserid)
+        {
+            <option value="@item.Value" selected>@item.Text  </option>
+        }
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var saveForm = document.getElementById("saveform");
+        var saveButton = document.getElementById("savedata");
+
+        saveForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You are about to update the patient's information.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, update it!",
+                cancelButtonText: "No, cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // You can also add additional form validation here
+                    saveForm.submit();
+                }
+            });
+        });
+
+        // After form submission, show a success message if desired
+        var urlParams = new URLSearchParams(window.location.search);
+        var successParam = urlParams.get("success");
+        if (successParam === "true") {
+            Swal.fire({
+                title: "Success!",
+                text: "Patient's information has been updated.",
+                icon: "success"
+            });
+        }
+    });
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var startShiftInput = document.querySelector('#startshift');
+        var endsifitInput = document.querySelector('#Endsifit');
+        var durationInput = document.querySelector('#durationInput');
+
+        function updateDuration() {
+            var startShiftValue = new Date(startShiftInput.value);
+            var endsifitValue = new Date(endsifitInput.value);
+            var durationMilliseconds = endsifitValue - startShiftValue;
+            var durationHours = durationMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
+            durationInput.value = durationHours.toFixed(2); // Display with two decimal places
+        }
+
+        startShiftInput.addEventListener('change', updateDuration);
+        endsifitInput.addEventListener('change', updateDuration);
+    });
+</script>
+
+
+
+
+
+@*
+
+
+
+
+
+
+
+
+
+<script>
+    function SaveStudent() {
+        var studentForm = document.getElementById("saveform");
+
+        if (studentForm.checkValidity()) {
+            var formData = new FormData(saveform);
+
+            fetch("/Doctor/TimingShifts/Save", {
+                method: "POST",
+                body: formData
+                // body: JSON.stringify(studentForm)
+                //Headers{
+
+                //'content-type': 'application/json'
+                //}
+
+
+
+
+
+
+
+            })
+                .then(response => response.text())
+                .then(response => {
+                    alert(response);
+                })
+                .catch(error => {
+                    alert("Error: " + error);
+                });
+        } else {
+            // If the form is invalid, display error messages (if any)
+            studentForm.reportValidity();
+        }
+    }
+</script>*@

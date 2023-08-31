@@ -1,0 +1,89 @@
+﻿@model PagedList.IPagedList<hospitalVm.ApointmentVm>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All Patients";
+}
+
+<form id="search-form" method="get" asp-action="Index">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
+</form>
+
+<a asp-controller="Patient" asp-action="Save" id="Add">
+    <i class="fas fa-plus-circle"></i> Add New Patient
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>visite date</th>
+            <th>doctorName</th>
+            <th>VisitStatus</th>
+            <th>VisitType</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="patientTableBody">
+        @foreach (var patient in Model)
+        {
+            <tr id="@patient.doctorid" class="row-style" data-visit-id="@patient.DoctorAppointmentVIsitid">
+                <td>@patient.CreateDate</td>
+                <td>@patient.DoctorName</td>
+                <td class="visit-status-cell">@patient.VisitStatus</td>
+                <td>@patient.VisitType</td>
+                <td>
+                    <a asp-controller="Appiontmentvisite" asp-action="Details" asp-route-id="@patient.id">
+                        <i class="fas fa-info-circle" title="Details"></i>
+                    </a>
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-page="1" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+            </li>
+        }
+        <li class="page-item @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-page="@Model.PageCount" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<partial name="_PaginationPartial" model="Model" />
+
+<script>
+   
+    // Update table visibility based on search input
+    function updateTableVisibility(searchTerm) {
+        const rows = document.querySelectorAll(".row-style");
+        rows.forEach(row => {
+            const doctorNameCell = row.querySelector("td:nth-child(2)"); // Adjust this selector as needed
+            if (doctorNameCell.textContent.toLowerCase().includes(searchTerm.toLowerCase()) || doctorNameCell.textContent.toUpperCase().includes(searchTerm.toUpperCase())) {
+                row.style.display = "table-row";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    const searchInput = document.getElementById("search-input");
+    searchInput.addEventListener("input", function () {
+        updateTableVisibility(this.value);
+    });
+</script>
+

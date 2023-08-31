@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Save";
+    Layout = "_Layout";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+
+@model hospitalVm.RoomVm
+
+<h1>Edit Room</h1>
+
+<form id="saveform">
+    <input type="hidden" asp-for="id" />
+
+    <div class="form-group">
+        <label asp-for="RoomName">RoomName:</label>
+        <input asp-for="RoomName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="type">type:</label>
+        <input asp-for="type" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Stuts">Stuts:</label>
+        <input asp-for="Stuts" class="form-control" />
+    </div>
+
+    <label asp-for="hospitalid">Hospital</label>
+
+    <select asp-for="hospitalid" class="form-control" asp-items="@ViewBag.HospitalsId">
+        <option value="">Select Hospital</option>
+        @foreach (var item in ViewBag.HospitalsId)
+        {
+            <option value="@item.Value" selected>@item.Text  </option>
+        }
+    </select>
+    <button type="submit" onclick=" SaveStudent()" id="savedata" class="btn btn-primary">Save</button>
+</form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var saveForm = document.getElementById("saveform");
+        var saveButton = document.getElementById("savedata");
+
+        saveForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You are about to update the patient's information.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, update it!",
+                cancelButtonText: "No, cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // You can also add additional form validation here
+                    saveForm.submit();
+                }
+            });
+        });
+
+        // After form submission, show a success message if desired
+        var urlParams = new URLSearchParams(window.location.search);
+        var successParam = urlParams.get("success");
+        if (successParam === "true") {
+            Swal.fire({
+                title: "Success!",
+                text: "Patient's information has been updated.",
+                icon: "success"
+            });
+        }
+    });
+
+    function SaveStudent() {
+        var studentForm = document.getElementById("saveform");
+
+        if (studentForm.checkValidity()) {
+            var formData = new FormData(saveform);
+
+            fetch("/Admin/Room/Save", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text())
+                .then(response => {
+                    alert(response);
+                })
+                .catch(error => {
+                    // alert("su");
+                });
+        } else {
+            // If the form is invalid, display error messages (if any)
+            studentForm.reportValidity();
+        }
+    }
+</script>

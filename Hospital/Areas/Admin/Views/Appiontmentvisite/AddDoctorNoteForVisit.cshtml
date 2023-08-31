@@ -1,0 +1,121 @@
+﻿@model hospitalVm.ApointmentVm
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "AddNote";
+}
+
+<@*div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #f8f9fa;">
+    <div class="card" style="width: 80%;">
+        <div class="card-body">
+            <h1 class="card-title text-center">Details</h1>
+            <p class="card-text">
+                <strong>Doctor Name:</strong> @Model.doctorName<br />
+                <strong>Patient Name:</strong> @Model.PatientName<br />
+                <strong>Visit Note by Doctor:</strong> @Model.VisiteNotebydoctor<br />
+                <strong>Visit Date:</strong> @Model.CreateDate<br />
+                <strong>Visit Type:</strong> @Model.VisitType<br />
+                <strong>Visit Status:</strong> @Model.VisitStatus<br />
+            </p>
+        </div>
+
+<div class="container-fluid d-flex justify-content-center mt-3">
+            <form asp-action="AddDoctorNoteForVisit" method="post" id="saveform" enctype="multipart/form-data">
+        <input type="hidden" asp-for="id" />
+        <input asp-for="doctorid" type="hidden" />
+        <input asp-for="DoctorAppointmentVIsitid" type="hidden" />
+        <input asp-for="doctorid" type="hidden" />
+        <input asp-for="patientid" type="hidden" />
+        <input asp-for="id" type="hidden">
+
+        <div class="card" style="width: 60%;">
+            <div class="card-body">
+                <h5 class="card-title text-center">Add Notes</h5>
+                <div class="form-group">
+                    <label asp-for="VisiteNotebydoctor">Doctor's Note:</label>
+                    <textarea asp-for="VisiteNotebydoctor" style="width: 80vw; height: 80vh;"></textarea>
+                </div>
+                <button type="submit" id="savedata" class="btn btn-primary btn-block">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+         
+    </div>
+</div>
+<div class="container-fluid d-flex justify-content-center mt-3">
+    <a asp-area="Doctor" asp-controller="Apointment"
+       asp-action="ConfimedApiontmentfordoctor" class="btn btn-sm btn-info"> AllBooking</a>
+
+</div>
+
+//*@
+<<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #f8f9fa;">
+    <div class="card w-75">
+        <div class="card-body">
+            <h1 class="card-title text-center">Details</h1>
+
+            <!-- Appointment Details -->
+            <p class="card-text">
+                <strong>Patient Name:</strong> @Model.PatientName<br />
+                <strong>Visit Note by Doctor:</strong> @Model.VisiteNotebydoctor<br />
+                <strong>Visit Date:</strong> @Model.CreateDate<br />
+                <strong>Visit Type:</strong> @Model.VisitType<br />
+                <strong>Visit Status:</strong> @Model.VisitStatus<br />
+            </p>
+
+            <!-- Add Notes Form -->
+            <h5 class="card-title text-center mt-3">Add Notes</h5>
+            <form asp-action="AddDoctorNoteForVisit" method="post" id="saveform" enctype="multipart/form-data">
+                <input type="hidden" asp-for="id" />
+                <input asp-for="doctorid" type="hidden" />
+                <input asp-for="DoctorAppointmentVIsitid" type="hidden" />
+                <input asp-for="doctorid" type="hidden" />
+                <input asp-for="patientid" type="hidden" />
+                <input asp-for="id" type="hidden">
+
+                <div class="form-group">
+                    <label asp-for="VisiteNotebydoctor">Doctor's Note:</label>
+                    <textarea asp-for="VisiteNotebydoctor" class="form-control" style="height: 60vh;"></textarea>
+                </div>
+                <button type="submit" id="savedata" class="btn btn-primary btn-block">Update</button>
+            </form>
+
+            <!-- All Booking Link -->
+            <div class="text-center mt-3">
+                <a asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="Getalldoctorvisit" class="btn btn-sm btn-info">All Booking</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var saveForm = document.getElementById("saveform");
+            var saveButton = document.getElementById("savedata");
+
+            saveForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You are about to update the patient's information.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, update it!",
+                    cancelButtonText: "No, cancel",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // You can also add additional form validation here
+                        saveForm.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

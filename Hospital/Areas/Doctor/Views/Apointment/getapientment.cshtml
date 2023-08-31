@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Save";
+    Layout = "_Layout";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+
+@model hospitalVm.ApointmentVm
+
+<h1>add apiontment </h1>
+
+<form asp-action="Save" method="post" id="saveform">
+    <input type="hidden" asp-for="id" />
+    <input type="hidden" asp-for="doctorid" />
+
+
+    <div class="form-group">
+        <label asp-for="DoctorName">DoctorName:</label>
+        <p class="form-control-static">@Model.DoctorName</p>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <label asp-for="discreaption">discreaption:</label>
+        <input asp-for="discreaption" class="form-control" />
+    </div>
+
+
+
+    @* <div class="form-group">
+    <label asp-for="PatientName">PatientName:</label>
+    <input asp-for="PatientName" class="form-control" />
+    </div>
+    *@
+    @*   <div class="form-group">
+    <label asp-for="doctosspilist">doctosspilist:</label>
+    <input asp-for="doctosspilist" class="form-control" />
+    </div>*@
+    @*<div class="form-group">
+    <label asp-for="isavilable">available:</label>
+
+    <p @Model.isavilable ? 'available' : 'not available' " readonly >available</p>
+
+    </div>*@
+    @*
+    <div class="form-group">
+    <label asp-for="isavilable">available:</label>
+
+    @if (Model != null)
+    {
+    <p>@(Model.isavilable ? "available" : "not available")</p>
+    }
+    else
+    {
+    <p>Model data is not available.</p>
+    }
+    </div>*@
+
+
+    <div class="form-group">
+        <label asp-for="CreateDate">Appointment Time</label>
+        <select asp-for="CreateDate" class="form-control">
+            <option value="">Select a time slot</option>
+            @foreach (var slot in ViewBag.availableSlots)
+            {
+                <option value="@slot.Value">@slot.Text</option>
+            }
+        </select>
+
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="VisitType">about your Visit</label>
+        <select asp-for="VisitType" class="form-control">
+            <option value="">Select a time slot</option>
+            @foreach (var slot in ViewBag.Visitetype)
+            {
+                <option value="@slot.Value">@slot.Text</option>
+            }
+        </select>
+
+    </div>
+
+
+
+
+@*
+
+    @foreach (var doctorSlots in ViewBag.AvailableSlotsByDoctor)
+    {
+        <h3>Doctor ID: @doctorSlots.Key</h3>
+        <ul>
+            @foreach (var slot in doctorSlots.Value)
+            {
+                <li>@slot.Text</li>
+            }
+        </ul>
+
+        <div class="form-group">
+            <label>Select Slot for Doctor @doctorSlots.Key:</label>
+            <select name="SelectedSlot" class="form-control">
+                <option value="">Select a slot</option>
+                @foreach (var slot in doctorSlots.Value)
+                {
+                    <option value="@slot.Value">@slot.Text</option>
+                }
+            </select>
+        </div>
+    }
+*@
+
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

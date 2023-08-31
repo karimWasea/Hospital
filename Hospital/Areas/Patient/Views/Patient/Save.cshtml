@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewData["Title"] = "Save";
+}
+
+<h1>Save</h1>
+
+
+
+@{
+    ViewData["Title"] = "Edit Shift";
+    Layout = "_Layout";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
+
+@model hospitalVm.PatientVm
+
+<h1>Edit Shift</h1>
+
+<form asp-action="Save" method="post" id="saveform" enctype="multipart/form-data">
+    <input type="hidden" asp-for="id" />
+
+    <!-- Group related fields using div containers -->
+    <div class="form-group">
+        <label asp-for="username">Username:</label>
+        <input asp-for="username" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="City">City:</label>
+        <input asp-for="City" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for=" imgurlupdated">updateimg:</label>
+        <input asp-for="imgurlupdated" class="form-control" />
+    </div>
+   
+    <div class="form-group">
+        <label asp-for="Nationality">Nationality:</label>
+        <input asp-for="Nationality" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StreetAddress">StreetAddress:</label>
+        <input asp-for="StreetAddress" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PostalCode">PostalCode:</label>
+        <input asp-for="PostalCode" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Phonenumber">Phonenumber:</label>
+        <input asp-for="Phonenumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Dateofbarth">Dateofbarth:</label>
+        <input asp-for="Dateofbarth" class="form-control" />
+    </div>
+
+  
+    
+
+  
+  
+    <div class="form-group">
+        <label asp-for="Gender">Gender</label>
+        <select asp-for="Gender" class="form-control" asp-items="@ViewBag.Gender ">
+            <option value="">Select Gender</option>
+            @foreach (var item in ViewBag.Gender)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RoleRegeseter">RoleRegeseter</label>
+        <select asp-for="RoleRegeseter" class="form-control" asp-items="@ViewBag.jop">
+            <option value="">Select RoleRegeseter</option>
+            @foreach (var item in ViewBag.jop)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+
+
+ 
+    <button type="submit" id="savedata" class="btn btn-primary">Update</button>
+</form>
+
+<a asp-controller="Patient" asp-action="Index" class="btn btn-secondary mt-2">
+    <i class="fas fa-chevron-circle-left"></i> Back to Index
+</a>
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var saveForm = document.getElementById("saveform");
+            var saveButton = document.getElementById("savedata");
+
+            saveForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You are about to update the patient's information.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, update it!",
+                    cancelButtonText: "No, cancel",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // You can also add additional form validation here
+                        saveForm.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

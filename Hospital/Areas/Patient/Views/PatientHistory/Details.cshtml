@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+}
+@model hospitalVm.PatientHistoryVm
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+@if (Model == null || Model.Id == 0 ||Model.PatientId==null)
+{
+    <p>No  PatientHistoryVm.</p>
+}
+<div class="container text-center">
+    <h1>Patient History Details</h1>
+
+    <div>
+        <dl class="row">
+            <dt class="col-sm-3">Patient ID</dt>
+            <dd class="col-sm-9">@Model.PatientId</dd>
+
+            <dt class="col-sm-3">Patient Name</dt>
+            <dd class="col-sm-9">@Model.PatientName</dd>
+
+            <dt class="col-sm-3">Visit Date</dt>
+            <dd class="col-sm-9">@Model.VisitDate</dd>
+
+            <dt class="col-sm-3">Chief Complaint</dt>
+            <dd class="col-sm-9">@Model.ChiefComplaint</dd>
+
+            <dt class="col-sm-3">History Of Present Illness</dt>
+            <dd class="col-sm-9">@Model.HistoryOfPresentIllness</dd>
+
+            <dt class="col-sm-3">Past Medical History</dt>
+            <dd class="col-sm-9">@Model.PastMedicalHistory</dd>
+
+            <dt class="col-sm-3">Family History</dt>
+            <dd class="col-sm-9">@Model.FamilyHistory</dd>
+
+            <dt class="col-sm-3">Physical Examination</dt>
+            <dd class="col-sm-9">@Model.PhysicalExamination</dd>
+
+            <dt class="col-sm-3">Assessment</dt>
+            <dd class="col-sm-9">@Model.Assessment</dd>
+
+            <dt class="col-sm-3">Plan</dt>
+            <dd class="col-sm-9">@Model.Plan</dd>
+
+            <dt class="col-sm-3">Medications</dt>
+            <dd class="col-sm-9">@Model.Medications</dd>
+
+            <dt class="col-sm-3">Allergies</dt>
+            <dd class="col-sm-9">@Model.Allergies</dd>
+
+            <dt class="col-sm-3">Lab Results</dt>
+            <dd class="col-sm-9">@Model.LabResults</dd>
+
+            <dt class="col-sm-3">Is Follow Up</dt>
+            <dd class="col-sm-9">@Model.IsFollowUp</dd>
+        </dl>
+    </div>
+
+    <div class="mt-3">
+        <a asp-controller="PatientHistory" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-controller="PatientHistory" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

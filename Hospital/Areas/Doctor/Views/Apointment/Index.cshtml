@@ -1,0 +1,84 @@
+﻿@using hospitalUtilities
+
+@model PagedREsult<hospitalVm.ApointmentVm>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+<style>
+    .form-group {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .form-control-inline {
+        display: inline-block;
+        width: auto;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<a asp-controller="Apointment" asp-action="Save">
+    <i class="fas fa-plus-circle"></i> Add New TimingShifts
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>discreaption</th>
+            <th>startsiftPM</th>
+            <th>CreateDate</th>
+
+            <th>applicationUserid</th>
+
+            <th>isavilable</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var hospital in Model.Data)
+        {
+            <tr>
+                <td>@hospital.id</td>
+                <td>@hospital.discreaption</td>
+                <td>@hospital.CreateDate</td>
+                <td>@hospital.ApplicationUserid</td>
+
+
+                <td>@hospital.IsAvailable</td>
+                <td>
+                    <a asp-controller="Apointment" asp-action="Details" asp-route-id="@hospital.id">
+                        <i class="fas fa-info-circle" title="Details"></i>
+                    </a>
+                    <a asp-controller="Apointment" asp-action="Save" asp-route-id="@hospital.id">
+                        <i class="fas fa-edit" title="Edit"></i>
+                    </a>
+                    <a asp-controller="Apointment" asp-action="Delete" asp-route-id="@hospital.id">
+                        <i class="fas fa-trash-alt" title="Delete"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<cs-pager cs-paging-pagesize=(int)Model.PageSize
+          cs-paging-pagenumber=(int)Model.PageNumber
+          cs-paging-totalitems=(int)Model.TotalItems
+          cs-pagenumber-param="PageNumber"
+          cs-previous-page-html="<a href='#' title='Previous page'><i class='glyphicon glyphicon-backward'></i></a>"
+          cs-next-page-html="<a href='#' title='Next page'><i class='glyphicon glyphicon-forward'></i></a>"
+          asp-controller="Hospitail"
+          asp-action="Index"
+          cs-pager-li-current-class="page-item active"
+          cs-pager-li-other-class="page-item"
+          cs-pager-li-non-active-class="page-item disabled"
+          cs-pager-link-current-class="page-link"
+          cs-pager-link-other-class="page-link">
+</cs-pager>
+

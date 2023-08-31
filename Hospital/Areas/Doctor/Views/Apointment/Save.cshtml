@@ -1,0 +1,198 @@
+﻿@{
+    ViewData["Title"] = "Save";
+    Layout = "_Layout";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+
+@model hospitalVm.ApointmentVm
+
+<h1>add apiontment </h1>
+
+<form  id="saveform">
+    <input type="hidden" asp-for="id" />
+    <input type="hidden" asp-for="doctorid" />
+
+
+
+
+
+
+    <div class="form-group">
+        <label asp-for="discreaption">discreaption:</label>
+        <input asp-for="discreaption" class="form-control" />
+    </div>
+
+    
+
+   @* <div class="form-group">
+        <label asp-for="PatientName">PatientName:</label>
+        <input asp-for="PatientName" class="form-control" />
+    </div>
+*@
+ @*   <div class="form-group">
+        <label asp-for="doctosspilist">doctosspilist:</label>
+        <input asp-for="doctosspilist" class="form-control" />
+    </div>*@
+    @*<div class="form-group">
+        <label asp-for="isavilable">available:</label>
+
+        <p @Model.isavilable ? 'available' : 'not available' " readonly >available</p>
+
+    </div>*@
+@*
+    <div class="form-group">
+        <label asp-for="isavilable">available:</label>
+
+        @if (Model != null)
+        {
+            <p>@(Model.isavilable ? "available" : "not available")</p>
+        }
+        else
+        {
+            <p>Model data is not available.</p>
+        }
+    </div>*@
+
+
+    <div class="form-group">
+        <label asp-for="CreateDate">Appointment Time</label>
+        <select asp-for="CreateDate" class="form-control">
+            <option value="">Select a time slot</option>
+            @foreach (var slot in ViewBag.AvailableSlots)
+            {
+                <option value="@slot.Value">@slot.Text</option>
+            }
+        </select>
+
+    </div>
+
+
+
+
+
+    <div id="calendar"></div>
+
+
+    <button type="submit" id="saveButton" class="btn btn-primary">Save</button>
+
+
+
+</form>
+@*<!-- Include FullCalendar CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css" rel="stylesheet" />
+
+<!-- Include jQuery (required by FullCalendar) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include FullCalendar JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.js"></script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize FullCalendar
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek', // Set the initial view to a weekly time grid
+            height: 'auto', // Set the height of the calendar
+            slotDuration: '00:30:00', // Set the duration of each time slot
+
+            events: [
+                // Populate events from the availableSlots
+    @foreach (var slot in ViewBag.ViewBag.AvailableSlots)
+    {
+        <text>{
+                        title: 'Available',
+                        start: '@slot.Value'
+                    }, </text>
+    }
+                ]
+        });
+
+        // Render the calendar
+        calendar.render();
+    });
+</script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+<!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+<!-- Include SweetAlert JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+
+<!-- Inside your view -->
+<!-- Inside your view -->
+<<script>
+     document.addEventListener('DOMContentLoaded', function () {
+         const saveButton = document.getElementById('saveButton');
+
+         saveButton.addEventListener('click', function (event) {
+             event.preventDefault();
+
+             Swal.fire({
+                 title: 'Confirm Save',
+                 text: 'Are you sure you want to save this item?',
+                 icon: 'warning',
+                 confirmButtonText: 'Yes',
+                 cancelButtonText: 'No',
+                 showCancelButton: true,
+                 showCloseButton: true,
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 buttonsStyling: false
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     const doctorArea = "your_doctor_area"; // Replace with actual doctor area
+                     const appointmentData = {
+                         doctorarea: doctorArea,
+                         appointment: {
+                             // Fill in your appointment data properties
+                             // Example: discreaption: document.getElementById('discreaption').value
+                         }
+                     };
+
+                     fetch('/Doctor/Appointment/Save', {
+                         method: 'POST',
+                         headers: {
+                             'Content-Type': 'application/json'
+                         },
+                         body: JSON.stringify(appointmentData)
+                     }).then(response => response.json())
+                         .then(data => {
+                             if (data.success) {
+                                 Swal.fire('Success', data.message, 'success');
+                                 // Perform any other desired actions upon success
+                             } else {
+                                 Swal.fire('Error', data.message, 'error');
+                                 // Perform any other desired actions upon error
+                             }
+                         });
+                 }
+             });
+         });
+     });
+</script>
+
+*@

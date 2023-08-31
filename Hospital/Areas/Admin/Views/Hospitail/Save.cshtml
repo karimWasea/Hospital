@@ -1,0 +1,78 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Cloudscribe.Web.Pagination
+@{
+    ViewData["Title"] = "Save";
+    Layout = "_Layout";
+}
+
+@model hospitalVm.HospitalVm
+
+<h1>Edit Hospital</h1>
+
+<form asp-action="Save" method="post" id="saveform">
+    <input type="hidden" asp-for="id" />
+
+    <div class="form-group">
+        <label asp-for="Name">Name:</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="City">City:</label>
+        <input asp-for="City" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Country">Country:</label>
+        <input asp-for="Country" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Type">Type:</label>
+        <input asp-for="Type" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Pincode">Pincode:</label>
+        <input asp-for="Pincode" class="form-control" />
+    </div>
+
+    <button type="submit"  onclick="SaveStudent()" class="btn btn-primary">Save</button>
+</form>
+
+@*
+<script>
+        var studentForm = document.getElementById("saveform");
+
+        if (studentForm.checkValidity()) {
+            var formData = new FormData(saveform);
+
+        fetch("/Admin/Hospitail/Save", {
+                method: "POST",
+                body: formData
+               //  body: JSON.stringify(studentForm)
+                Headers{
+
+                'content-type': 'application/json'
+                }
+
+                 
+
+
+
+
+
+            })
+                .then(response => response.text())
+                .then(response => {
+                    alert(response);
+                })
+                .catch(error => {
+                    alert("Error: " + error);
+                });
+        } else {
+            // If the form is invalid, display error messages (if any)
+            studentForm.reportValidity();
+        }
+    }
+</script>*@

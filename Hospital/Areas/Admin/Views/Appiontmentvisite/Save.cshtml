@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Save";
+}
+
+<h1>Save</h1>
+
+
+
+@{
+    ViewData["Title"] = "Edit Shift";
+    Layout = "_Layout";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
+<input type="hidden" asp-for="id" />
+
+@model hospitalVm.ApointmentVm
+
+<h1>efirapiontmentvisit</h1>
+    
+<partial name="_AlertMessage" />
+
+<form asp-action="Save" method="post" id="saveform" enctype="multipart/form-data">
+    
+    <!-- Group related fields using div containers -->
+     <input asp-for=" doctorid" type="hidden" />
+     <input asp-for=" DoctorAppointmentVIsitid" type="hidden" />
+     <input asp-for=" doctorid" type="hidden" />
+     <input asp-for=" patientid" type="hidden" />
+     <input asp-for=" id" type="hidden" />
+
+    <div class="form-group">
+        <label asp-for="VisiteNotebydoctor">Doctor's Note:</label>
+        <textarea asp-for="VisiteNotebydoctor" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="discreaption">visdiscro:</label>
+        <textarea asp-for="discreaption" class="form-control"></textarea>
+    </div>
+  
+   
+    <div class="form-group">
+        <label asp-for="VisitType">Visitetype</label>
+        <select asp-for="VisitType" class="form-control" asp-items="@ViewBag.Visitetype ">
+            <option value="">Select VisitType</option>
+            @foreach (var item in ViewBag.Visitetype)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+
+
+   
+    <div class="form-group">
+        <label asp-for="VisitStatus"> viststuts</label>
+        <select asp-for="VisitStatus" class="form-control" asp-items="@ViewBag.viststuts">
+            <option value="">Select VisitStatus</option>
+            @foreach (var item in ViewBag.viststuts)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+     <div class="form-group">
+        <label asp-for="doctorid"> doctorname</label>
+        <select asp-for="doctorid" class="form-control" asp-items="@ViewBag.doctordam">
+            <option value="">Select doctor</option>
+            @foreach (var item in ViewBag.doctordam)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+     <div class="form-group">
+        <label asp-for="patientid"> patient</label>
+        <select asp-for="patientid" class="form-control" asp-items="@ViewBag.allpatient">
+            <option value="">Select doctor</option>
+            @foreach (var item in ViewBag.allpatient)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="CreateDate">Appointment Time</label>
+        <select asp-for="CreateDate" class="form-control">
+            <option value="">Select a time slot</option>
+            @foreach (var slot in ViewBag.AvailableSlots)
+            {
+                <option value="@slot.Value">@slot.Text</option>
+            }
+        </select>
+
+    </div>
+
+
+
+    <button type="submit" id="savedata" class="btn btn-primary">Update</button>
+</form>
+
+<a asp-controller="Appiontmentvisite" asp-action="Index"  data-action="edit">
+    back tolist 
+</a>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var saveForm = document.getElementById("saveform");
+            var saveButton = document.getElementById("savedata");
+
+            saveForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You are about to update the patient's information.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, update it!",
+                    cancelButtonText: "No, cancel",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // You can also add additional form validation here
+                        saveForm.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}
