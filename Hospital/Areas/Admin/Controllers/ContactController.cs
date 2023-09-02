@@ -62,6 +62,7 @@ namespace Hospital.Areas.Admin.Controllers
         {
             
                 _unitOfWork.Contact.Save(HospitalVm);
+
             TempData["Message"] = $" successfully!";
             TempData["MessageType"] = "Save";
 
