@@ -236,7 +236,6 @@ namespace Hospital.Areas.Identity.Pages.Account
 
 
 
-
                   
                             await _userManager.AddToRoleAsync(user, WebSiteRoles.WebSite_User);
                             await _userManager.GetUserIdAsync(user);

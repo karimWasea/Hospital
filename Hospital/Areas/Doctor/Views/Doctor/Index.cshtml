@@ -151,15 +151,17 @@
                     <th>Phone Number</th>
                     <th>Specialist</th>
                     <th>Gender</th>
-                    <th>Nationality</th>
+                    <th>Title</th>
+
+                    @* <th>Nationality</th>
                     <th>Street Address</th>
                     <th>Date of Birth</th>
                     <th>Hiring Date</th>
                     <th>Email</th>
                     <th>Status in System</th>
-                    <th>Title</th>
+
                     <th>Image</th>
-                    <th>Contract</th>
+                    <th>Contract</th> *@
                     <th>Action</th>
                 </tr>
             </thead>
@@ -171,13 +173,16 @@
                         <td>@doctor.Phonenumber</td>
                         <td>@doctor.spicialist</td>
                         <td>@doctor.Gender</td>
-                        <td>@doctor.Nationality</td>
+                        <td>@doctor.Title</td>
+
+                        @*  <td>@doctor.Nationality</td>
                         <td>@doctor.StreetAddress</td>
                         <td>@doctor.Dateofbarth</td>
                         <td>@doctor.HiringDate</td>
                         <td>@doctor.Email</td>
                         <td>@doctor.StatusDoctorInSystem</td>
-                        <td>@doctor.Title</td>
+                        <td>@doctor.Title</td> 
+                        *@
                         <td>
                             <img class="rounded-circle img-fluid" src="@doctor.Contracturl" alt="@doctor.username" width="50">
                         </td>
@@ -189,6 +194,8 @@
                             <a asp-controller="Daywork" asp-action="Save" asp-route-id="@doctor.id" class="btn btn-sm btn-info"> addshift</a>
 
                             <a asp-controller="Doctor" asp-action="Details" asp-route-id="@doctor.id" class="btn btn-sm btn-info">
+                                <i class="fas fa-info-circle"></i> Details & Edit
+                            </a>  <a asp-controller="Doctor" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">
                                 <i class="fas fa-info-circle"></i> Details & Edit
                             </a>
                         </td>

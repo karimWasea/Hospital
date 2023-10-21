@@ -26,12 +26,13 @@ namespace hospitalservess
     {
         Imgoeration _lookupServess;
         private readonly UserManager<ApplicationUser> _user;
-
+        Idoctodayworinweek idoctodayworinweek;
 
 
         private ApplicationDBcontext _db;
-        public Doctorserves(ApplicationDBcontext db, UserManager<ApplicationUser> user , Imgoeration lookupServess )
+        public Doctorserves(ApplicationDBcontext db, UserManager<ApplicationUser> user , Imgoeration lookupServess , DoctorDayworkserves doctorDayworkserves )
         {
+            idoctodayworinweek = doctorDayworkserves;
             _lookupServess = lookupServess;
             _user = user;
             _db = db;
@@ -116,7 +117,11 @@ namespace hospitalservess
         {
             try
             {
+               var listworkdays=  _db.doctorDayworks.Where(i => i.DoctorId == id).Select(i => i).ToList();
+                _db.doctorDayworks.RemoveRange(listworkdays);
+                _db.SaveChanges();
                 var user = await _user.FindByIdAsync(id);
+                
                 if (user != null)
                 {
                     var roles = await _user.GetRolesAsync(user);

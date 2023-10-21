@@ -64,29 +64,29 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 
     //    // Set the path for the logout page.
-    //    options.LogoutPath = "/Identity/Account/Logout";
+    options.LogoutPath = "/Identity/Account/Logout";
 
     //    // Set the cookie expiration time (in this example, it's set to 7 days).
-    //    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    options.ExpireTimeSpan = TimeSpan.FromDays(7);
 
     //    Set whether the cookie is essential for authentication.If set to true,
     //    authentication will fail if the cookie is not present.
-    //   options.Cookie.IsEssential = true;
+    options.Cookie.IsEssential = true;
 
     //    Set the cookie name.
-    //    options.Cookie.Name = "authratization";
+    options.Cookie.Name = "authratization";
 
     //    Set the domain for the cookie. If not set, the cookie will be valid for the current domain only.
     //   options.Cookie.Domain = ".library";
 
     //    Set whether the cookie should only be transmitted over HTTPS.
-    //    options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
+    options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
 
     //    Set the cookie path.
-    //    options.Cookie.Path = "/";
+    options.Cookie.Path = "/";
 
     //    Set whether the cookie should be accessible by JavaScript in the browser.
-    //    options.Cookie.HttpOnly = true;
+    options.Cookie.HttpOnly = true;
 });
 
 var app = builder.Build();
@@ -103,6 +103,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 Dataeding();
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 app.MapRazorPages();
