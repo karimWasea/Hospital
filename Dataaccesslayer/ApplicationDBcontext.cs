@@ -27,11 +27,10 @@ namespace Dataaccesslayer
         public DbSet<WeekDays> weekDays { get; set; }
         public DbSet<DoctorDaywork> doctorDayworks { get; set; }
         public DbSet<DoctorTimingShift> DoctorTimingShift { get; set; }
-        // public DbSet<ApplicationUser> ApplicationUser { get; set; }
+
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Apointment> Apointment { get; set; }
-        //   public DbSet<Doctor> Doctors { get; set; }
-        //public DbSet<Patient>  Patients { get; set; }
+       
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Lab> Labs { get; set; }
         public DbSet<Department> Departments { get; set; }

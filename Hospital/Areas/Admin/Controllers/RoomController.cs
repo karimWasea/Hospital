@@ -46,7 +46,7 @@ namespace Hospital.Areas.Admin.Controllers
             else
       
 
-            return View();
+            return      View();
 
 
         }
@@ -64,33 +64,6 @@ namespace Hospital.Areas.Admin.Controllers
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         public IActionResult Delete(int id)

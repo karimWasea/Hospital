@@ -22,7 +22,7 @@ namespace Hospital.Areas.Admin.Controllers
            _unitOfWork = unitOfWork;
         }
 
-      //  GET: HomeController
+
         public ActionResult Index(int pagnumber = 1, int pagesize = 10)
         {
             return View(_unitOfWork.Contact.Getallpag(pagnumber, pagesize));
