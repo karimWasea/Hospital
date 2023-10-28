@@ -7,114 +7,129 @@
 
 @model hospitalVm.ApointmentVm
 
-<h1>add apiontment </h1>
-
-<form asp-action="Save" method="post" id="saveform">
-    <input type="hidden" asp-for="id" />
-    <input type="hidden" asp-for="doctorid" />
+<style>
 
 
-    <div class="form-group">
-        <label asp-for="DoctorName">DoctorName:</label>
-        <p class="form-control-static">@Model.DoctorName</p>
-    </div>
-
-
-
-
-    <div class="form-group">
-        <label asp-for="discreaption">discreaption:</label>
-        <input asp-for="discreaption" class="form-control" />
-    </div>
-
-
-
-    @* <div class="form-group">
-    <label asp-for="PatientName">PatientName:</label>
-    <input asp-for="PatientName" class="form-control" />
-    </div>
-    *@
-    @*   <div class="form-group">
-    <label asp-for="doctosspilist">doctosspilist:</label>
-    <input asp-for="doctosspilist" class="form-control" />
-    </div>*@
-    @*<div class="form-group">
-    <label asp-for="isavilable">available:</label>
-
-    <p @Model.isavilable ? 'available' : 'not available' " readonly >available</p>
-
-    </div>*@
-    @*
-    <div class="form-group">
-    <label asp-for="isavilable">available:</label>
-
-    @if (Model != null)
-    {
-    <p>@(Model.isavilable ? "available" : "not available")</p>
+    /* Custom CSS styles */
+    .container {
+        text-align: center;
     }
-    else
-    {
-    <p>Model data is not available.</p>
+
+    h1 {
+        margin-bottom: 20px;
     }
-    </div>*@
 
+    .btn-secondary {
+        margin-top: 10px;
+    }
 
-    <div class="form-group">
-        <label asp-for="CreateDate">Appointment Time</label>
-        <select asp-for="CreateDate" class="form-control">
-            <option value="">Select a time slot</option>
-            @foreach (var slot in ViewBag.availableSlots)
-            {
-                <option value="@slot.Value">@slot.Text</option>
-            }
-        </select>
+    body {
+        background-image: url('/Images/hospital11.jpg');
 
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="VisitType">about your Visit</label>
-        <select asp-for="VisitType" class="form-control">
-            <option value="">Select a time slot</option>
-            @foreach (var slot in ViewBag.Visitetype)
-            {
-                <option value="@slot.Value">@slot.Text</option>
-            }
-        </select>
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    /* Glass-like style for form elements */
+    .glass-container {
+        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        color: black;
+    }
 
-    </div>
+    .glass-input {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
 
+    .glass-select {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
 
+    /* Style for the button group */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
 
+        .button-group .btn {
+            margin: 0;
+        }
 
-@*
+    /* Style for form-row divisions */
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
 
-    @foreach (var doctorSlots in ViewBag.AvailableSlotsByDoctor)
-    {
-        <h3>Doctor ID: @doctorSlots.Key</h3>
-        <ul>
-            @foreach (var slot in doctorSlots.Value)
-            {
-                <li>@slot.Text</li>
-            }
-        </ul>
+</style>
+<div class="container mt-5 glass-container col-md-7">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h1>New Appointment</h1>
 
-        <div class="form-group">
-            <label>Select Slot for Doctor @doctorSlots.Key:</label>
-            <select name="SelectedSlot" class="form-control">
-                <option value="">Select a slot</option>
-                @foreach (var slot in doctorSlots.Value)
-                {
-                    <option value="@slot.Value">@slot.Text</option>
-                }
-            </select>
+            <form asp-action="Save" method="post" id="saveform">
+                <input type="hidden" asp-for="id" />
+                <input type="hidden" asp-for="doctorid" />
+                <div class="form-row">
+                    <div class="form-group glass-input col-6">
+                        <label asp-for="DoctorName">Doctor Name:</label>
+                        <p class="form-control-static">@Model.DoctorName</p>
+                    </div>
+
+                    <div class="form-group glass-input col-5">
+                        <label asp-for="discreaption">Description:</label>
+                        <input asp-for="discreaption" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group glass-select col-6">
+                        <label asp-for="CreateDate">Appointment Time</label>
+                        <select asp-for="CreateDate" class="form-control">
+                            <option value="">Select a time slot</option>
+                            @foreach (var slot in ViewBag.availableSlots)
+                            {
+                                <option value="@slot.Value">@slot.Text</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group glass-select col-md-5">
+                        <label asp-for="VisitType">About your Visit</label>
+                        <select asp-for="VisitType" class="form-control">
+                            <option value="">Select a visit type</option>
+                            @foreach (var slot in ViewBag.Visitetype)
+                            {
+                                <option value="@slot.Value">@slot.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" id="savedata" class="btn btn-primary">
+                        Add New
+                    </button>
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary mt-2">
+                        <i class="fas fa-chevron-circle-left"></i> Back to Index
+                    </a>
+                </div>
+            </form>
         </div>
-    }
-*@
-
-
-
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
+    </div>
+</div>
 
 
 

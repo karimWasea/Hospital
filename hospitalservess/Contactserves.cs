@@ -90,6 +90,7 @@ namespace hospitalservess
                  hospitalid = p.hospitalid,
                  Email= p.Email ,
                  phone = p.phone ,
+                 Id = p.id ,
 
 
 
@@ -106,6 +107,8 @@ namespace hospitalservess
 
                 hospitalid = p.hospitalid,
                 Email = p.Email,
+                Id = p.id,
+
                 phone = p.phone,
 
             }).FirstOrDefault();

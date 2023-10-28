@@ -60,8 +60,9 @@ namespace Hospital.Areas.Admin.Controllers
         // [ValidateAntiForgeryToken]
         public IActionResult Save(ContactVm HospitalVm)
         {
-            
-                _unitOfWork.Contact.Save(HospitalVm);
+            ViewBag.HospitalsId = _unitOfWork.Ilookup.HospitalsId();
+
+            _unitOfWork.Contact.Save(HospitalVm);
 
             TempData["Message"] = $" successfully!";
             TempData["MessageType"] = "Save";

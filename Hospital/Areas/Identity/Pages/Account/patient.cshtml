@@ -1,103 +1,142 @@
 ﻿@page
 @model RegisterModelpatient
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Register Patient";
 }
-<style>
-    /* Add CSS styles for the background image */
-    body {
-        background-image: url('/Images/images (3).jpeg');
-        background-size:cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-
-    /* Add other CSS styles here if needed */
-</style>
 <h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+<style>
+    /* Custom CSS styles */
+    .container {
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    .btn-secondary {
+        margin-top: 10px;
+    }
+
+    /* Glass-like style for form elements */
+    .glass-container {
+        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-input {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-select {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Style for the button group
+                .button-group {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 20px;
+                }
+
+                    .button-group .btn {
+                        margin: 0;
+                    }
+
+                /* Style for form-row divisions */
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+</style>
+
+<partial name="_AlertMessage" model="Model" />
+<div class="container mt-5 glass-container">
+
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="glass-form" enctype="multipart/form-data">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <div class="form-group col-md-8">
+            <label asp-for="Input.Email">Email:</label>
+            <input asp-for="Input.Email" class="glass-input form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label asp-for=" Input. Usename">Username:</label>
+                <input asp-for="Input.Usename" class="glass-input form-control" />
+                <span asp-validation-for="Input.Usename" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+
+            <div class="form-group col-md-5">
+                <label asp-for="Input.Phonnumber">Phone Number:</label>
+                <input asp-for="Input.Phonnumber" class="glass-input form-control" />
+                <span asp-validation-for="Input.Phonnumber" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label asp-for="Input.StreetAddress">Address:</label>
+                <input asp-for="Input. StreetAddress" class="glass-input form-control" />
+                <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label asp-for="Input.dateofbarth">Hiring Date:</label>
+                <input asp-for="Input.dateofbarth" class="glass-input form-control" />
+                <span asp-validation-for="Input.dateofbarth" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label asp-for="Input.imphgurl">Update Image:</label>
+                <input asp-for="Input.imphgurl" class="glass-input form-control" />
+                <span asp-validation-for="Input.imphgurl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label asp-for="Input.City">Contract URL:</label>
+                <input asp-for="Input.City" class="glass-input form-control" />
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group col-md-5">
+                <input asp-for="Input.ConfirmPassword" class="    .glass-input form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-5">
+                <input asp-for="Input.Password" class="form-control     .glass-input" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.Password">Password</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
 
-            </div>
-
-
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Usename" class="form-control" autocomplete="Usename" aria-required="true" placeholder="Usename" />
-                <label asp-for="Input.Usename">Name</label>
-                <span asp-validation-for="Input.Usename" class="text-danger"></span>
-
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Phonnumber" class="form-control" autocomplete="Usename" aria-required="true" placeholder="Phonnumber" />
-                <label asp-for="Input.Phonnumber"> Phonnumber</label>
-                <span asp-validation-for="Input.Phonnumber" class="text-danger"></span>
-
-            </div>
-
-
-
-
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.City" class="form-control" autocomplete="City" aria-required="true" placeholder="City" />
-                <label asp-for="Input.City"> City</label>
-                <span asp-validation-for="Input.City" class="text-danger"></span>
-
-            </div>
-        
-
-
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Nationality" class="form-control" autocomplete="City" aria-required="true" placeholder="Nationality" />
-                <label asp-for="Input.Nationality"> Nationality</label>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label asp-for="Input. Nationality">Birth Date:</label>
+                <input asp-for="Input.Nationality" class="glass-input form-control" />
                 <span asp-validation-for="Input.Nationality" class="text-danger"></span>
-
-            </div>
-
-
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.StreetAddress" class="form-control" autocomplete="StreetAddress" aria-required="true" placeholder="StreetAddress" />
-                <label asp-for="Input.StreetAddress"> StreetAddress</label>
-                <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
-
-            </div>
-            <label asp-for="Input.imphgurl"> img</label>
-
-            <div class="form-floating mb-3">
-
-                <input asp-for="Input.imphgurl" class="form-control" autocomplete="imphgurl" aria-required="true"  />
-                <span asp-validation-for="Input.imphgurl" class="text-danger"></span>
-
-            </div>
-              
-            <div class="form-floating mb-3">
-                <input asp-for="Input.dateofbarth" class="form-control" autocomplete="dateofbarth" aria-required="true" placeholder="dateofbarth" />
-                <label asp-for="Input.dateofbarth"> dateofbarth</label>
-                <span asp-validation-for="Input.dateofbarth" class="text-danger"></span>
-
             </div>
 
 
@@ -105,75 +144,55 @@
 
 
 
-
-
-            <label asp-for="Input.Gender"></label>
-
-            <div class="form-floating mb-3">
-
-                <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"
-                        aria-required="true" class="form-control">
-                    <option value="" disabled>Choose gender</option>
-                </select>
-                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            <div class="form-group col-md-5">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Input.Gender" class="control-label">Gender</label>
+                        <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"
+                                aria-required="true" class="    .glass-input form-control">
+                            <option value="" disabled>Choose gender</option>
+                        </select>
+                        <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-
-
-
-@*
-            <label asp-for="Input.RoleRegeseter"></label> :
-            <div class="form-floating mb-3">
-
-                <select asp-for="  Input.RoleRegeseter"  asp-items="@Html.GetEnumSelectList<RoleRegeseter>()" aria-required="true" class="form-control">
-
-
-                    <option value="-1"  disabled>
-                        select RoleRegeseter
-                    </option>
-                </select>
-                <span asp-validation-for="Input.RoleRegeseter" class="text-danger"></span>
-
+        </div>
+        @*   <div class="col-md-6">
+        <div class="form-group">
+        <label asp-for="Input.Gender" class="control-label">Department</label>
+        <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()">
+        <option value="">-- Select Department --</option>
+        </select>
+        <span asp-validation-for="Input.Gender" class="text-danger"></span>
+        </div>
+        </div> *@
+        <div class="row mt-3">
+            <div class="form-group col-md-6">
+                <button type="submit" id="savedata" class="btn btn-primary">Update</button>
             </div>
-*@
-
-   
-
-
-
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    //<div>
-                    //    <p>
-                    //        There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                    //        about setting up this ASP.NET application to support logging in via external services</a>.
-                    //    </p>
-                    //</div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
+            <div class="form-group col-md-6 text-right">
+                <a asp-controller="Admim" asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-chevron-circle-left"></i> Back to Index
+                </a>
+            </div>
+        </div>
+    </form>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

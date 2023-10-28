@@ -1,22 +1,11 @@
 ﻿@page
-@model RegisterModel
+@model RegisterModel 
 @{
     ViewData["Title"] = "Register";
 }
-<style>
-    /* Add CSS styles for the background image */
-    body {
-        background-image: url('/Images/images (3).jpeg');
-        background-size:cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
 
-    /* Add other CSS styles here if needed */
-</style>
-<h1>@ViewData["Title"]</h1>
 
-<div class="row">
+@* <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
             <h2>Create a new account.</h2>
@@ -99,14 +88,14 @@
                 <span asp-validation-for="Input.dateofbarth" class="text-danger"></span>
 
             </div>
+ *@
 
 
 
 
 
 
-
-
+@* 
             <label asp-for="Input.Gender"></label>
 
             <div class="form-floating mb-3">
@@ -148,12 +137,12 @@
                 </select>
                 <span asp-validation-for="Input.RoleRegeseter" class="text-danger"></span>
 
-            </div>
+            </div> *@
 
 
    
 
-
+@* 
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
@@ -189,6 +178,249 @@
         </section>
     </div>
 </div>
+ *@
+
+
+@{
+    ViewData["Title"] = "Register Doctor";
+}
+<h1>@ViewData["Title"]</h1>
+
+<style>
+    body {
+        background-image: url('/Images/hospital17.jpg');
+
+
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    /* Custom CSS styles */
+    .container {
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    .btn-secondary {
+        margin-top: 10px;
+    }
+
+    /* Glass-like style for form elements */
+    .glass-container {
+        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-input {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-select {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Style for the button group
+                .button-group {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 20px;
+                }
+
+                    .button-group .btn {
+                        margin: 0;
+                    }
+
+                /* Style for form-row divisions */
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+</style>
+
+<partial name="_AlertMessage" model="Model" />
+<div class="container mt-5 glass-container" style="width:80%; height:80%;">
+
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="glass-form" enctype="multipart/form-data">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <div class="form-row">
+
+        <div class="form-group col-md-4">
+
+                <input asp-for="Input.Email" class="glass-input form-control" placeholder=" inter Email" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+            <div class="form-group col-md-4">
+
+                <input asp-for="Input.Nationality" class="glass-input form-control" placeholder=" inter Narionality" />
+                <span asp-validation-for="Input.Nationality" class="text-danger"></span>
+            </div>
+       
+
+
+        </div>
+
+
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+
+                <input asp-for="Input.Usename" class="glass-input form-control" placeholder=" inter Usename" />
+                <span asp-validation-for="Input.Usename" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4">
+
+                <input asp-for="Input.Phonnumber" class="glass-input form-control" placeholder="Inter Phonnumber" />
+                <span asp-validation-for="Input.Phonnumber" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+
+                <input asp-for="Input. StreetAddress" class="glass-input form-control" placeholder=" inter Adress street" />
+                <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4">
+
+                <input asp-for="Input.dateofbarth" class="glass-input form-control" placeholder=" inter date of Barth" />
+                <span asp-validation-for="Input.dateofbarth" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+
+                <input asp-for="Input.imphgurl" class="glass-input form-control" placeholder=" inter imge" />
+                <span asp-validation-for="Input.imphgurl" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <input asp-for="Input.ConfirmPassword" class="glass-input form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+        
+
+        </div>
+
+        <div class="form-row">
+
+          
+            <div class="form-group col-md-4">
+                <input asp-for="Input.Password" class="glass-input form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    
+                    <select asp-for="  Input.RoleRegeseter" asp-items="@Html.GetEnumSelectList<RoleRegeseter>()" aria-required="true" class="glass-input form-control" placeholder="RoleRegeseter">
+                        <option value="">-- Select RoleRegeseter --</option>
+                    </select>
+                    <span asp-validation-for="Input.RoleRegeseter" class="text-danger"></span>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+        <div class="form-row">
+
+
+
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <select asp-for="  Input.spicialist" asp-items="@Html.GetEnumSelectList<spicialist>()" aria-required="true" class=" glass-input form-control" placeholder="spicialist">
+
+
+                    <option value="">
+                        select spicialist
+                    </option>
+                </select>
+                <span asp-validation-for="Input.spicialist" class="text-danger"></span>
+
+            </div>
+            </div>
+
+
+
+
+            <div class="col-md-4">
+
+                    <div class="form-group">
+
+                        <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"
+                            aria-required="true" class="glass-input form-control" placeholder="Gender">
+                            <option
+                         
+                                value="" >Choose gender</option>
+                        </select>
+                        <span asp-validation-for="Input.Gender" class="text-danger"></span>
+
+                </div>
+                </div>
+        </div>
+
+
+
+
+
+        <div class="row mt-8">
+            <div class="form-group col-md-6">
+                <button type="submit" id="savedata" class="btn btn-primary">Update</button>
+            </div>
+            <div class="form-group col-md-6 text-right">
+                <a asp-controller="Admim" asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-chevron-circle-left"></i> Back to Index
+                </a>
+            </div>
+        </div>
+
+
+
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

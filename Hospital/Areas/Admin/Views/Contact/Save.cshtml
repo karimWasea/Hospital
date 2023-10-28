@@ -7,14 +7,20 @@
 
 @model hospitalVm.ContactVm
 
-<h1>Edit Room</h1>
+@* <h1>Edit Contat </h1>
 <partial name="_AlertMessage" />
 
 <form id="saveform">
     <input type="hidden" asp-for="Id" />
 
     <div class="form-group">
-        <label asp-for="Email">RoomName:</label>
+        <label asp-for="Email">Contat Name:</label>
+        <input asp-for="Email" class="form-control" required />
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="phone">Contat Name:</label>
         <input asp-for="phone" class="form-control" required />
     </div>
 
@@ -29,6 +35,181 @@
 
     <button type="button" onclick="saveStudent()" id="savedata" class="btn btn-primary">Save</button>
 </form>
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+
+
+    /* Custom CSS styles */
+    .container {
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    .btn-secondary {
+        margin-top: 10px;
+    }
+
+    body {
+        background-image: url('/Images/hospital11.jpg');
+
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    /* Glass-like style for form elements */
+    .glass-container {
+        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        color: black;
+    }
+
+    .glass-input {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-select {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Style for the button group */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+        .button-group .btn {
+            margin: 0;
+        }
+
+    /* Style for form-row divisions */
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+
+</style>
+<div class="container mt-5 glass-container col-md-7">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h1>Mange Contact </h1>
+
+            <form asp-action="Save" method="post" id="saveform">
+              
+                <div class="form-row">
+                    <div class="form-group glass-input col-6">
+                        <label asp-for="Email">Contat Name:</label>
+                        <input asp-for="Email" class="form-control" required />
+                    </div>
+
+                    <div class="form-group glass-input col-5">
+                        <label asp-for="phone">Description:</label>
+                        <input asp-for="phone" class="form-control" />
+                    </div>
+                </div>
+
+                
+                <div class="form-group glass-select col-8">
+
+                    <label asp-for="hospitalid">Hospital</label>
+                    <select asp-for="hospitalid" class="form-control  glass-select " asp-items="@ViewBag.HospitalsId">
+                        <option value="">Select Hospital</option>
+                        @foreach (var item in ViewBag.HospitalsId)
+                        {
+                            <option value="@item.Value" selected>@item.Text</option>
+                        }
+                    </select>
+
+                
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" id="savedata" class="btn btn-info">
+                        Add New Contact
+                    </button>
+                    <a asp-area="Admin" asp-controller="Contact" asp-action="Index" class="btn btn-secondary mt-2">
+                        <i class="fas fa-chevron-circle-left"></i> Back to Index
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
     function saveStudent() {
@@ -46,7 +227,7 @@
                 if (result.isConfirmed) {
                     var formData = new FormData(studentForm);
 
-                    fetch("/Admin/Room/Save", {
+                    fetch("/Admin/Contact/Save", {
                         method: "POST",
                         body: formData
                     })
@@ -54,7 +235,7 @@
                         .then(response => {
                             Swal.fire({
                                 title: "Success!",
-                                text: response,
+                                text: Success,
                                 icon: "success"
                             });
                         })

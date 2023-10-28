@@ -1,63 +1,6 @@
-﻿@*@using hospitalUtilities 
-
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using hospitalUtilities
 @model PagedREsult<hospitalVm.ContactVm>
-@addTagHelper *,Cloudscribe.Web.Pagination
-
-@{
-    ViewData["Title"] = "Index";
-    Layout = "_Layout";
-}
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-<a asp-controller="Contact" asp-action="Save">
-    <i class="fas fa-plus-circle"></i> Add New  Contact 
-</a>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>phone</th>
-            <th>Email</th>
-            <th>HospitalName</th>
-            
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var hospital in Model.Data)
-        {
-            <tr>
-                <td>@hospital.Id</td>
-                <td>@hospital.phone</td>
-                <td>@hospital.Email</td>
-                <td>@hospital.Hospitalname</td>
-               
-                <td>
-                    <a asp-controller="Contact" asp-action="Details" asp-route-id="@hospital.Id">
-                        <i class="fas fa-info-circle" title="Details"></i>
-                    </a>
-                    <a asp-controller="Contact" asp-action="Save" asp-route-id="@hospital.Id">
-                        <i class="fas fa-edit" title="Edit"></i>
-                    </a>
-                    <a asp-controller="Contact" asp-action="Delete" asp-route-id="@hospital.Id">
-                        <i class="fas fa-trash-alt" title="Delete"></i>
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-   *@
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
-   @using hospitalUtilities 
-
-@model PagedREsult<hospitalVm.ContactVm>
-
 @{
     Layout = "_Layout";
     ViewData["Title"] = "All Contacts";
@@ -65,13 +8,14 @@
 <partial name="_AlertMessage" />
 
 <h2>@ViewData["Title"]</h2>
-<a asp-controller="Contact" asp-action="Save" id="Add">
+<a asp-controller="Contact" asp-action="Save" id="Add" class="btn btn-primary">
     <i class="fas fa-plus-circle"></i> Add New Contact
 </a>
-<table class="table">
+<table class="table table-hover bg-info">
+    <!-- Added "bg-info" class here -->
     <thead>
         <tr>
-            <th>ID</th>
+
             <th>Phone</th>
             <th>Email</th>
             <th>Hospital Name</th>
@@ -82,19 +26,19 @@
         @foreach (var contact in Model.Data)
         {
             <tr>
-                <td>@contact.Id</td>
+
                 <td>@contact.phone</td>
                 <td>@contact.Email</td>
-                <td>@contact.Id</td>
+                <td>@contact.Hospitalname</td>
                 <td>
-                    <a asp-controller="Contact" asp-action="Details" asp-route-id="@contact.Id">
-                        <i class="fas fa-info-circle" title="Details"></i>
+                    <a asp-controller="Contact" asp-action="Details" asp-route-id="@contact.Id" class="btn btn-info">
+                        <i class="fas fa-info-circle"></i> Details
                     </a>
-                    <a asp-controller="Contact" asp-action="Save" asp-route-id="@contact.Id">
-                        <i class="fas fa-edit" title="Edit"></i>
+                    <a asp-controller="Contact" asp-action="Save" asp-route-id="@contact.Id" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Edit
                     </a>
-                    <a asp-controller="Contact" asp-action="Delete" asp-route-id="@contact.Id">
-                        <i class="fas fa-trash-alt" title="Delete"></i>
+                    <a asp-controller="Contact" asp-action="Delete" asp-route-id="@contact.Id" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
                     </a>
                 </td>
             </tr>
