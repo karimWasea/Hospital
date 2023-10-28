@@ -9,10 +9,11 @@ using Dataaccesslayer;
 using hospitalUtilities;
 
 using hospitalVm;
+using PagedList;
 
 namespace hospitalIrepreatory
 {
-   public interface IDoctor// IGenericRepository<DoctorVm>
+   public interface IDoctor:IPaginationHelper<DoctorVm>
     {
         Task<bool> Delete(string id);
         // PagedREsult<DoctorVm> Getallpag(int pagnumber, int pagesize);
@@ -24,6 +25,11 @@ namespace hospitalIrepreatory
 
         Task Save(DoctorVm entity);
       Task<IEnumerable<DoctorVm>> GetAllDoctorRegester( );
+
+
+
+        Task<IEnumerable<DoctorVm>> Search(string searchTerm = null);
+
 
 
 

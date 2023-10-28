@@ -19,7 +19,7 @@ namespace hospitalservess
 
     public  class PaginationHelper <T>: IPaginationHelper<T> where T : class
     {
-        public  IPagedList<T> GetPagedData<T>(IQueryable<T> data, int pageNumber)
+        public  IPagedList<T> GetPagedData<T>(IEnumerable<T> data, int pageNumber)
         {
             int pageSize = 10; // Set the page size to 10
             int totalItemCount = data.Count();

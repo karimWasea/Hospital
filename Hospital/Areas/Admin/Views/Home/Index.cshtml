@@ -1,6 +1,7 @@
-﻿@using hospitalUtilities
+﻿@* @using hospitalUtilities
 
-@model List<hospitalVm.DoctorVm>
+ 
+@model PagedList.IPagedList<hospitalVm.DoctorVm>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *,Cloudscribe.Web.Pagination
 
@@ -22,6 +23,10 @@
 
 
 
+<!-- Add the search input form -->
+<form id="search-form" method="get" action="@Url.Action("Index")">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
+</form>
 <div class="container-fluid" style=" margin-bottom :10px ; margin-top:20px; ">
     <div class="row product-list">
         @foreach (var product in Model)
@@ -53,7 +58,135 @@
         }
     </div>
 </div>
+<partial name="_PaginationPartial" model="Model" />
+<script>
 
+
+
+
+    // Get the search input element
+    const searchInput = document.getElementById('search-input');
+
+    // Get the patient rows
+    const patientRows = document.querySelectorAll('.patient');
+
+    // Function to update the search results
+    function updateSearchResults() {
+        const searchText = searchInput.value.toLowerCase();
+
+        patientRows.forEach(patientRow => {
+            const patientText = patientRow.textContent.toLowerCase();
+            if (patientText.includes(searchText)) {
+                patientRow.style.display = 'table-row';
+            } else {
+                patientRow.style.display = 'none';
+            }
+        });
+    }
+
+    // Add an event listener to the search input to listen for input changes
+    searchInput.addEventListener('input', function () {
+        updateSearchResults();
+    });
+
+    // Initial call to populate search results
+    updateSearchResults();
+
+
+
+
+
+
+</script> *@
+@using hospitalUtilities
+
+@model PagedList.IPagedList<hospitalVm.DoctorVm>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<style>
+    /* Add CSS styles for the background image */
+    body {
+        background-image: url('/Images/WhatsApp Image 2023-08-07 at 01.40.08.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    /* Add other CSS styles here if needed */
+</style>
+
+<!-- Add the search input form -->
+<div class="input-group">
+    <label for="search-input" class="sr-only">Search</label>
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input" class="form-control" />
+    <div class="input-group-append">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
+        </button>
+    </div>
+</div>
+
+
+<div class="container-fluid" style="margin-bottom: 10px; margin-top: 20px;">
+    <div class="row product-list">
+        @foreach (var product in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4 doctor-card">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img class="card-img-top rounded-circle" src="@product.imphgurl" alt="@product.username">
+                    <div class="card-body">
+                        <h5 class="card-title">Doctor Name: @product.username</h5>
+                        <h5 class="card-title">Email: @product.Email</h5>
+                        <a class="btn btn-danger"
+                           id="EditButton"
+                           asp-area="Doctor"
+                           asp-controller="Apointment"
+                           asp-action="getapientment"
+                           asp-route-id="@product.id">New Appointment</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<partial name="_PaginationPartial" model="Model">
+
+<script>
+    // Get the search input element
+    const searchInput = document.getElementById('search-input');
+
+    // Get the doctor cards
+    const doctorCards = document.querySelectorAll('.doctor-card');
+
+    // Function to update the search results
+    function updateSearchResults() {
+        const searchText = searchInput.value.toLowerCase();
+
+        doctorCards.forEach(doctorCard => {
+            const doctorInfo = doctorCard.textContent.toLowerCase();
+            if (doctorInfo.includes(searchText)) {
+                doctorCard.style.display = 'block';
+            } else {
+                doctorCard.style.display = 'none';
+            }
+        });
+    }
+
+    // Add an event listener to the search input to listen for input changes
+    searchInput.addEventListener('input', function () {
+        updateSearchResults();
+    });
+
+    // Initial call to populate search results
+    updateSearchResults();
+</script>
 
 
 

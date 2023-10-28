@@ -12,7 +12,8 @@ namespace Hospital.Areas.Patient.Controllers
 
     [Area("Patient")]
     public class PatientController : Controller
-    { // GET: HomeController
+    {
+
         UnitOfWork _unitOfWork;
         lookupServess _lookupServess;
 

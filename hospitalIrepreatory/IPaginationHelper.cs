@@ -11,7 +11,7 @@ namespace hospitalIrepreatory
 
         public interface IPaginationHelper<T>
         {
-            IPagedList<T> GetPagedData<T>(IQueryable<T> data, int pageNumber);
+            IPagedList<T> GetPagedData<T>(IEnumerable<T> data, int pageNumber);
         }
     
 
