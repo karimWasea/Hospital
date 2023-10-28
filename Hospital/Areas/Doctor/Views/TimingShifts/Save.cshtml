@@ -3,121 +3,142 @@
     Layout = "_Layout";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *,Cloudscribe.Web.Pagination
+@addTagHelper *, Cloudscribe.Web.Pagination
 
 @model hospitalVm.timingshiftVm
 
-<h1>Edit  Shift</h1>
 
-<form asp-action="Save" method="post" id="saveform">
-    <input type="hidden" asp-for="id" />
+<style>
+     body{
+        background-image: url('/Images/hospital11.jpg');
+    }
+    /* Glass-like style for form elements */
+    .glass-container {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    /* Style for the button group */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
 
-
-
-  
-
-    <div class="form-group">
-        <label asp-for="startshift">Shift Start Date:</label>
-        <input asp-for="startshift" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Endsifit">Shift End Date:</label>
-        <input asp-for="Endsifit" class="form-control" />
-    </div>
-    <div class="form-group">
-        <input id="durationInput" class="form-control" readonly style="background-color: transparent; border: none; width: auto; display: inline-block;" />
-        <label asp-for="Duration" style="display: inline-block; margin-left: 10px;">Duration:</label>
-    </div>
-
-
-
-
-    <label asp-for="Stutus">Stuts</label>
-    <select asp-for="Stutus" class="form-control" asp-items="@ViewBag.avilabledoctoronsift">
-        <option value="">Select Stutus</option>
-        @foreach (var item in ViewBag.avilabledoctoronsift)
-        {
-            <option value="@item.Value" selected>@item.Text  </option>
+        .button-group .btn {
+            background-color: #0056b3;
+            margin: 0;
         }
-    </select>
 
+    .glass-input {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        width: 100%;
+    }
 
-    <label asp-for="applicatinUserdictorid">doctorname</label>
-    <select asp-for="applicatinUserdictorid" class="form-control" asp-items="@ViewBag.getdoctorfromapplicationuserid">
-        <option value="">Select doctorName</option>
-        @foreach (var item in ViewBag.getdoctorfromapplicationuserid)
-        {
-            <option value="@item.Value" selected>@item.Text  </option>
-        }
-    </select>
+    .glass-select {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        width: 100%;
+    }
 
+    .glass-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
 
+</style>
 
+<div class="container mt-5 glass-container col-md-7">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h1>Mange shifr </h1>
 
+    <form asp-action="Save" method="post" id="saveform">
+        <input type="hidden" asp-for="id" />
 
+        <div class="form-group">
+            <label asp-for="startshift">Shift Start Date:</label>
+            <input asp-for="startshift" class="glass-input" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Endsifit">Shift End Date:</label>
+            <input asp-for="Endsifit" class="glass-input" />
+        </div>
+        <div class="form-group">
+            <input id="durationInput" class="glass-input" readonly style="background-color: transparent; border: none; width: auto; display: inline-block;" />
+            <label asp-for="Duration" style="display: inline-block; margin-left: 10px;">Duration:</label>
+        </div>
 
+        <div class="form-group">
+            <label asp-for="Stutus">Status:</label>
+            <select asp-for="Stutus" class="glass-select" asp-items="@ViewBag.avilabledoctoronsift">
+                <option value="">Select Status</option>
+                @foreach (var item in ViewBag.avilabledoctoronsift)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+        </div>
 
+        <div class="form-group">
+            <label asp-for="applicatinUserdictorid">Doctor Name:</label>
+            <select asp-for="applicatinUserdictorid" class="glass-select" asp-items="@ViewBag.getdoctorfromapplicationuserid">
+                <option value="">Select Doctor Name</option>
+                @foreach (var item in ViewBag.getdoctorfromapplicationuserid)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+        </div>
 
-
-
-
-
-
-
-
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
-
-
-
-
-
-
-
-
-
-
-
+                <div class="button-group">
+                    <button type="submit" id="savedata" class="btn btn-info">
+                        Add New Contact
+                    </button>
+                    <a asp-area="Admin" asp-controller="TimingShifts" asp-action="Index" class="btn btn-secondary mt-2">
+                        <i class="fas fa-chevron-circle-left"></i> Back to Index
+                    </a>
+                </div>
+            </form>
+</div>
+</div>
+</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var saveForm = document.getElementById("saveform");
-        var saveButton = document.getElementById("savedata");
 
         saveForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "You are about to update the patient's information.",
+                text: "You are about to update the shift information.",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Yes, update it!",
                 cancelButtonText: "No, cancel",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // You can also add additional form validation here
                     saveForm.submit();
                 }
             });
         });
-
-        // After form submission, show a success message if desired
-        var urlParams = new URLSearchParams(window.location.search);
-        var successParam = urlParams.get("success");
-        if (successParam === "true") {
-            Swal.fire({
-                title: "Success!",
-                text: "Patient's information has been updated.",
-                icon: "success"
-            });
-        }
     });
-</script>
 
-
-
-<script>
     document.addEventListener('DOMContentLoaded', function () {
         var startShiftInput = document.querySelector('#startshift');
         var endsifitInput = document.querySelector('#Endsifit');
@@ -127,62 +148,11 @@
             var startShiftValue = new Date(startShiftInput.value);
             var endsifitValue = new Date(endsifitInput.value);
             var durationMilliseconds = endsifitValue - startShiftValue;
-            var durationHours = durationMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
-            durationInput.value = durationHours.toFixed(2); // Display with two decimal places
+            var durationHours = durationMilliseconds / (1000 * 60 * 60);
+            durationInput.value = durationHours.toFixed(2);
         }
 
         startShiftInput.addEventListener('change', updateDuration);
         endsifitInput.addEventListener('change', updateDuration);
     });
 </script>
-
-
-
-
-
-@*
-
-
-
-
-
-
-
-
-
-<script>
-    function SaveStudent() {
-        var studentForm = document.getElementById("saveform");
-
-        if (studentForm.checkValidity()) {
-            var formData = new FormData(saveform);
-
-            fetch("/Doctor/TimingShifts/Save", {
-                method: "POST",
-                body: formData
-                // body: JSON.stringify(studentForm)
-                //Headers{
-
-                //'content-type': 'application/json'
-                //}
-
-
-
-
-
-
-
-            })
-                .then(response => response.text())
-                .then(response => {
-                    alert(response);
-                })
-                .catch(error => {
-                    alert("Error: " + error);
-                });
-        } else {
-            // If the form is invalid, display error messages (if any)
-            studentForm.reportValidity();
-        }
-    }
-</script>*@

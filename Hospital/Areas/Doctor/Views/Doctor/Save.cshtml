@@ -1,192 +1,4 @@
-﻿@*@{
-    ViewData["Title"] = "Save";
-    Layout = "_Layout";
-}
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *,Cloudscribe.Web.Pagination
-
-@model hospitalVm.DoctorVm
-
-<h1>Edit  Shift</h1>
-<style>
-
-</style>
-
-<form asp-action="Save" method="post" id="saveform">
-    <input type="hidden" asp-for="id" />
-
-
-    <div class="form-group">
-        <label asp-for="username">username:</label>
-        <input asp-for="username" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="City">City:</label>
-        <input asp-for="City" class="form-control" />
-    </div>
-
-
-
-    <div class="form-group">
-        <label asp-for="Nationality">Nationality:</label>
-        <input asp-for="Nationality" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for=" StreetAddress">StreetAddress:</label>
-        <input asp-for="StreetAddress" class="form-control" />
-    </div>
-
-
-
-    <div class="form-group">
-        <label asp-for="PostalCode">PostalCode:</label>
-        <input asp-for="PostalCode" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Email">Email:</label>
-        <input asp-for="Email" class="form-control" />
-    </div>
-     <div class="form-group">
-        <label asp-for="Phonenumber">Phonenumber:</label>
-        <input asp-for="Phonenumber" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Dateofbarth">Dateofbarth:</label>
-        <input asp-for="Dateofbarth" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="HiringDate">HiringDate:</label>
-        <input asp-for="HiringDate" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Title">Title:</label>
-        <input asp-for="Title" class="form-control" />
-    </div>
-     <div class="form-group">
-        <label asp-for="WorkingDaysinWeek">WorkingDaysinWeek:</label>
-        <input asp-for="WorkingDaysinWeek" class="form-control" />
-    </div> 
-    
-    <div class="form-group">
-        <label asp-for="Salary">Salary:</label>
-        <input asp-for="Salary" class="form-control" />
-    </div>
-
-    <label asp-for="Gender">Gender</label>
-    <select asp-for="Gender" class="form-control" asp-items="@ViewBag.Gender ">
-        <option value="">Select Gender</option>
-        @foreach (var item in ViewBag.Gender)
-        {
-            <option value="@item.Value" selected>@item.Text  </option>
-        }
-    </select>
-
-
-
-    <label asp-for="RoleRegeseter">RoleRegeseter</label>
-    <select asp-for="RoleRegeseter" class="form-control" asp-items="@ViewBag.jop">
-        <option value="">Select RoleRegeseter</option>
-        @foreach (var item in ViewBag.jop)
-        {
-            <option value="@item.Value" selected>@item.Text  </option>
-        }
-    </select>
-
-    <label asp-for="spicialist">spicialist</label>
-    <select asp-for="spicialist" class="form-control" asp-items="@ViewBag.Doctorspicialist">
-        <option value="">Select spicialist</option>
-        @foreach (var item in ViewBag.Doctorspicialist)
-        {
-            <option value="@item.Value" selected>@item.Text  </option>
-        }
-    </select> 
-    
-    <label asp-for="StatusDoctorInSystem">StatusDoctorInSystem</label>
-    <select asp-for="spicialist" class="form-control" asp-items="@ViewBag.StatusDoctorInSystem">
-        <option value="">Select StatusDoctorInSystem</option>
-        @foreach (var item in ViewBag.StatusDoctorInSystem)
-        {
-            <option value="@item.Value" selected>@item.Text  </option>
-        }
-    </select>
-
-
-
-
-
-
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
-
-
-<a asp-controller="Doctor" asp-action="Index" >
-    <i class="fas fa-trash-alt" title="Index">
-    </i> Index
-</a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*
-
-
-
-
-
-
-
-
-
-<script>
-    function SaveStudent() {
-        var studentForm = document.getElementById("saveform");
-
-        if (studentForm.checkValidity()) {
-            var formData = new FormData(saveform);
-
-            fetch("/Doctor/TimingShifts/Save", {
-                method: "POST",
-                body: formData
-                // body: JSON.stringify(studentForm)
-                //Headers{
-
-                //'content-type': 'application/json'
-                //}
-
-
-
-
-
-
-
-            })
-                .then(response => response.text())
-                .then(response => {
-                    alert(response);
-                })
-                .catch(error => {
-                    alert("Error: " + error);
-                });
-        } else {
-            // If the form is invalid, display error messages (if any)
-            studentForm.reportValidity();
-        }
-    }
-</script>*@
-
-
-
-
-
+﻿
 
 
 
@@ -206,141 +18,123 @@
 
 @model hospitalVm.DoctorVm
 
-<h1>Edit Shift</h1>
 
-<form asp-action="Save" method="post" id="saveform" enctype="multipart/form-data"
-    >
-    <input type="hidden" asp-for="id" />
 
-    <!-- Group related fields using div containers -->
-    <div class="form-group">
-        <label asp-for="username">Username:</label>
-        <input asp-for="username" class="form-control" />
+
+<style>
+    /* Custom CSS styles */
+    .container {
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    body {
+        background-image: url('/Images/hospital11.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    /* Glass-like style for form elements */
+    .glass-container {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        color: black;
+    }
+
+    .glass-input {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Style for the button group */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .button-group .btn {
+        margin: 0;
+    }
+</style>
+
+<div class="container mt-5 glass-container col-md-7">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h1>Edit Doctor</h1>
+
+            <form asp-action="Save" method="post" id="saveform" enctype="multipart/form-data">
+                <input type="hidden" asp-for="id" />
+
+                <div class="form-group glass-input">
+                    <label asp-for="username">Username:</label>
+                    <input asp-for="username" class="form-control" />
+                </div>
+
+                <div class "form-group glass-input">
+                    <label asp-for="City">City:</label>
+                    <input asp-for="City" class="form-control" />
+                </div>
+
+                <div class="form-group glass-input">
+                    <label asp-for="imgurlupdated">Update Image URL:</label>
+                    <input asp-for="imgurlupdated" class="form-control" />
+                </div>
+
+                <div class="form-group glass-input">
+                    <label asp-for="Contracturluplod">Add Contract URL:</label>
+                    <input asp-for="Contracturluplod" class="form-control" />
+                </div>
+
+                <!-- Add other fields with glass-input style -->
+                <div class="form-group glass-input">
+                    <label asp-for="Nationality">Nationality:</label>
+                    <input asp-for="Nationality" class="form-control" />
+                </div>
+
+                <div class="form-group glass-input">
+                    <label asp-for="StreetAddress">Street Address:</label>
+                    <input asp-for="StreetAddress" class="form-control" />
+                </div>
+
+                <div class="form-group glass-input">
+                    <label asp-for="PostalCode">Postal Code:</label>
+                    <input asp-for="PostalCode" class="form-control" />
+                </div>
+                
+                <div class="form-group glass-input">
+                    <label asp-for="Email">Email:</label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+
+                <div class="form-group glass-input">
+                    <label asp-for="Phonenumber">Phone Number:</label>
+                    <input asp-for="Phonenumber" class="form-control" />
+                </div>
+
+                <div class="form-group glass-input">
+                    <label asp-for="Dateofbarth">Date of Birth:</label>
+                    <input asp-for="Dateofbarth" class="form-control" />
+                </div>
+
+                <!-- Add more fields as needed -->
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-controller="Doctor" asp-action="Index" class="btn btn-secondary mt-2">
+                        <i class="fas fa-chevron-circle-left"></i> Back to Index
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="City">City:</label>
-        <input asp-for="City" class="form-control" />
-    </div>
-      <div class="form-group">
-        <label asp-for=" imgurlupdated">updateimg:</label>
-        <input asp-for="imgurlupdated" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for=" Contracturluplod">addcotracturl:</label>
-        <input asp-for="Contracturluplod" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Nationality">Nationality:</label>
-        <input asp-for="Nationality" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="StreetAddress">StreetAddress:</label>
-        <input asp-for="StreetAddress" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="PostalCode">PostalCode:</label>
-        <input asp-for="PostalCode" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Email">Email:</label>
-        <input asp-for="Email" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Phonenumber">Phonenumber:</label>
-        <input asp-for="Phonenumber" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Dateofbarth">Dateofbarth:</label>
-        <input asp-for="Dateofbarth" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="HiringDate">HiringDate:</label>
-        <input asp-for="HiringDate" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Title">Title:</label>
-        <input asp-for="Title" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="WorkingDaysinWeek">WorkingDaysinWeek:</label>
-        <input asp-for="WorkingDaysinWeek" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Salary">Salary:</label>
-        <input asp-for="Salary" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Gender">Gender</label>
-        <select asp-for="Gender" class="form-control" asp-items="@ViewBag.Gender ">
-            <option value="">Select Gender</option>
-            @foreach (var item in ViewBag.Gender)
-            {
-                <option value="@item.Value">@item.Text</option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="RoleRegeseter">RoleRegeseter</label>
-        <select asp-for="RoleRegeseter" class="form-control" asp-items="@ViewBag.jop">
-            <option value="">Select RoleRegeseter</option>
-            @foreach (var item in ViewBag.jop)
-            {
-                <option value="@item.Value">@item.Text</option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="spicialist">spicialist</label>
-        <select asp-for="spicialist" class="form-control" asp-items="@ViewBag.Doctorspicialist">
-            <option value="">Select spicialist</option>
-            @foreach (var item in ViewBag.Doctorspicialist)
-            {
-                <option value="@item.Value">@item.Text</option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="StatusDoctorInSystem">StatusDoctorInSystem</label>
-        <select asp-for="StatusDoctorInSystem" class="form-control" asp-items="@ViewBag.StatusDoctorInSystem">
-            <option value="">Select StatusDoctorInSystem</option>
-            @foreach (var item in ViewBag.StatusDoctorInSystem)
-            {
-                <option value="@item.Value">@item.Text</option>
-            }
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Update</button>
-</form>
-
-<a asp-controller="Doctor" asp-action="Index" class="btn btn-secondary mt-2">
-    <i class="fas fa-chevron-circle-left"></i> Back to Index
-</a>
-
-@section Scripts {
-    <script>
-        // Your form validation and submission script here
-    </script>
-}
-
-
-
-
-
-
-
+</div>
