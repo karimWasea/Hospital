@@ -9,11 +9,17 @@ namespace hospitalVm
     {
         public int Id
         { get; set; }
+        [Required(ErrorMessage ="is rqured")]
         public int hospitalid         
         { get; set; }
+        [Required(ErrorMessage = "Phone is required")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Phone must contain only numeric characters")]
         public string phone { get; set; }
+    
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
         public string Email { get; set; }
-        public string Hospitalname { get; set; }
+        public string ? Hospitalname { get; set; }=string.Empty;
 
 
     public ContactVm(Contact Contact)

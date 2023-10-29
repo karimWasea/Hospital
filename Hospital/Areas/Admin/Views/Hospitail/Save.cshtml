@@ -60,33 +60,34 @@
 
             <form asp-action="Save" method="post" id="saveform">
                 <input type="hidden" asp-for="id" />
-
-                <div class="form-group glass-input">
+                <div class="form-row">
+                    <div class="form-group glass-input col-5">
                     <label asp-for="Name">Name:</label>
                     <input asp-for="Name" class="form-control" />
                 </div>
 
-                <div class="form-group glass-input">
+                    <div class="form-group glass-input col-5">
                     <label asp-for="City">City:</label>
                     <input asp-for="City" class="form-control" />
-                </div>
+                    </div>
+                </div> <div class="form-row">
 
-                <div class="form-group glass-input">
+                    <div class="form-group glass-input col-5">
                     <label asp-for="Country">Country:</label>
                     <input asp-for="Country" class="form-control" />
                 </div>
 
-                <div class="form-group glass-input">
+                    <div class="form-group glass-input col-5">
                     <label asp-for="Type">Type:</label>
                     <input asp-for="Type" class="form-control" />
-                </div>
+                </div>  </div>
 
-                <div class="form-group glass-input">
+                <div class="form-group glass-input col-5">
                     <label asp-for="Pincode">Pincode:</label>
                     <input asp-for="Pincode" class="form-control" />
                 </div>
 
-                <div class="button-group">
+                <div class="button-group col-8">
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a asp-area="Admin" asp-controller="Hospital" asp-action="Index" class="btn btn-secondary mt-2">
                         <i class="fas fa-chevron-circle-left"></i> Back to Index
@@ -98,111 +99,46 @@
 </div>
 
 <script>
-    function SaveStudent() {
+    function saveStudent() {
         var studentForm = document.getElementById("saveform");
 
         if (studentForm.checkValidity()) {
-            var formData = new FormData(studentForm);
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You are about to update the room's information.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, update it!",
+                cancelButtonText: "No, cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var formData = new FormData(studentForm);
 
-            fetch("/Admin/Hospitail/Save", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    'content-type': 'application/json'
+                    fetch("/Admin/Hospitail/Save",, {
+                        method: "POST",
+                        body: formData
+                    })
+                        .then(response => response.text())
+                        .then(response => {
+                            Swal.fire({
+                                title: "Success!",
+                                text: Success,
+                                icon: "success"
+                            });
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            Swal.fire({
+                                title: "Error!",
+                                text: "An error occurred while saving the data.",
+                                icon: "error"
+                            });
+                        });
                 }
-            })
-                .then(response => response.text())
-                .then(response => {
-                    alert(response);
-                })
-                .catch(error => {
-                    alert("Error: " + error);
-                });
+            });
         } else {
             studentForm.reportValidity();
         }
     }
 </script>
 
-
-
-@* 
-
-
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *,Cloudscribe.Web.Pagination
-@{
-    ViewData["Title"] = "Save";
-    Layout = "_Layout";
-}
-
-
-<h1>Edit Hospital</h1>
-
-<form asp-action="Save" method="post" id="saveform">
-    <input type="hidden" asp-for="id" />
-
-    <div class="form-group">
-        <label asp-for="Name">Name:</label>
-        <input asp-for="Name" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="City">City:</label>
-        <input asp-for="City" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Country">Country:</label>
-        <input asp-for="Country" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Type">Type:</label>
-        <input asp-for="Type" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Pincode">Pincode:</label>
-        <input asp-for="Pincode" class="form-control" />
-    </div>
-
-    <button type="submit"  onclick="SaveStudent()" class="btn btn-primary">Save</button>
-</form>
-
-@*
-<script>
-        var studentForm = document.getElementById("saveform");
-
-        if (studentForm.checkValidity()) {
-            var formData = new FormData(saveform);
-
-        fetch("/Admin/Hospitail/Save", {
-                method: "POST",
-                body: formData
-               //  body: JSON.stringify(studentForm)
-                Headers{
-
-                'content-type': 'application/json'
-                }
-
-                 
-
-
-
-
-
-            })
-                .then(response => response.text())
-                .then(response => {
-                    alert(response);
-                })
-                .catch(error => {
-                    alert("Error: " + error);
-                });
-        } else {
-            // If the form is invalid, display error messages (if any)
-            studentForm.reportValidity();
-        }
-    }
-</script>*@ 

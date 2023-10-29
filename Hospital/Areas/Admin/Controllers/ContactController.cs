@@ -59,16 +59,21 @@ namespace Hospital.Areas.Admin.Controllers
         [HttpPost]
         // [ValidateAntiForgeryToken]
         public IActionResult Save(ContactVm HospitalVm)
-        {
-            ViewBag.HospitalsId = _unitOfWork.Ilookup.HospitalsId();
+        { if(ModelState.IsValid)
+            {
 
-            _unitOfWork.Contact.Save(HospitalVm);
+                ViewBag.HospitalsId = _unitOfWork.Ilookup.HospitalsId();
 
-            TempData["Message"] = $" successfully!";
-            TempData["MessageType"] = "Save";
+                _unitOfWork.Contact.Save(HospitalVm);
 
-            return RedirectToAction("Index");
-            
+                TempData["Message"] = $" successfully!";
+                TempData["MessageType"] = "Save";
+
+                return RedirectToAction("Index");
+
+            }
+
+            return View(HospitalVm);
 
 
         }
