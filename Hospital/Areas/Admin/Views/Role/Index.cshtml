@@ -6,7 +6,14 @@
     Layout = "_Layout";
     ViewData["Title"] = "All Rols";
 }
-
+<style>
+    body {
+        background-image: url('/Images/hospital.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
 <form id="search-form" method="get" asp-action="Index">
     <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
 </form>
@@ -21,6 +28,7 @@
         <tr>
             <th>Id</th>
             <th>name</th>
+            <th>Action</th>
          
         </tr>
     </thead>

@@ -210,7 +210,14 @@ asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" onclick="
     Layout = "_Layout";
     ViewData["Title"] = "All Patients";
 }
-    //
+<style>
+    body {
+        background-image: url('images/hospital.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
 <partial name="_AlertMessage" />
 
     <form id="search-form" method="get" asp-action="Index">

@@ -8,7 +8,14 @@
 
 <h2>@ViewData["Title"]</h2>
 
-
+<style>
+    body {
+        background-image: url('/Images/hospital17.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
 <!-- Add the search input form -->
 <form id="search-form" method="get" action="@Url.Action("Index")">
     <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">

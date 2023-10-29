@@ -1,15 +1,37 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *,Cloudscribe.Web.Pagination
+@addTagHelper *, Cloudscribe.Web.Pagination
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    body {
+        background-image: url('/Images/hospital.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    /* Glass-like style for the card */
+    .card {
+        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
+        border: none;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        color: white; /* Change the text color to white for better visibility */
+    }
+
+    .card-title {
+        color: #007BFF; /* Change the title text color */
+    }
+</style>
+
 <h1>Details</h1>
 
 @model hospitalVm.RoomVm
-
 
 <h1>Room Details</h1>
 

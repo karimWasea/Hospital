@@ -15,7 +15,14 @@
 @addTagHelper *, Cloudscribe.Web.Pagination
 
 @model hospitalVm.PatientVm
-
+<style>
+    body {
+        background-image: url('/Images/hospital17.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
 <h1>Edit Shift</h1>
 
 <form asp-action="Save" method="post" id="saveform" enctype="multipart/form-data">

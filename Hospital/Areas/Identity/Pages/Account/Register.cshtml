@@ -187,14 +187,14 @@
 <h1>@ViewData["Title"]</h1>
 
 <style>
+    
     body {
-        background-image: url('/Images/hospital17.jpg');
-
-
+        background-image: url('/Images/hospital.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
+
     /* Custom CSS styles */
     .container {
         text-align: center;
@@ -260,7 +260,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
         <div class="form-row">
 
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-8">
 
                 <input asp-for="Input.Email" class="glass-input form-control" placeholder=" inter Email" />
             <span asp-validation-for="Input.Email" class="text-danger"></span>

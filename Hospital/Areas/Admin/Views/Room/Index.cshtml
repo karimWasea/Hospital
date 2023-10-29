@@ -8,7 +8,14 @@
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
-
+<style>
+    body {
+        background-image: url('/Images/hospital.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
 <a asp-controller="Room" onclick="return showADDConfirmation()" asp-action="Save" class="btn btn-primary">
     <i class="fas fa-plus-circle"></i> Add New Room
 </a>

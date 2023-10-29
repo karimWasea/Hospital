@@ -8,9 +8,17 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Doctor\Data\**" />
+    <Compile Remove="Areas\Patient\Data\**" />
+    <Compile Remove="Areas\Patient\Models\**" />
     <Content Remove="Areas\Doctor\Data\**" />
+    <Content Remove="Areas\Patient\Data\**" />
+    <Content Remove="Areas\Patient\Models\**" />
     <EmbeddedResource Remove="Areas\Doctor\Data\**" />
+    <EmbeddedResource Remove="Areas\Patient\Data\**" />
+    <EmbeddedResource Remove="Areas\Patient\Models\**" />
     <None Remove="Areas\Doctor\Data\**" />
+    <None Remove="Areas\Patient\Data\**" />
+    <None Remove="Areas\Patient\Models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,8 +41,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Doctor\Models\" />
-    <Folder Include="Areas\Patient\Data\" />
-    <Folder Include="Areas\Patient\Models\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 

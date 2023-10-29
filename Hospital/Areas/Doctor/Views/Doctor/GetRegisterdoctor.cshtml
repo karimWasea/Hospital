@@ -80,6 +80,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+
+    body {
+        background-image: url('/Images/hospital11.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+</style>
 <div class="container mt-8">
     <h1>Registered Doctors</h1>
 
@@ -99,6 +107,7 @@
                     <th>Status in System</th>
                     <th>Image</th>
                     <th>Action</th>
+                    <th> </th>
                 </tr>
             </thead>
             <tbody>
@@ -125,10 +134,13 @@
                             <a asp-controller="Doctor" asp-action="Delete" asp-route-id="@hospital.id" class="btn btn-sm btn-danger">
                                 <i class="fas fa-trash-alt"></i> Delete
                             </a>
+                          
+                        </td> 
+                        <td>
                             <a asp-controller="Doctor" asp-action="Details" asp-route-id="@hospital.id" class="btn btn-sm btn-info">
                                 <i class="fas fa-info-circle"></i> Details
                             </a>
-                        </td>
+                    </td>
                     </tr>
                 }
             </tbody>
