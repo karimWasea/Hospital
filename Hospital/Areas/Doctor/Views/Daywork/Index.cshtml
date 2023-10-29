@@ -1,338 +1,4 @@
-﻿
-
-
-
-
-
-
-
- @*@model IEnumerable<hospitalVm.DoctorDayworkVM>   usingjuary
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<select class="form-control" id="hospitalDropdown">
-    <option value="">Select Doctor</option>
-    @foreach (var doctor in ViewBag.getdoctorfromapplicationuserid)
-    {
-        <option value="@doctor.Value">@doctor.Text</option>
-    }
-</select>
-<p id="validationMessage" style="color: red;"></p>
-
-<div id="doctorsTable">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Doctor dayname</th>
-                <th>Starting PM Shift</th>
-                <th>Starting AM Shift</th>
-                <th>AM Shift</th>
-                <th>PM Shift</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var doctor in Model)
-            {
-                <tr data-doctor-id="@doctor.DoctorId" data-weekday-id="@doctor.WeekDaystId" data-daywork-id="@doctor.DoctorDayworkId">
-                    <td>@doctor.dayname</td>
-                    <td>@doctor.StartingPmShift</td>
-                    <td>@doctor.StratingAmShafit</td>
-                    <td>
-                        <input type="checkbox" class="shift-checkbox isam" data-shift-type="am" @(doctor.isam ? "checked" : "") />
-                    </td>
-                    <td>
-                        <input type="checkbox" class="shift-checkbox ispm" data-shift-type="pm" @(doctor.ispm ? "checked" : "") />
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<button type="button" id="saveButton" class="btn btn-primary" style="width: 150px" disabled>ADD/Update Shifts</button>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        const hospitalDropdown = $("#hospitalDropdown");
-        const validationMessage = $("#validationMessage");
-        const saveButton = $("#saveButton");
-        const doctorsTable = $("#doctorsTable");
-        let selectedDoctorId = null;
-
-        hospitalDropdown.on("change", function () {
-            selectedDoctorId = $(this).val();
-            validationMessage.text(selectedDoctorId ? "" : "Please select a doctor.");
-
-            saveButton.prop("disabled", !selectedDoctorId);
-        });
-
-        doctorsTable.on("change", ".shift-checkbox", function () {
-            const row = $(this).closest("tr");
-            const isChecked = $(this).is(":checked");
-            const shiftType = $(this).data("shift-type");
-
-            if (shiftType === "am") {
-                row.find(".isam").prop("checked", isChecked);
-            } else if (shiftType === "pm") {
-                row.find(".ispm").prop("checked", isChecked);
-            }
-        });
-
-        saveButton.on("click", function () {
-            const data = [];
-
-            doctorsTable.find("tbody tr").each(function () {
-                const row = $(this);
-                const doctorId = selectedDoctorId;
-                const weekDaystId = row.data("weekday-id");
-                const DoctorDayworkId = row.data("daywork-id");
-                const isam = row.find(".isam").is(":checked");
-                const ispm = row.find(".ispm").is(":checked");
-
-                const newEntry = {
-                    DoctorDayworkId: DoctorDayworkId,
-                    doctorId: selectedDoctorId,
-                    WeekDaystId: weekDaystId,
-                    IsCheckedDay: isam || ispm,
-                    IsAM: isam,
-                    IsPM: ispm
-                };
-
-                data.push(newEntry);
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/Doctor/Daywork/Save",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (response) {
-                    console.log("Response from server:", response);
-                    if (response.success) {
-                        alert("Data updated successfully!");
-                    } else {
-                        alert("An error occurred while updating data.");
-                    }
-                },
-                error: function () {
-                    alert("An error occurred while updating data.");
-                }
-            });
-        });
-    });
-</script>
-
-
-
-*@
-
-
-
-@*
-
-
-
-
-
-
-
-
-
-
-
-
-
-@model IEnumerable<hospitalVm.DoctorDayworkVM>
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<select class="form-control" id="hospitalDropdown">
-    <option value="">Select Doctor</option>
-    @foreach (var doctor in ViewBag.getdoctorfromapplicationuserid)
-    {
-        <option value="@doctor.Value">@doctor.Text</option>
-    }
-</select>
-<p id="validationMessage" style="color: red;"></p>
-
-<div id="doctorsTable">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Doctor dayname</th>
-                <th>Starting PM Shift</th>
-                <th>Starting AM Shift</th>
-                <th>AM Shift</th>
-                <th>PM Shift</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var doctor in Model)
-            {
-                <tr data-doctor-id="@doctor.DoctorId" data-weekday-id="@doctor.WeekDaystId" data-daywork-id="@doctor.DoctorDayworkId">
-                    <td>@doctor.dayname</td>
-                    <td>@doctor.StartingPmShift</td>
-                    <td>@doctor.StratingAmShafit</td>
-                    <td>
-                        <input type="checkbox" class="shift-checkbox isam" data-shift-type="am" @(doctor.isam ? "checked" : "") />
-                    </td>
-                    <td>
-                        <input type="checkbox" class="shift-checkbox ispm" data-shift-type="pm" @(doctor.ispm ? "checked" : "") />
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<button type="button" id="saveButton" class="btn btn-primary" style="width: 150px" disabled>ADD/Update Shifts</button>
-<button type="button" id="removeButton" class="btn btn-primary" style="width: 150px" disabled>Remove all Shidts</button>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const hospitalDropdown = document.getElementById('hospitalDropdown');
-        const validationMessage = document.getElementById('validationMessage');
-        const saveButton = document.getElementById('saveButton');
-        const doctorsTable = document.getElementById('doctorsTable');
-        let selectedDoctorId = null;
-
-        hospitalDropdown.addEventListener('change', function () {
-            selectedDoctorId = this.value;
-            validationMessage.textContent = selectedDoctorId ? '' : 'Please select a doctor.';
-
-            saveButton.disabled = !selectedDoctorId;
-            removeButton.disabled = !selectedDoctorId;
-        });
-
-        doctorsTable.addEventListener('change', function (event) {
-            if (event.target.classList.contains('shift-checkbox')) {
-                const row = event.target.closest('tr');
-                const isChecked = event.target.checked;
-                const shiftType = event.target.getAttribute('data-shift-type');
-
-                if (shiftType === 'am') {
-                    row.querySelector('.isam').checked = isChecked;
-                } else if (shiftType === 'pm') {
-                    row.querySelector('.ispm').checked = isChecked;
-                }
-            }
-        });
-
-        saveButton.addEventListener('click', function () {
-            const data = [];
-
-            const rows = doctorsTable.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const doctorId = selectedDoctorId;
-                const weekDaystId = row.getAttribute('data-weekday-id');
-                const DoctorDayworkId = row.getAttribute('data-daywork-id');
-                const isam = row.querySelector('.isam').checked;
-                const ispm = row.querySelector('.ispm').checked;
-
-                const newEntry = {
-                    DoctorDayworkId: DoctorDayworkId,
-                    doctorId: selectedDoctorId,
-                    WeekDaystId: weekDaystId,
-                    IsCheckedDay: isam || ispm,
-                    IsAM: isam,
-                    IsPM: ispm
-                };
-
-                data.push(newEntry);
-            });
-
-            fetch('/Doctor/Daywork/Save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Response from server:', data);
-                    if (data.success) {
-                        alert('Data updated successfully!');
-                    } else {
-                        alert('An error occurred while updating data.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('successfully!');
-                });
-        });
-        removeButton.addEventListener('click', function () {
-            const rows = doctorsTable.querySelectorAll('tbody tr');
-            const data = [];
-
-            rows.forEach(row => {
-                const doctorId = selectedDoctorId;
-                const weekDaystId = row.getAttribute('data-weekday-id');
-                // Use a default value or whatever makes sense for DoctorDayworkId
-                const DoctorDayworkId = row.getAttribute('data-daywork-id');
-                const isam = false;
-                const ispm = false;
-
-                const removeShafts = {
-                    DoctorDayworkId: DoctorDayworkId,
-                    doctorId: doctorId,
-                    WeekDaystId: weekDaystId,
-                    IsCheckedDay: isam || ispm,
-                    IsAM: isam,
-                    IsPM: ispm
-                };
-
-                data.push(removeShafts);
-            });
-
-            fetch('/Doctor/Daywork/Save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Response from server:', data);
-                    if (data.success) {
-                        alert('Shifts removed successfully!');
-                    } else {
-                        alert('An error occurred while removing shifts.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('All shifts removing ');
-                });
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    });
-</script>
-
-
-
-*@
+﻿@* 
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
@@ -389,6 +55,240 @@
 <a asp-controller="Daywork" asp-action="AllDayShifts">
     <i class="fas fa-info-circle" title="Mangshifts">ALLShifts</i>
 </a>
+
+<!-- Include SweetAlert CSS -->
+@*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+<!-- Include SweetAlert JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const hospitalDropdown = document.getElementById('hospitalDropdown');
+        const validationMessage = document.getElementById('validationMessage');
+        const saveButton = document.getElementById('saveButton');
+        const removeButton = document.getElementById('removeButton'); // New button
+        const doctorsTable = document.getElementById('doctorsTable');
+        let selectedDoctorId = null;
+
+        hospitalDropdown.addEventListener('change', function () {
+            selectedDoctorId = this.value;
+            validationMessage.textContent = selectedDoctorId ? '' : 'Please select a doctor.';
+
+            saveButton.disabled = !selectedDoctorId;
+            removeButton.disabled = !selectedDoctorId;
+        });
+
+        doctorsTable.addEventListener('change', function (event) {
+            if (event.target.classList.contains('shift-checkbox')) {
+                const row = event.target.closest('tr');
+                const isChecked = event.target.checked;
+                const shiftType = event.target.getAttribute('data-shift-type');
+
+                if (shiftType === 'am') {
+                    row.querySelector('.isam').checked = isChecked;
+                } else if (shiftType === 'pm') {
+                    row.querySelector('.ispm').checked = isChecked;
+                }
+            }
+        });
+
+        saveButton.addEventListener('click', function () {
+            // Show SweetAlert confirmation
+            Swal.fire({
+                title: 'Confirm Save',
+                text: 'Are you sure you want to save this data?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, save it',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Proceed with saving the data
+                    const data = [];
+
+                    const rows = doctorsTable.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const doctorId = selectedDoctorId;
+                        const weekDaystId = row.getAttribute('data-weekday-id');
+                        const DoctorDayworkId = row.getAttribute('data-daywork-id');
+                        const isam = row.querySelector('.isam').checked;
+                        const ispm = row.querySelector('.ispm').checked;
+
+                        const newEntry = {
+                            DoctorDayworkId: DoctorDayworkId,
+                            doctorId: selectedDoctorId,
+                            WeekDaystId: weekDaystId,
+                            IsCheckedDay: isam || ispm,
+                            IsAM: isam,
+                            IsPM: ispm
+                        };
+
+                        data.push(newEntry);
+                    });
+
+                    fetch('/Doctor/Daywork/Save', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Response from server:', data);
+                            if (data.success) {
+                                Swal.fire('Success', 'Data updated successfully!', 'success');
+                            } else {
+                                Swal.fire('Error', 'An error occurred while updating data.', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire('Success');
+                        });
+                }
+            });
+        });
+
+
+        removeButton.addEventListener('click', function () {
+            Swal.fire({
+                title: 'Confirm Removal',
+                text: 'Are you sure you want to remove all shifts?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, remove all shifts',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const rows = doctorsTable.querySelectorAll('tbody tr');
+                    const data = [];
+
+                    rows.forEach(row => {
+                        const doctorId = selectedDoctorId;
+                        const weekDaystId = row.getAttribute('data-weekday-id');
+                        const DoctorDayworkId = row.getAttribute('data-daywork-id');
+                        const isam = false;
+                        const ispm = false;
+
+                        const removeShafts = {
+                            DoctorDayworkId: DoctorDayworkId,
+                            doctorId: doctorId,
+                            WeekDaystId: weekDaystId,
+                            IsCheckedDay: isam || ispm,
+                            IsAM: isam,
+                            IsPM: ispm
+                        };
+
+                        data.push(removeShafts);
+                    });
+
+                    fetch('/Doctor/Daywork/Save', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Response from server:', data);
+                            if (data.success) {
+                                Swal.fire('Shifts Removed', 'All shifts have been removed.', 'success');
+                            } else {
+                                Swal.fire('Error', 'An error occurred while removing shifts.', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire( ' removing shifts.');
+                        });
+                }
+            });
+        });
+    });
+</script>
+
+ *@
+ 
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
+@model IEnumerable<hospitalVm.DoctorDayworkVM>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<partial name="_AlertMessage" />
+<style>
+    body {
+        background-image: url('/Images/hospital11.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    /* Glass-like style for select elements */
+    .glass-select {
+        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+</style>
+
+<select  class="form-control glass-select" id="hospitalDropdown">
+    <option value="">Select Doctor</option>
+    @foreach (var doctor in ViewBag.getdoctorfromapplicationuserid)
+    {
+        <option value="@doctor.Value">@doctor.Text</option>
+    }
+</select>
+
+<p id="validationMessage" style="color: red;"></p>
+
+<div id="doctorsTable">
+    <table class="table table-bordered table-hover table-success
+            table-bordered">
+        <thead>
+            <tr>
+                <th>Doctor Day Name</th>
+                <th>Starting PM Shift</th>
+                <th>Starting AM Shift</th>
+                <th>AM Shift</th>
+                <th>PM Shift</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var doctor in Model)
+            {
+                <tr data-doctor-id="@doctor.DoctorId" data-weekday-id="@doctor.WeekDaystId" data-daywork-id="@doctor.DoctorDayworkId">
+                    <td>@doctor.dayname</td>
+                    <td>@doctor.StartingPmShift</td>
+                    <td>@doctor.StratingAmShafit</td>
+                    <td>
+                        <input type="checkbox" class="shift-checkbox isam" data-shift-type="am" @(doctor.isam ? "checked" : "") />
+                    </td>
+                    <td>
+                        <input type="checkbox" class="shift-checkbox ispm" data-shift-type="pm" @(doctor.ispm ? "checked" : "") />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<button type="button" id="saveButton" class="btn btn-primary" style="width: 150px" disabled>Save Shifts</button>
+<button type="button" id="removeButton" class="btn btn-danger" style="width: 150px" disabled>Remove All Shifts</button>
+<button type="button" id="allShiftsButton" class="btn btn-info">
+    <a asp-controller="Daywork" asp-action="AllDayShifts">
+        <i class="fas fa-info-circle"></i> All Shifts
+    </a>
+</button>
+
 
 <!-- Include SweetAlert CSS -->
 @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
@@ -543,4 +443,3 @@
         });
     });
 </script>
-

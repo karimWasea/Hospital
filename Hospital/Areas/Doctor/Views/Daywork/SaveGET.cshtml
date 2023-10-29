@@ -1,4 +1,4 @@
-﻿@using hospitalUtilities
+﻿@* @using hospitalUtilities
 
 @model IEnumerable<hospitalVm.DoctorDayworkVM>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+ *@
 @*
 <a asp-controller="TimingShifts" asp-action="Save">
     <i class="fas fa-plus-circle"></i> Add New TimingShifts
@@ -19,12 +19,120 @@
 @ViewBag.getdoctorfromapplicationuserid
 </h1>
 *@
+<a>hh</a>
+@using hospitalUtilities
+
+@model IEnumerable<hospitalVm.DoctorDayworkVM>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
+
+@{
+    ViewData["Title"] = "SaveGET";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Doctor Work Days</h1>
+
+<form id="saveForm">
+    <input type="hidden" id="hiddenId" name="id" value="@ViewBag.id" />
+
+    <table class="table table-bordered table-hover table-success">
+        <thead>
+            <tr>
+                <th>Day Name1</th>
+                <th>Starting PM Shift</th>
+                <th>Starting AM Shift</th>
+                <th>Checked Day</th>
+                <th>AM Shift</th>
+                <th>PM Shift</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hospital in Model)
+            {
+                <tr>
+                    <input type="hidden" id="chkCheckedDay_@hospital.DoctorId" asp-for="@hospital.DoctorId" hidden />
+                    <input type="hidden" id="chkCheckedDay_@hospital.WeekDaystId" asp-for="@hospital.WeekDaystId" hidden />
+
+                    <td>@hospital.dayname</td>
+                    <td>@hospital.StartingPmShift</td>
+                    <td>@hospital.StratingAmShafit</td>
+                    <td>
+                        <input type="checkbox" id="ischekedday" asp-for="@hospital.ischekedday" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="isam" asp-for="@hospital.isam" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="ispm" asp-for="@hospital.ispm" />
+                    </td>
+                    <td>
+                        <a asp-controller="TimingShifts" asp-action="Save" asp-route-id="@hospital.DoctorId">
+                            <i class="fas fa-edit" title="Edit"></i>
+                        </a>
+                        <a asp-controller="TimingShifts" asp-action="Delete" asp-route-id="@hospital.DoctorDayworkId">
+                            <i class="fas fa-trash-alt" title="Delete"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="button" onclick="saveData()" class="btn btn-primary" style="width: 150px">Save</button>
+</form>
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: lightgreen;
+    }
+</style>
+
+<script>
+    function saveData() {
+        const rows = document.querySelectorAll('tr');
+        const data = [];
+
+        rows.forEach(row => {
+            const doctorId = row.querySelector('input[type="hidden"]').value;
+            const ischekedday = row.querySelector('input#ischekedday').checked;
+            const isam = row.querySelector('input#isam').checked;
+            const ispm = row.querySelector('input#ispm').checked;
+
+            data.push({
+                DoctorId: doctorId,
+                ischekedday: ischekedday,
+                isam: isam,
+                ispm: ispm
+            });
+        });
+
+        const formData = JSON.stringify(data);
+
+        // Send data using AJAX
+        fetch('/Doctor/Daywork/Save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from server:', data);
+                alert('Data saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while saving data.');
+            });
+    }
+</script>
 
 
 
-<h1>jjj</h1>
 
-
+@* 
 
 
 
@@ -126,3 +234,4 @@
             });
     }
 </script>
+ *@

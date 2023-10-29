@@ -1,4 +1,5 @@
-﻿
+﻿@using Dataaccesslayer;
+
 
 
 
@@ -21,7 +22,26 @@
 
 
 
+
+
+
+
+
+
+
+       
+@{
+    ViewData["Title"] = "Register Doctor";
+}
+<h1>@ViewData["Title"]</h1>
+
 <style>
+    body {
+        background-image: url('/Images/hospital17.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
     /* Custom CSS styles */
     .container {
         text-align: center;
@@ -31,110 +51,233 @@
         margin-bottom: 20px;
     }
 
-    body {
-        background-image: url('/Images/hospital11.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
+    .btn-secondary {
+        margin-top: 10px;
     }
 
     /* Glass-like style for form elements */
     .glass-container {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
         border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px;
-        padding: 5px;
+        border-radius: 10px;
+        padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        color: black;
     }
 
     .glass-input {
         background-color: rgba(255, 255, 255, 0.2);
         border: none;
         border-radius: 5px;
-        padding: 5px;
+        padding: 10px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     }
 
-    /* Style for the button group */
-    .button-group {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
+    .glass-select {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     }
 
-    .button-group .btn {
-        margin: 0;
+     Style for the button group
+                    .button-group {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 20px;
+                    }
+
+                        .button-group .btn {
+                            margin: 0;
+                        }
+
+                    /* Style for form-row divisions */
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
     }
 </style>
 
-<div class="container mt-5 glass-container col-md-7">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <h1>Edit Doctor</h1>
+<partial name="_AlertMessage" model="Model" />
+<div class="container mt-5 glass-container" style="width:80%; height:80%;">
 
-            <form asp-action="Save" method="post" id="saveform" enctype="multipart/form-data">
-                <input type="hidden" asp-for="id" />
+    <form asp-action="Save" method="post" id="saveform" enctype="multipart/form-data">
+        <input type="hidden" asp-for="id" />
 
-                <div class="form-group glass-input">
-                    <label asp-for="username">Username:</label>
-                    <input asp-for="username" class="form-control" />
-                </div>
 
-                <div class "form-group glass-input">
-                    <label asp-for="City">City:</label>
-                    <input asp-for="City" class="form-control" />
-                </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <div class="form-row">
 
-                <div class="form-group glass-input">
-                    <label asp-for="imgurlupdated">Update Image URL:</label>
-                    <input asp-for="imgurlupdated" class="form-control" />
-                </div>
+            <div class="form-group col-md-4">
 
-                <div class="form-group glass-input">
-                    <label asp-for="Contracturluplod">Add Contract URL:</label>
-                    <input asp-for="Contracturluplod" class="form-control" />
-                </div>
+                <input asp-for="Nationality" class="glass-input form-control" placeholder=" inter Nationality" />
+                <span asp-validation-for="Nationality" class="text-danger"></span>
+            </div>
 
-                <!-- Add other fields with glass-input style -->
-                <div class="form-group glass-input">
-                    <label asp-for="Nationality">Nationality:</label>
-                    <input asp-for="Nationality" class="form-control" />
-                </div>
+            <div class="form-group col-md-4">
 
-                <div class="form-group glass-input">
-                    <label asp-for="StreetAddress">Street Address:</label>
-                    <input asp-for="StreetAddress" class="form-control" />
-                </div>
+                <input asp-for="City" class="glass-input form-control" placeholder=" inter City" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
 
-                <div class="form-group glass-input">
-                    <label asp-for="PostalCode">Postal Code:</label>
-                    <input asp-for="PostalCode" class="form-control" />
-                </div>
-                
-                <div class="form-group glass-input">
-                    <label asp-for="Email">Email:</label>
-                    <input asp-for="Email" class="form-control" />
-                </div>
 
-                <div class="form-group glass-input">
-                    <label asp-for="Phonenumber">Phone Number:</label>
-                    <input asp-for="Phonenumber" class="form-control" />
-                </div>
 
-                <div class="form-group glass-input">
-                    <label asp-for="Dateofbarth">Date of Birth:</label>
-                    <input asp-for="Dateofbarth" class="form-control" />
-                </div>
-
-                <!-- Add more fields as needed -->
-
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a asp-controller="Doctor" asp-action="Index" class="btn btn-secondary mt-2">
-                        <i class="fas fa-chevron-circle-left"></i> Back to Index
-                    </a>
-                </div>
-            </form>
         </div>
-    </div>
+       
+        <div class="form-row">
+
+            <div class="form-group col-md-4">
+
+                <input asp-for="Email" class="glass-input form-control" placeholder=" inter Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4">
+
+                <input asp-for="  PostalCode" class="glass-input form-control" placeholder=" inter PostalCode" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+
+                <input asp-for="username" class="glass-input form-control" placeholder=" inter Usename" />
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4">
+
+                <input asp-for="Phonenumber" class="glass-input form-control" placeholder="Inter Phonnumber" />
+                <span asp-validation-for="Phonenumber" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+
+                <input asp-for="StreetAddress" class="glass-input form-control" placeholder=" inter Adress street" />
+                <span asp-validation-for="StreetAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4">
+
+                <input asp-for="Dateofbarth" class="glass-input form-control" placeholder=" inter date of Barth" />
+                <span asp-validation-for="Dateofbarth" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+
+                <input asp-for="imgurlupdated" class="glass-input form-control" placeholder=" inter imge" />
+                <span asp-validation-for="imgurlupdated" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <input asp-for="Contracturluplod" class="glass-input form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+
+                <span asp-validation-for="Contracturluplod" class="text-danger"></span>
+            </div>
+
+
+        </div>
+
+        <div class="form-row">
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <select asp-for="  spicialist" asp-items="@Html.GetEnumSelectList<spicialist>()" aria-required="true" class=" glass-input form-control" placeholder="spicialist">
+
+
+                        <option value="">
+                            select spicialist
+                        </option>
+                    </select>
+                    <span asp-validation-for="spicialist" class="text-danger"></span>
+
+                </div>
+            </div>
+           
+
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <select asp-for="  RoleRegeseter" asp-items="@Html.GetEnumSelectList<RoleRegeseter>()" aria-required="true" class="glass-input form-control" placeholder="RoleRegeseter">
+                        <option value="">-- Select RoleRegeseter --</option>
+                    </select>
+                    <span asp-validation-for="RoleRegeseter" class="text-danger"></span>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+        <div class="form-row">
+
+
+
+
+
+
+
+
+
+            <div class="col-md-4">
+
+                <div class="form-group">
+
+                    <select asp-for="Gender" asp-items="@Html.GetEnumSelectList<Gender>()"
+                            aria-required="true" class="glass-input form-control" placeholder="Gender">
+                        <option value="">Choose gender</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+
+                </div>
+            </div> 
+            
+            <div class="col-md-4">
+
+                <div class="form-group">
+
+                    <select asp-for="StatusDoctorInSystem" asp-items="@Html.GetEnumSelectList<Cofimationdoctor>()"
+                            aria-required="true" class="glass-input form-control" placeholder="StatusDoctorInSystem">
+                        <option value="">Choose Confirmation</option>
+                    </select>
+                    <span asp-validation-for="StatusDoctorInSystem" class="text-danger"></span>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row mt-8">
+            <div class="form-group col-md-6">
+                <button type="submit" id="savedata" class="btn btn-primary">Update</button>
+            </div>
+            <div class="form-group col-md-6 text-right">
+                <a asp-controller="Admim" asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-chevron-circle-left"></i> Back to Index
+                </a>
+            </div>
+        </div>
+
+
+
+    </form>
 </div>
+

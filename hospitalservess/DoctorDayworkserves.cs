@@ -16,7 +16,7 @@ using System.Linq.Expressions;
 namespace hospitalservess
 {
 
-    public class DoctorDayworkserves : IGenericRepository<DoctorDayworkVM>, Idoctodayworinweek
+    public class DoctorDayworkserves : PaginationHelper<DoctorDayworkVM>, IGenericRepository<DoctorDayworkVM>, Idoctodayworinweek
     {
 
         lookupServess _lookupServess;

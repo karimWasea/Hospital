@@ -3,7 +3,7 @@ using hospitalVm;
 
 namespace hospitalIrepreatory
 {
-    public interface Idoctodayworinweek : IGenericRepository<DoctorDayworkVM>
+    public interface Idoctodayworinweek  :      IPaginationHelper<DoctorDayworkVM> ,IGenericRepository<DoctorDayworkVM>
     {
        // IEnumerable<DoctorDayworkVM> Getallstatandendshiftbydoctorbydoctorid(string id);
 

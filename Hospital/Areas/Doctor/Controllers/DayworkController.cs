@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 using Newtonsoft.Json;
 
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
@@ -29,17 +31,25 @@ namespace Hospital.Areas.Doctor.Controllers
         }
 
         //  GET: HomeController
-        public ActionResult Index( string doctorId)
+        public async Task<ActionResult> Index(string doctorId)
         {
             ViewBag.getdoctorfromapplicationuserid = _lookupServess.getdoctorfromapplicationuserid();
+            var model = _unitOfWork.idoctodayworinweek.getall();
 
-            return View(_unitOfWork.idoctodayworinweek.getall());
+            return View(model);
+
         }
+      
+
 
         // GET: HomeController/Details/5
-        public ActionResult  AllDayShifts()
+        public ActionResult  AllDayShifts(int? page)
         {
-            return View(_unitOfWork.idoctodayworinweek.GetAll());
+            var model = _unitOfWork.idoctodayworinweek.GetAll();
+         int pageNumber = page ?? 1;
+            var pagedPatients = _unitOfWork.idoctodayworinweek.GetPagedData(model.AsEnumerable(), pageNumber);
+            return View(pagedPatients);
+
         }
 
 
