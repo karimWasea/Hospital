@@ -31,7 +31,8 @@
     <i class="fas fa-plus-circle"></i> Add New TimingShifts
 </a>
 <table class="table table-bordered table-hover table-success
-            table-bordered">
+            =table-bordered">
+  <thead>
         <tr>
             <th>ID</th>
             <th>discreaption</th>
@@ -72,18 +73,15 @@
     </tbody>
 </table>
 
-<cs-pager cs-paging-pagesize=(int)Model.PageSize
-          cs-paging-pagenumber=(int)Model.PageNumber
-          cs-paging-totalitems=(int)Model.TotalItems
-          cs-pagenumber-param="PageNumber"
-          cs-previous-page-html="<a href='#' title='Previous page'><i class='glyphicon glyphicon-backward'></i></a>"
-          cs-next-page-html="<a href='#' title='Next page'><i class='glyphicon glyphicon-forward'></i></a>"
-          asp-controller="Hospitail"
-          asp-action="Index"
-          cs-pager-li-current-class="page-item active"
-          cs-pager-li-other-class="page-item"
-          cs-pager-li-non-active-class="page-item disabled"
-          cs-pager-link-current-class="page-link"
-          cs-pager-link-other-class="page-link">
-</cs-pager>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.pageSize; i++)
+        {
+            <li class="page-item @(i == Model.pageNumber ? "active" : "")">
+                <a class="page-link" href="/Admin/Contact/Index?pagnumber=@i">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+
 

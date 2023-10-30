@@ -27,7 +27,7 @@ IServiceCollection serviceCollection = builder.Services.AddDbContext<Application
 
 
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount =  false)
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount =  true)
 .AddEntityFrameworkStores<ApplicationDBcontext>().AddDefaultTokenProviders();
 
 

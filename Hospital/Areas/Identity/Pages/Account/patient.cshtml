@@ -77,20 +77,19 @@
 
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
         <div class="form-group col-md-8">
-            <label asp-for="Input.Email">Email:</label>
-            <input asp-for="Input.Email" class="glass-input form-control" />
+            <input asp-for="Input.Email" class="glass-input form-control" placeholder="Email" />
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label asp-for=" Input. Usename">Username:</label>
-                <input asp-for="Input.Usename" class="glass-input form-control" />
+                
+                <input asp-for="Input.Usename" class="glass-input form-control" placeholder="Usename" />
                 <span asp-validation-for="Input.Usename" class="text-danger"></span>
             </div>
 
             <div class="form-group col-md-5">
-                <label asp-for="Input.Phonnumber">Phone Number:</label>
-                <input asp-for="Input.Phonnumber" class="glass-input form-control" />
+                
+                <input asp-for="Input.Phonnumber" class="glass-input form-control" placeholder="Phonnumber" />
                 <span asp-validation-for="Input.Phonnumber" class="text-danger"></span>
             </div>
         </div>
@@ -98,14 +97,14 @@
 
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label asp-for="Input.StreetAddress">Address:</label>
-                <input asp-for="Input. StreetAddress" class="glass-input form-control" />
+              
+                <input asp-for="Input. StreetAddress" class="glass-input form-control" placeholder="StreetAddress" />
                 <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
             </div>
 
             <div class="form-group col-md-5">
-                <label asp-for="Input.dateofbarth">Hiring Date:</label>
-                <input asp-for="Input.dateofbarth" class="glass-input form-control" />
+        
+                <input asp-for="Input.dateofbarth" class="glass-input form-control" placeholder="StreetAddress" />
                 <span asp-validation-for="Input.dateofbarth" class="text-danger"></span>
             </div>
         </div>
@@ -113,14 +112,14 @@
 
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label asp-for="Input.imphgurl">Update Image:</label>
-                <input asp-for="Input.imphgurl" class="glass-input form-control" />
+              
+                <input asp-for="Input.imphgurl" class="glass-input form-control" placeholder="imphgurlimphgurl" />
                 <span asp-validation-for="Input.imphgurl" class="text-danger"></span>
             </div>
 
             <div class="form-group col-md-5">
-                <label asp-for="Input.City">Contract URL:</label>
-                <input asp-for="Input.City" class="glass-input form-control" />
+            
+                <input asp-for="Input.City" class="glass-input form-control" placeholder="City" />
                 <span asp-validation-for="Input.City" class="text-danger"></span>
             </div>
         </div>
@@ -128,21 +127,21 @@
         <div class="form-row">
 
             <div class="form-group col-md-5">
-                <input asp-for="Input.ConfirmPassword" class="    .glass-input form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <input asp-for="Input.ConfirmPassword" class="    glass-input form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group col-md-5">
-                <input asp-for="Input.Password" class="form-control     .glass-input" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
+                <input asp-for="Input.Password" class="form-control     glass-input" autocomplete="new-password" aria-required="true" placeholder="password" />
+           
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label asp-for="Input. Nationality">Birth Date:</label>
-                <input asp-for="Input.Nationality" class="glass-input form-control" />
+         
+                <input asp-for="Input.Nationality" class="glass-input form-control" placeholder="Nationality" />
                 <span asp-validation-for="Input.Nationality" class="text-danger"></span>
             </div>
 
@@ -154,9 +153,9 @@
             <div class="form-group col-md-5">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Input.Gender" class="control-label">Gender</label>
+               
                         <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"
-                                aria-required="true" class="    .glass-input form-control">
+                                aria-required="true" class="    glass-input form-control" placeholder="Nationality">
                             <option value="" disabled>Choose gender</option>
                         </select>
                         <span asp-validation-for="Input.Gender" class="text-danger"></span>
