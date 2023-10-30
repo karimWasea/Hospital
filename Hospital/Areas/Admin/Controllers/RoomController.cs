@@ -56,10 +56,18 @@ namespace Hospital.Areas.Admin.Controllers
         // [ValidateAntiForgeryToken]
         public ActionResult Save(RoomVm HospitalVm)
         {
-            
-                _unitOfWork.IRoom.Save(HospitalVm);
+            ViewBag.HospitalsId = _unitOfWork.Ilookup.HospitalsId();
 
-            return RedirectToAction("Index" , new { success = true });
+            if (ModelState.IsValid)
+            {
+
+                _unitOfWork.IRoom.Save(HospitalVm);
+                TempData["Message"] = $" successfully!";
+                TempData["MessageType"] = "Save";
+                return RedirectToAction("Index", new { success = true });
+            }
+
+            return View(HospitalVm);
 
 
 
@@ -69,7 +77,8 @@ namespace Hospital.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             _unitOfWork.IRoom.Delete(id);
-
+            TempData["Message"] = $" successfully!";
+            TempData["MessageType"] = "Delete";
 
 
 

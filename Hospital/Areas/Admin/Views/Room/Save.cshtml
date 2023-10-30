@@ -7,70 +7,9 @@
 
 @model hospitalVm.RoomVm
 
-<style>
-    /* Custom CSS styles */
-    .container {
-        text-align: center;
-    }
+<partial name="_AlertMessage" />
 
-    h1 {
-        margin-bottom: 20px;
-    }
-
-    .btn-secondary {
-        margin-top: 10px;
-    }
-
-    body {
-        background-image: url('/Images/hospital11.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-
-    /* Glass-like style for form elements */
-    .glass-container {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px;
-        padding: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        color: black;
-    }
-
-    .glass-input {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 5px;
-        padding: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .glass-select {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 5px;
-        padding: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Style for the button group */
-    .button-group {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-        .button-group .btn {
-            margin: 0;
-        }
-
-    /* Style for form-row divisions */
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-        margin: 10px 0;
-    }
-</style>
+<link href="~/css/roonsave.css" rel="stylesheet" />
 
 <div class="container mt-5 glass-container col-md-7">
     <div class="row justify-content-center">
@@ -78,24 +17,32 @@
             <h1>Edit Room</h1>
 
             <form asp-action="Save" method="post" id="saveform">
-                <input type="hidden" asp-for="id" />
-
-                <div class="form-group">
+         @*        <input type="hidden" asp-for="id" /> *@
+                <div class="form-row">
+                    <div class="form-group col-4">
                     <label asp-for="RoomName">Room Name:</label>
-                    <input asp-for="RoomName" class="form-control glass-input" required />
-                </div>
+                    <input asp-for="RoomName" class="form-control glass-input"   />
+                    <span asp-validation-for="RoomName" class="text-danger"></span>
 
-                <div class="form-group">
+                    </div>
+
+
+                    <div class="form-group col-4">
                     <label asp-for="type">Type:</label>
                     <input asp-for="type" class="form-control glass-input" />
-                </div>
+                    <span asp-validation-for="type" class="text-danger"></span>
 
-                <div class="form-group">
+                    </div>
+                </div><div class="form-row">
+
+                    <div class="form-group col-4">
                     <label asp-for="Stuts">Status:</label>
-                    <input asp-for="Stuts" class="form-control glass-input" />
+                    <input asp-for="Stuts" class="form-control glass-input" />  
+                    <span asp-validation-for="Stuts" class="text-danger"></span>
+
                 </div>
 
-                <div class="form-group glass-select col-8">
+                <div class="form-group glass-select col-4">
                     <label asp-for="hospitalid">Hospital</label>
                     <select asp-for="hospitalid" class="form-control glass-select" asp-items="@ViewBag.HospitalsId">
                         <option value="">Select Hospital</option>
@@ -104,11 +51,20 @@
                             <option value="@item.Value" selected>@item.Text</option>
                         }
                     </select>
-                </div>
+                    <span asp-validation-for="hospitalid" class="text-danger"></span>
+
+                </div>  </div>
 
                 <div class="button-group">
-                    <button type="submit" id="savedata" class="btn btn-info">
-                        Save
+                    <button type="submit" class="btn btn-primary">
+                        @if (Model != null && Model.id > 0)
+                        {
+                            <text>Edit</text>
+                        }
+                        else
+                        {
+                            <text>addnew</text>
+                        }
                     </button>
                     <a asp-area="Admin" asp-controller="Room" asp-action="Index" class="btn btn-secondary mt-2">
                         <i class="fas fa-chevron-circle-left"></i> Back to Index
@@ -118,39 +74,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var saveForm = document.getElementById("saveform");
-        var saveButton = document.getElementById("savedata");
-
-        saveForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You are about to update the room's information.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, update it!",
-                cancelButtonText: "No, cancel",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // You can also add additional form validation here
-                    saveForm.submit();
-                }
-            });
-        });
-
-        // After form submission, show a success message if desired
-        var urlParams = new URLSearchParams(window.location.search);
-        var successParam = urlParams.get("success");
-        if (successParam === "true") {
-            Swal.fire({
-                title: "Success!",
-                text: "Room's information has been updated.",
-                icon: "success"
-            });
-        }
-    });
-</script>
+@section Scripts{
+    <script src="~/js/roonsave.js"></script>
+}

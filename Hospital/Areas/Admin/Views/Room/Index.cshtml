@@ -8,14 +8,8 @@
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
-<style>
-    body {
-        background-image: url('/Images/hospital.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-</style>
+<link href="~/css/contactindex.css" rel="stylesheet" />
+
 <a asp-controller="Room" onclick="return showADDConfirmation()" asp-action="Save" class="btn btn-primary">
     <i class="fas fa-plus-circle"></i> Add New Room
 </a>
@@ -24,7 +18,7 @@
             table-bordered">
     <thead>
         <tr>
-            <th>ID</th>
+         
             <th>Name</th>
             <th>Stuts</th>
             <th>Hospitail Name</th>
@@ -36,7 +30,7 @@
         @foreach (var hospital in Model.Data)
         {
             <tr>
-                <td>@hospital.id</td>
+                
                 <td>@hospital.RoomName</td>
                 <td>@hospital.Stuts</td>
                 <td>@hospital.hospitalname</td>
@@ -69,44 +63,6 @@
 </nav>
 
 
-<script>
-    async function executeInitialAction(url) {
-        try {
-            const response = await fetch(url, { method: 'POST' });
-
-            if (response.ok) {
-                showEditConfirmation(url);
-            } else {
-                console.error('Initial action failed');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-
-    async function showEditConfirmation(url) {
-        const confirmed = await showConfirmation('Edit', 'Are you sure you want to edit?');
-        if (confirmed) {
-            window.location.href = url;
-        }
-    }
-
-    async function DeletEditConfirmation(url) {
-        const confirmed = await showConfirmation('Delete', 'Are you sure you want to delete?');
-        if (confirmed) {
-            window.location.href = url;
-        }
-    }
-
-    async function showConfirmation(action, message) {
-        const result = await Swal.fire({
-            title: `Confirm ${action}`,
-            text: message,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: `Yes, ${action} it!`,
-            cancelButtonText: 'No, cancel',
-        });
-        return result.isConfirmed;
-    }
-</script>
+@section Scripts{
+    <script src="~/js/roomindex.js"></script>
+}

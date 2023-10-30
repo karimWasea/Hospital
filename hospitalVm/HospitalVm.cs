@@ -6,13 +6,23 @@ namespace hospitalVm
 
     public class HospitalVm
     {
+
         public int id
-        { get; set; }
+        { get; set; } = 0;
+        [Required(ErrorMessage = "Name is required")]
         public string? Name { get; set; }
 
+        [Required(ErrorMessage = "City is required")]
         public string? City { get; set; }
+
+        [Required(ErrorMessage = "Country is required")]
         public string? Country { get; set; }
+
+        [Required(ErrorMessage = "Type is required")]
         public string? Type { get; set; }
+
+        [Required(ErrorMessage = "Pincode is required")]
+        [RegularExpression(@"^\d{6}$", ErrorMessage = "Pincode must be a 6-digit number")]
         public string? Pincode { get; set; }
 
 

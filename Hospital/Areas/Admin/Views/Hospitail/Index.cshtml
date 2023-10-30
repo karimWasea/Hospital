@@ -5,22 +5,16 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
-}<style>
-     body {
-         background-image: url('/Images/hospital.jpg');
-         background-size: cover;
-         background-repeat: no-repeat;
-         background-attachment: fixed;
-     }
-</style>
-
+}
+<partial name="_AlertMessage" />
+<link href="~/css/hospitalindex.css" rel="stylesheet" />
 <div class="container">
     <h2>@ViewData["Title"]</h2>
 
     <a asp-controller="Hospitail" asp-action="Save" class="btn btn-primary">
         <i class="fas fa-plus-circle"></i> Add New Hospital
     </a>
-
+    <br />
     <table class="table table-bordered table-hover table-success
             table-bordered">
         <thead>
@@ -46,15 +40,16 @@
                     <td>@hospital.Type</td>
                     <td>
                         <a asp-controller="Hospitail" asp-action="Details" asp-route-id="@hospital.id" class="btn btn-info">
-                            <i class="fas fa-info-circle" title="Details"></i>
+                            <i class="fas fa-info-circle" title="Details"></i> Details
                         </a>
                         <a asp-controller="Hospitail" asp-action="Save" asp-route-id="@hospital.id" class="btn btn-warning">
-                            <i class="fas fa-edit" title="Edit"></i>
+                            <i class="fas fa-edit" title="Edit"></i> Edit
                         </a>
                         <a asp-controller="Hospitail" asp-action="Delete" asp-route-id="@hospital.id" class="btn btn-danger">
-                            <i class="fas fa-trash-alt" title="Delete"></i>
+                            <i class="fas fa-trash-alt" title="Delete"></i> Delete
                         </a>
                     </td>
+
                 </tr>
             }
         </tbody>

@@ -9,14 +9,22 @@ namespace hospitalVm
     {
 
 
-
+ 
         public int id
         { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+
         public int hospitalid
         { get; set; }
+        [Required(ErrorMessage = "RoomName is required")]
+
         public string RoomName { get; set; }
+        [Required(ErrorMessage = "Stuts is required")]
+
         public string Stuts { get; set; }
-        public string hospitalname { get; set; }
+        public string hospitalname { get; set; }= string.Empty;
+        [Required(ErrorMessage = "type is required")]
+
         public string type { get; set; }
 
 

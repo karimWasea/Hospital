@@ -11,6 +11,7 @@
 
 
 
+<link href="~/css/contacsave.css" rel="stylesheet" />
 
 
 
@@ -18,73 +19,8 @@
 
 
 
-<style>
+<partial name="_AlertMessage" />
 
-
-    /* Custom CSS styles */
-    .container {
-        text-align: center;
-    }
-
-    h1 {
-        margin-bottom: 20px;
-    }
-
-    .btn-secondary {
-        margin-top: 10px;
-    }
-
-    body {
-        background-image: url('/Images/hospital11.jpg');
-
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-    /* Glass-like style for form elements */
-    .glass-container {
-        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px;
-        padding: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        color: black;
-    }
-
-    .glass-input {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 5px;
-        padding: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .glass-select {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 5px;
-        padding: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Style for the button group */
-    .button-group {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-        .button-group .btn {
-            margin: 0;
-        }
-
-    /* Style for form-row divisions */
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-        margin: 10px 0;
-    }
-
-</style>
 <div class="container mt-5 glass-container col-md-7">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -95,12 +31,16 @@
                 <div class="form-row">
                     <div class="form-group glass-input col-6">
                         <label asp-for="Email">Contat Email:</label>
-                        <input asp-for="Email" class="form-control" required />
+                        <input asp-for="Email" class="form-control"   />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+
                     </div>
 
                     <div class="form-group glass-input col-5">
                         <label asp-for="phone">phone:</label>
                         <input asp-for="phone" class="form-control" />
+                        <span asp-validation-for="phone" class="text-danger"></span>
+
                     </div>
                 </div>
 
@@ -116,13 +56,22 @@
                         }
                     </select>
 
-                
+                    <span asp-validation-for="hospitalid" class="text-danger"></span>
+
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" id="savedata" class="btn btn-info">
-                        Add New Contact
+                    <button type="submit" class="btn btn-primary">
+                        @if (Model != null && Model.Id > 0)
+                        {
+                            <text>Edit</text>
+                        }
+                        else
+                        {
+                            <text>addnew</text>
+                        }
                     </button>
+
                     <a asp-area="Admin" asp-controller="Contact" asp-action="Index" class="btn btn-secondary mt-2">
                         <i class="fas fa-chevron-circle-left"></i> Back to Index
                     </a>
@@ -140,53 +89,14 @@
 
 
 
+@section Scripts{
+
+    <script src="~/js/contactsave.js"></script>
+
+
+}
 
 
 
 
 
-
-
-<script>
-    function saveStudent() {
-        var studentForm = document.getElementById("saveform");
-
-        if (studentForm.checkValidity()) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You are about to update the room's information.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, update it!",
-                cancelButtonText: "No, cancel",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var formData = new FormData(studentForm);
-
-                    fetch("/Admin/Contact/Save", {
-                        method: "POST",
-                        body: formData
-                    })
-                        .then(response => response.text())
-                        .then(response => {
-                            Swal.fire({
-                                title: "Success!",
-                                text: Success,
-                                icon: "success"
-                            });
-                        })
-                        .catch(error => {
-                            console.error("Error:", error);
-                            Swal.fire({
-                                title: "Error!",
-                                text: "An error occurred while saving the data.",
-                                icon: "error"
-                            });
-                        });
-                }
-            });
-        } else {
-            studentForm.reportValidity();
-        }
-    }
-</script>

@@ -7,6 +7,8 @@ namespace hospitalVm
 
     public class ContactVm
     {
+        [Required(ErrorMessage = "name is required")]
+
         public int Id
         { get; set; }
         [Required(ErrorMessage ="is rqured")]
