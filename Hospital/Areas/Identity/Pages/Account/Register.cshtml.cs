@@ -207,7 +207,7 @@ namespace Hospital.Areas.Identity.Pages.Account
                 user.imphgurl = _imgoeration.Addrengofimges(Input.imphgurl);
                 user.PhoneNumber = Input.Phonnumber;
                 user.Email = Input.Email;
-                user.City = Input.City;
+                user.City = Input.City; 
                 user.StreetAddress = Input.StreetAddress;
                 user.UserName = Input.Usename;
                 user.Gender = Input.Gender;
