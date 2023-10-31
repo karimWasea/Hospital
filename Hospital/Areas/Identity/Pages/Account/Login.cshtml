@@ -1,4 +1,6 @@
-﻿@* @page
+﻿@page
+@using Hr.Mangment.System.Areas.Identity.Pages.Account;
+
 @model LoginModel
 
 @{
@@ -7,11 +9,12 @@
 <style>
     /* Add CSS styles for the background image */
     body {
-        background-image: url('/Images/images (4).jpeg');
+        background-image: url('/Images/hospital.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
+
 
     /* Custom CSS styles */
     .login-container {
@@ -19,8 +22,9 @@
         justify-content: center;
         align-items: center;
         height: 100vh; /* Vertically center the form */
-/*         width: 100%; /* Set the width to 40% of the parent container */
- */    }
+    }
+
+   
 
     .login-form {
     max-width: 100%;
@@ -92,10 +96,9 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
- *@
+ 
 
-
-
+@*
 @page
 @using Hr.Mangment.System.Areas.Identity.Pages.Account;
 @model LoginModel
@@ -155,3 +158,4 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+ *@

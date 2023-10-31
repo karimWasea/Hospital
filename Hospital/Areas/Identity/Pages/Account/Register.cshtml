@@ -5,7 +5,7 @@
 }
 
 
-@* <div class="row">
+@*  <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
             <h2>Create a new account.</h2>
@@ -88,14 +88,14 @@
                 <span asp-validation-for="Input.dateofbarth" class="text-danger"></span>
 
             </div>
- *@
+ 
 
 
 
 
 
 
-@* 
+
             <label asp-for="Input.Gender"></label>
 
             <div class="form-floating mb-3">
@@ -137,12 +137,12 @@
                 </select>
                 <span asp-validation-for="Input.RoleRegeseter" class="text-danger"></span>
 
-            </div> *@
+            </div> 
 
 
    
 
-@* 
+
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
@@ -178,8 +178,8 @@
         </section>
     </div>
 </div>
+ 
  *@
-
 
 @{
     ViewData["Title"] = "Register Doctor";
@@ -260,7 +260,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
         <div class="form-row">
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-4">
 
                 <input asp-for="Input.Email" class="glass-input form-control" placeholder=" inter Email" />
             <span asp-validation-for="Input.Email" class="text-danger"></span>
@@ -425,3 +425,4 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+ 

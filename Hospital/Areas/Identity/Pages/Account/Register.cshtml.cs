@@ -222,8 +222,8 @@ namespace Hospital.Areas.Identity.Pages.Account
                 user.statusDoctorInSystem = Cofimationdoctor.Regeseter;
 
 
-                await _userStore.SetUserNameAsync(user, Input.Usename, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                //await _userStore.SetUserNameAsync(user, Input.Usename, CancellationToken.None);
+                //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
