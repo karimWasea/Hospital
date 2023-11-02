@@ -14,10 +14,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 using Newtonsoft.Json.Linq;
 
+using PagedList;
+
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq.Expressions;
 using System.Security.Policy;
+using System.Transactions;
 
 namespace hospitalservess
 {
@@ -39,26 +42,11 @@ namespace hospitalservess
         }
     
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public async Task Save(DoctorVm entity)
         {
-            var model = DoctorVm.CanconvertViewmodel(entity);
 
-            if (entity.id != null)
+
+            if (entity.id != null && entity.id!=string.Empty)
             {
                 // Update existing entity
                 var existingUser = await _user.FindByIdAsync(entity.id);
@@ -99,14 +87,56 @@ namespace hospitalservess
                  
                         var updateResult = await _user.UpdateAsync(existingUser);
                        
-                        await _db.SaveChangesAsync();
+                          _db.SaveChanges();
                     }
             else
             {
 
-                var updateResult = await _user.CreateAsync(model);
 
-                await _db.SaveChangesAsync();   
+          var model=    new ApplicationUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = entity.username,
+
+                    Email = entity.Email,
+                    RoleRegeseter = entity.RoleRegeseter,
+                    Gender = entity.Gender,
+                    StreetAddress = entity.StreetAddress,
+                    City = entity.City,
+                    Dateofbarth = entity.Dateofbarth,
+                    PhoneNumber = entity.Phonenumber,
+                    Nationality = entity.Nationality,
+                    imphgurl = _lookupServess.Uploadimg(entity.imgurlupdated),
+                    PostalCode = entity.PostalCode,
+                    Title = entity.Title,
+                    HiringDate = entity.HiringDate,
+                    Contracturl = _lookupServess.Uploadimg(entity.Contracturluplod),
+                    statusDoctorInSystem = entity.StatusDoctorInSystem,
+                    WorkingDaysinWeek = entity.WorkingDaysinWeek,
+                    Salary = entity.Salary,
+                };
+
+
+                using (var transactionScope = new TransactionScope())
+                {
+
+
+                    //var model = DoctorVm.CanconvertViewmodel(entity);
+
+                    //var updateResult = _user.CreateAsync(model, "");
+
+                    // Add the model to the DbContext
+                    _db.Add(model);
+
+                    // Save changes to the database
+                    int rowsAffected = _db.SaveChanges();
+
+                    // Commit the transaction
+                    transactionScope.Complete();
+
+                    // Return the number of rows affected
+
+                }
             }
           
         }
@@ -227,38 +257,10 @@ namespace hospitalservess
         }
 
 
+    
 
-        public async Task<IEnumerable<DoctorVm>> GetAllDoctorRegester()
-        {
-            // && ApplicationUser.statusDoctorInSystem == Cofimationdoctor.Regeseter
-            var _users = await _user.Users.Where(ApplicationUser => ApplicationUser.RoleRegeseter == RoleRegeseter.Doctor && ApplicationUser.statusDoctorInSystem == Cofimationdoctor.Regeseter).Select(ApplicationUser => new DoctorVm
-            {
+      
 
-
-                id = ApplicationUser.Id,
-                username = ApplicationUser.UserName,
-
-                Email = ApplicationUser.Email,
-                RoleRegeseter = ApplicationUser.RoleRegeseter,
-                Gender = ApplicationUser.Gender,
-                StreetAddress = ApplicationUser.StreetAddress,
-                City = ApplicationUser.City,
-                Dateofbarth = ApplicationUser.Dateofbarth,
-                Phonenumber = ApplicationUser.PhoneNumber,
-                Nationality = ApplicationUser.Nationality,
-                imphgurl = ApplicationUser.imphgurl,
-                PostalCode = ApplicationUser.PostalCode,
-                StatusDoctorInSystem = ApplicationUser.statusDoctorInSystem,
-                spicialist = ApplicationUser.spicialist,
-
-
-
-
-
-
-            }).ToListAsync();
-            return _users;
-        }
 
         public async Task<DoctorVm> GetByIdasconfirmed(string id)
         {
@@ -294,9 +296,13 @@ namespace hospitalservess
              }).FirstOrDefaultAsync();
             return model;
         }
-        public async Task<IEnumerable<DoctorVm>> Search(string searchTerm = null)
+      
+
+
+        public async Task<IPagedList<DoctorVm>> Search(int? Pagenumber, string searchTerm = null )
         {
             var searchTermLower = searchTerm?.ToLower();
+            int pageNum = Pagenumber ?? 1;
 
             var doctorsList = await _user.Users
                 .Where(a => a.RoleRegeseter == RoleRegeseter.Doctor &&
@@ -330,10 +336,54 @@ namespace hospitalservess
                     Salary = ApplicationUser.Salary
                 })
                 .ToListAsync();
+         var paglist=   GetPagedData(doctorsList , pageNum);
 
-            return doctorsList;
+            return paglist;
         }
 
+        public async Task<IPagedList<DoctorVm>> GetAllDoctorRegester(int? pageNumber, string searchTerm = null)
+        {
+            var searchTermLower = searchTerm?.ToLower();
+            int pageNum = pageNumber ?? 1;
+
+            var query = _user.Users
+                .Where(a => a.RoleRegeseter == RoleRegeseter.Doctor &&
+                            a.statusDoctorInSystem == Cofimationdoctor.Regeseter &&
+                            (string.IsNullOrWhiteSpace(searchTermLower) ||
+                             EF.Functions.Like(a.UserName, "%" + searchTermLower + "%") ||
+                             EF.Functions.Like(a.StreetAddress, "%" + searchTermLower + "%") ||
+                             EF.Functions.Like(a.City, "%" + searchTermLower + "%") ||
+                             EF.Functions.Like(a.Email, "%" + searchTermLower + "%") ||
+                             EF.Functions.Like(a.Title, "%" + searchTermLower + "%") ||
+                             EF.Functions.Like(a.Nationality, "%" + searchTermLower + "%"))
+                )
+                .Select(ApplicationUser => new DoctorVm
+                {
+                    id = ApplicationUser.Id,
+                    username = ApplicationUser.UserName,
+                    Email = ApplicationUser.Email,
+                    RoleRegeseter = ApplicationUser.RoleRegeseter,
+                    Gender = ApplicationUser.Gender,
+                    StreetAddress = ApplicationUser.StreetAddress,
+                    City = ApplicationUser.City,
+                    Dateofbarth = ApplicationUser.Dateofbarth,
+                    Phonenumber = ApplicationUser.PhoneNumber,
+                    Nationality = ApplicationUser.Nationality,
+                    imphgurl = ApplicationUser.imphgurl,
+                    PostalCode = ApplicationUser.PostalCode,
+                    Title = ApplicationUser.Title,
+                    HiringDate = ApplicationUser.HiringDate,
+                    Contracturl = ApplicationUser.Contracturl,
+                    StatusDoctorInSystem = ApplicationUser.statusDoctorInSystem,
+                    WorkingDaysinWeek = ApplicationUser.WorkingDaysinWeek,
+                    Salary = ApplicationUser.Salary
+                });
+
+            var doctors = await query.ToListAsync();
+            var pagedList = GetPagedData(doctors, pageNum);
+
+            return pagedList;
+        }
 
 
     }

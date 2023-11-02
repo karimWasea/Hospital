@@ -1,88 +1,4 @@
-﻿@*
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *,Cloudscribe.Web.Pagination
-
-@model hospitalVm.DoctorVm
-@{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<div class="container mt-5">
-    <h2 class="text-center">Doctor Profile</h2>
-
-    <div class="card mt-4" style="width: 18rem;">
-        <img class="card-img-top" src="@Model.imphgurl" alt="Profile Image">
-        <div class="card-body">
-            <h5 class="card-title">Doctor Profile</h5>
-
-            <p class="card-text d-none"><strong>ID:</strong> @Model.id</p>
-            <p class="card-text"><strong>Phone Number:</strong> @Model.Phonenumber</p>
-            <p class="card-text"><strong>Title:</strong> @Model.Title</p>
-            <p class="card-text"><strong>Salary:</strong> @Model.Salary</p>
-            <p class="card-text"><strong>Hiring Date:</strong> @Model.HiringDate.ToShortDateString()</p>
-            <p class="card-text"><strong>Bonus Working Hours:</strong> @Model.BonusWorkingHours</p>
-            <p class="card-text"><strong>Contract URL:</strong> @Model.Contracturl</p>
-            <p class="card-text"><strong>Working Days in Week:</strong> @Model.WorkingDaysinWeek</p>
-            <p class="card-text"><strong>Starting Shift:</strong> @Model.StartingShift</p>
-            <p class="card-text"><strong>Ending Shift:</strong> @Model.EndingShift</p>
-            <p class="card-text"><strong>Gender:</strong> @Model.Gender</p>
-            <p class="card-text"><strong>Street Address:</strong> @Model.StreetAddress</p>
-            <p class="card-text"><strong>City:</strong> @Model.City</p>
-            <p class="card-text"><strong>Role:</strong> @Model.RoleRegeseter</p>
-            <p class="card-text"><strong>Nationality:</strong> @Model.Nationality</p>
-            <p class="card-text"><strong>Username:</strong> @Model.username</p>
-            <p class="card-text"><strong>Email:</strong> @Model.Email</p>
-            <p class="card-text"><strong>Profile Image URL:</strong> @Model.imphgurl</p>
-            <p class="card-text"><strong>Specialist:</strong> @Model.spicialist</p>
-            <p class="card-text"><strong>Status in System:</strong> @Model.StatusDoctorInSystem</p>
-            <p class="card-text"><strong>Postal Code:</strong> @Model.PostalCode</p>
-            <p class="card-text"><strong>Date of Birth:</strong> @Model.Dateofbarth.ToShortDateString()</p>
-
-            <div class="text-center mt-4">
-                <a asp-controller="Doctor" asp-action="Save" asp-route-id="@Model.id" class="btn btn-primary">
-                    <i class="fas fa-plus-circle"></i> Edit Profile
-                </a>
-                <a asp-controller="Doctor" asp-action="Index" class="btn btn-secondary ml-2">
-                    <i class="fas fa-plus-circle"></i> Back to Index
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*@
-
-
-
-
-
-
-
-
-
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Cloudscribe.Web.Pagination
 
 @model hospitalVm.DoctorVm
@@ -91,69 +7,107 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
     body {
         background-image: url('/Images/hospital11.jpg');
-
         background-size: cover;
         background-repeat: no-repeat;
     }
-</head>
-<body>
 
-<div class="container mt-5">
+    .foromRoww {
+        display: flex;
+        justify-content: center;
+    }
+
+    .card-text {
+        text-align: center;
+        padding: 10px;
+    }
+</style>
+<div class="text-center mt-4">
+    <a asp-controller="Doctor" asp-action="Save" asp-route-id="@Model.id" class="btn btn-primary edit-profile">
+        <i class="fas fa-plus-circle"></i> Edit Profile
+    </a>
+    <a asp-controller="Doctor" asp-action="Index" class="btn btn-secondary ml-2">
+        <i class="fas fa-plus-circle"></i> Back to Index
+    </a>
+    <a asp-controller="Doctor" asp-action="GetRegisterdoctor" class="btn btn-secondary ml-2">
+        <i class="fas fa-plus-circle"></i> Back to Registerdoctor
+    </a>
+    <a asp-controller="DoctorDaywork" asp-action="Index" asp-route-id="@Model.id" class="btn btn-secondary ml-2">
+        <i class="fas fa-plus-circle"></i> Add Workdays
+    </a>
+</div>
+<div class="container mt-5" >
     <h2 class="text-center">Doctor Profile</h2>
-
-    <div class="card mt-4 mx-auto w-80">
-        <img class="card-img-top" src="@Model.imphgurl" alt="Profile Image" width="300">
+    <div class="card mt-4 mx-auto w-80 ">
+        <img class="card-img-top" src="@Model.imphgurl" alt="Profile Image" width="150">
         <div class="card-body">
             <h5 class="card-title">Doctor Profile</h5>
 
-            <p class="card-text d-none" id="idField"><strong>ID:</strong> @Model.id</p>
-            <p class="card-text"><strong>Phone Number:</strong> @Model.Phonenumber</p>
-            <p class="card-text"><strong>Title:</strong> @Model.Title</p>
-            <p class="card-text"><strong>Salary:</strong> @Model.Salary</p>
-                <p class="card-text"><strong>Hiring Date:</strong> @Model.HiringDate.ToShortDateString()</p>
-                <p class="card-text"><strong>Bonus Working Hours:</strong> @Model.BonusWorkingHours</p>
-                <p class="card-text"><strong>Contract URL:</strong> @Model.Contracturl</p>
-                <p class="card-text"><strong>Working Days in Week:</strong> @Model.WorkingDaysinWeek</p>
-                <p class="card-text"><strong>Starting Shift:</strong> @Model.StartingShift</p>
-                <p class="card-text"><strong>Ending Shift:</strong> @Model.EndingShift</p>
-                <p class="card-text"><strong>Gender:</strong> @Model.Gender</p>
-                <p class="card-text"><strong>Street Address:</strong> @Model.StreetAddress</p>
-                <p class="card-text"><strong>City:</strong> @Model.City</p>
-                <p class="card-text"><strong>Role:</strong> @Model.RoleRegeseter</p>
-                <p class="card-text"><strong>Nationality:</strong> @Model.Nationality</p>
-                <p class="card-text"><strong>Username:</strong> @Model.username</p>
-                <p class="card-text"><strong>Email:</strong> @Model.Email</p>
-                <p class="card-text"><strong>Specialist:</strong> @Model.spicialist</p>
-                <p class="card-text"><strong>Status in System:</strong> @Model.StatusDoctorInSystem</p>
-                <p class="card-text"><strong>Postal Code:</strong> @Model.PostalCode</p>
-                <p class="card-text"><strong>Date of Birth:</strong> @Model.Dateofbarth.ToShortDateString()</p>
+            <table class="table">
+                <tr>
+                    <td class="bg-success"><strong>ID:</strong></td>
+                    <td class="bg-success">@Model.id</td>
+                    <td class="bg-success"><strong>Phone Number:</strong></td>
+                    <td class="bg-success">@Model.Phonenumber</td>
+                    <td class="bg-success"><strong>Title:</strong></td>
+                    <td class="bg-success">@Model.Title</td>
+                </tr>
+                <tr>
+                    <td class="bg-success"><strong>Salary:</strong></td>
+                    <td class="bg-success">@Model.Salary</td>
+                    <td class="bg-success"><strong>Hiring Date:</strong></td>
+                    <td class="bg-success">@Model.HiringDate.ToShortDateString()</td>
+                    <td class="bg-success"><strong>Bonus Working Hours:</strong></td>
 
-            <div class="text-center mt-4">
-                    <a asp-controller="Doctor" asp-action="Save" asp-route-id="@Model.id" class="btn btn-primary edit-profile">
-                    <i class="fas fa-plus-circle"></i> Edit Profile
-                </a>
-                <a asp-controller="Doctor" asp-action="Index" class="btn btn-secondary ml-2">
-                    <i class="fas fa-plus-circle"></i> Back to Index
-                </a>
-
-
-
-
-                    <a asp-controller="DoctorDaywork" asp-action="ADDRengofdftiming" asp-route-id="@Model.id" class="btn btn-secondary ml-2">
-                    <i class="fas fa-plus-circle"></i> ADDworkdays
-                </a>
-            </div>
+                </tr>
+                <tr>
+                    <td class="bg-success"><strong>Contract URL:</strong></td>
+                    <td class="bg-success">@Model.Contracturl</td>
+                    <td class="bg-success"><strong>Working Days in Week:</strong></td>
+                    <td class="bg-success">@Model.WorkingDaysinWeek</td>
+                    <td class="bg-success"><strong>Starting Shift:</strong></td>
+                    <td class="bg-success">@Model.StartingShift</td>
+                </tr>
+                <tr>
+                    <td class="bg-success"><strong>Ending Shift:</strong></td>
+                    <td class="bg-success">@Model.EndingShift</td>
+                    <td class="bg-success"><strong>Gender:</strong></td>
+                    <td class="bg-success">@Model.Gender</td>
+                    <td class="bg-success"><strong>Street Address:</strong></td>
+                    <td class="bg-success">@Model.StreetAddress</td>
+                </tr>
+                <tr>
+                    <td class="bg-success"><strong>City:</strong></td>
+                    <td class="bg-success">@Model.City</td>
+                    <td class="bg-success"><strong>Role:</strong></td>
+                    <td class="bg-success">@Model.RoleRegeseter</td>
+                    <td class="bg-success"><strong>Nationality:</strong></td>
+                    <td class="bg-success">@Model.Nationality</td>
+                </tr>
+                <tr>
+                    <td class="bg-success"><strong>Username:</strong></td>
+                    <td class="bg-success">@Model.username</td>
+                    <td class="bg-success"><strong>Email:</strong></td>
+                    <td class="bg-success">@Model.Email</td>
+                    <td class="bg-success"><strong>Specialist:</strong></td>
+                    <td class="bg-success">@Model.spicialist</td>
+                </tr>
+                <tr>
+                    <td class="bg-success"><strong>Status in System:</strong></td>
+                    <td class="bg-success">@Model.StatusDoctorInSystem</td>
+                    <td class="bg-success"><strong>Postal Code:</strong></td>
+                    <td class="bg-success">@Model.PostalCode</td>
+                    <td class="bg-success"><strong>Date of Birth:</strong></td>
+                    <td class="bg-success">@Model.Dateofbarth.ToShortDateString()</td>
+                </tr>
+            </table>
         </div>
     </div>
+    
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -164,134 +118,18 @@
     $(document).ready(function () {
         var idField = $("#idField");
         var editProfileBtn = $(".edit-profile");
-
         idField.hide();
 
-        editProfileBtn.click(function () {
-            idField.toggle();
-        });
-
         editProfileBtn.click(function (event) {
-            var confirmMsg = "Are you sure you want to edit the profile?";
-            if (!confirm(confirmMsg)) {
-                event.preventDefault();
+            if (idField.is(":visible")) {
+                idField.hide();
+                var confirmMsg = "Are you sure you want to edit the profile?";
+                if (!confirm(confirmMsg)) {
+                    event.preventDefault();
+                }
+            } else {
+                idField.show();
             }
         });
     });
 </script>
-
-</body>
-</html>
-
-@*
-<h2>Doctor Profile</h2>
-
-<div class="profile-container">
-    <div class="profile-item">
-        <div class="profile-label">ID:</div>
-        <div class="profile-value">@Model.id</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Profile Image:</div>
-        <div class="profile-value">
-            <img src="@Model.imphgurl" alt="Profile Image" class="img-thumbnail" />
-        </div>
-    </div>
-
-    <div class="profile-item">
-        <div class="profile-label">Phone Number:</div>
-        <div class="profile-value">@Model.Phonenumber</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Title:</div>
-        <div class="profile-value">@Model.Title</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Salary:</div>
-        <div class="profile-value">@Model.Salary</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Hiring Date:</div>
-        <div class="profile-value">@Model.HiringDate.ToShortDateString()</div>
-    </div>
-    <!-- Add more profile items for other properties -->
-    <!-- Use tag helpers for other properties -->
-    <div class="profile-item">
-        <div class="profile-label">Bonus Working Hours:</div>
-        <div class="profile-value">@Model.BonusWorkingHours</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Contract URL:</div>
-        <div class="profile-value">@Model.Contracturl</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Working Days in Week:</div>
-        <div class="profile-value">@Model.WorkingDaysinWeek</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Starting Shift:</div>
-        <div class="profile-value">@Model.StartingShift</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Ending Shift:</div>
-        <div class="profile-value">@Model.EndingShift</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Gender:</div>
-        <div class="profile-value">@Model.Gender</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Street Address:</div>
-        <div class="profile-value">@Model.StreetAddress</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">City:</div>
-        <div class="profile-value">@Model.City</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Role:</div>
-        <div class="profile-value">@Model.RoleRegeseter</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Nationality:</div>
-        <div class="profile-value">@Model.Nationality</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Username:</div>
-        <div class="profile-value">@Model.username</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Email:</div>
-        <div class="profile-value">@Model.Email</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Profile Image URL:</div>
-        <div class="profile-value">@Model.imphgurl</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Specialist:</div>
-        <div class="profile-value">@Model.spicialist</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Status in System:</div>
-        <div class="profile-value">@Model.StatusDoctorInSystem</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Postal Code:</div>
-        <div class="profile-value">@Model.PostalCode</div>
-    </div>
-    <div class="profile-item">
-        <div class="profile-label">Date of Birth:</div>
-        <div class="profile-value">@Model.Dateofbarth.ToShortDateString()</div>
-    </div>
-</div>
-<a asp-controller="Doctor" asp-action="Save">
-    <i class="fas fa-plus-circle"></i> Editeprofile
-</a>
-<a asp-controller="Doctor" asp-action="Index">
-    <i class="fas fa-plus-circle"></i> backindex
-
-</a>
-
-  
-*@

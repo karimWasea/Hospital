@@ -51,9 +51,8 @@ namespace hospitalservess
             {
                 EntityEntry<Apointment>? save = _db.Apointment.Update(model);
 
-                //entity.id = save.Entity.id;
-                 
-                //idoctorvist.Save(entity);
+             
+
 
             }
             else
@@ -112,14 +111,8 @@ namespace hospitalservess
             }).FirstOrDefault();
         }
         
-        //public Task ApointmentVm bydocid(string id)
-        //{
+     
 
-        //    return _db.Doctors.Where(p => p.Id == id).Select(p => new ApointmentVm
-        //    {
-        //        doctorid =
-        //    }).FirstOrDefault();
-        //}
 
 
 

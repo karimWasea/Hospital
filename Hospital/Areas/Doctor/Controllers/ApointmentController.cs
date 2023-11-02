@@ -25,15 +25,15 @@ namespace Hospital.Areas.Doctor.Controllers
     public class ApointmentController : Controller
     { // GET: HomeController
         UnitOfWork _unitOfWork;
-        lookupServess _lookupServess;
+        //lookupServess _lookupServess;
       
-        private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly UserManager<ApplicationUser> _userManager;
 
-        public ApointmentController(UnitOfWork unitOfWork , lookupServess lookupServess , UserManager<ApplicationUser> userManager)
+        public ApointmentController(UnitOfWork unitOfWork )
         {
             _unitOfWork = unitOfWork;
-            _lookupServess = lookupServess;
-            _userManager = userManager;
+            //_lookupServess = lookupServess;
+            //_userManager = userManager;
         }
 
         //  GET: HomeController
@@ -88,7 +88,10 @@ namespace Hospital.Areas.Doctor.Controllers
             }
 
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userId))
+            var Roleregester = _unitOfWork._userManager.Users.FirstOrDefault(i => i.Id == userId).RoleRegeseter;
+
+
+            if (string.IsNullOrEmpty(userId)&& Roleregester!=RoleRegeseter.Doctor)
             {
                 // Handle the case where the user identifier is not found in claims (optional).
                 return Redirect("/Admin/Home/Index");
@@ -125,14 +128,16 @@ namespace Hospital.Areas.Doctor.Controllers
             }
 
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+
             if (string.IsNullOrEmpty(userId))
             {
                 // Handle the case where the user identifier is not found in claims (optional).
                 return Redirect("/Admin/Home/Index");
             }
-            ViewBag.AvailableSlots = _lookupServess.AvailableAppointments(id);
+            ViewBag.AvailableSlots =  _unitOfWork. _lookupServess.AvailableAppointments(id);
           //  ViewBag.AvailableSlots = availableSlots;
-            ViewBag.Visitetype = _lookupServess.Visitetype();
+            ViewBag.Visitetype = _unitOfWork. _lookupServess.Visitetype();
             var m = await _unitOfWork.Apointment.GetAvilablebydocid(id);
 
             return View(m);

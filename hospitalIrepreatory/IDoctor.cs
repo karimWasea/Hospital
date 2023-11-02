@@ -24,11 +24,12 @@ namespace hospitalIrepreatory
 
 
         Task Save(DoctorVm entity);
-      Task<IEnumerable<DoctorVm>> GetAllDoctorRegester( );
+      //Task<IEnumerable<DoctorVm>> GetAllDoctorRegester(string searchTerm = null);
 
 
 
-        Task<IEnumerable<DoctorVm>> Search(string searchTerm = null);
+            Task<IPagedList<DoctorVm>> Search(int ?pagnumber, string searchTerm = null);
+            Task<IPagedList<DoctorVm>> GetAllDoctorRegester(int ?pagnumber, string searchTerm = null);
 
 
 

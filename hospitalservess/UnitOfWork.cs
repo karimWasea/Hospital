@@ -3,24 +3,30 @@ using hospitalIrepreatory;
 
 using hospitalVm;
 
+using Microsoft.AspNetCore.Identity;
+
 namespace hospitalservess
 {
     public class UnitOfWork : IUnitOfWork
     {
 
        public readonly ApplicationDBcontext _context;
+        public readonly UserManager<ApplicationUser> _userManager;
+        public lookupServess _lookupServess;
 
-        public UnitOfWork(Hospitalserves hospitalserves ,  RoleService roleService,Roomserves roomserves , Contactserves contactserves,
+        public UnitOfWork(Hospitalserves hospitalserves , lookupServess lookupServess, RoleService roleService,Roomserves roomserves , Contactserves contactserves,
             PatientHistoryserves patientHistoryserves ,
 
-            ApplicationDBcontext context , lookupServess lookupServess  , timingShiftservess timingShiftservess ,
+            ApplicationDBcontext context   , timingShiftservess timingShiftservess ,
             Apointmentserves apointmentserves , Applicationuserserves applicationuserserves , Doctorserves doctorserves 
              , DoctorDayworkserves doctorDayworkserves , patientreportserves patientreportserves , Patientserves patientserves  ,idoctorvisittserves idoctorvisittserves
-            
+           , UserManager<ApplicationUser> userManager
             )
 
         {
-            roleS = roleService;
+            _lookupServess = lookupServess;
+            _userManager = userManager;  
+           roleS = roleService;
              Patient = patientserves;
             idoctodayworinweek = doctorDayworkserves;
              genericRepositoryDoctorDaywork = doctorDayworkserves;

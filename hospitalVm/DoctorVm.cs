@@ -3,81 +3,129 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using System;
+
+using Microsoft.AspNetCore.Mvc;
+using hospitalUtilities;
 
 namespace hospitalVm
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-
-    using Xunit;
-
     public class DoctorVm
     {
-        
-            public string id { get; set; }
-            public string Phonenumber { get; set; }
-            public string Title { get; set; }
-            public decimal Salary { get; set; }
-            public DateTime HiringDate { get; set; }
-            public int BonusWorkingHours { get; set; }
-            public string Contracturl { get; set; }
-            public IFormFile Contracturluplod { get; set; }
-            public int WorkingDaysinWeek { get; set; }
-            public string StartingShift { get; set; }
-            public string EndingShift { get; set; }
-            public IFormFile imgurlupdated { get; set; }
-            public Gender Gender { get; set; }
+        public string id { get; set; } = string.Empty;
 
-            public string StreetAddress { get; set; }
+        [Required(ErrorMessage = "Phone Number is required")]
+        [Display(Name = "Phone Number")]
+        public string Phonenumber { get; set; }
 
-            public string City { get; set; }
+        public string Title { get; set; } = string.Empty;
 
-            public RoleRegeseter RoleRegeseter { get; set; }
+        [Required(ErrorMessage = "Salary is required")]
+        [Range(0, double.MaxValue, ErrorMessage = "Salary must be a non-negative value")]
+        public decimal Salary { get; set; }
 
-            public string Nationality { get; set; }
-            public string username { get; set; }
-            public string Email { get; set; }
+        [Display(Name = "Hiring Date")]
+        [DataType(DataType.Date)]
+        public DateTime HiringDate { get; set; }
 
-            public string imphgurl { get; set; }
+        //[Display(Name = "Bonus Working Hours")]
+        //public int BonusWorkingHours { get; set; }
+
+        [Display(Name = "Contract URL")]
+        public string Contracturl { get; set; } = string.Empty;
 
 
-            public spicialist spicialist { get; set; }
-            public Cofimationdoctor StatusDoctorInSystem { get; set; }
+        [Display(Name = "Image Contracturluplod")]
+        [CustomImageValidation]
+
+        public IFormFile Contracturluplod { get; set; }
+
+        [Display(Name = "Working Days in Week")]
+        public int WorkingDaysinWeek { get; set; }
+
+        [Display(Name = "Starting Shift")]
+        public string StartingShift { get; set; } = string.Empty;
+
+        [Display(Name = "Ending Shift")]
+        public string EndingShift { get; set; } = string.Empty;
+
+        [Display(Name = "Image File")]
+        [ CustomImageValidation]
+
+        public IFormFile imgurlupdated { get; set; }
+        [Required(ErrorMessage = "Role is required")]
+
+        [EnumDataType(typeof(Gender))]
+
+        public Gender Gender { get; set; }
+
+        public string StreetAddress { get; set; }
+        [Required(ErrorMessage = "City is required")]
+
+        public string City { get; set; }
+
+        [Required(ErrorMessage = "Role is required")]
+        [EnumDataType(typeof(RoleRegeseter))]
+        [Display(Name = "Role")]
+
+        public RoleRegeseter RoleRegeseter { get; set; }
+        [Required(ErrorMessage = "Username is required")]
+
+        public string Nationality { get; set; }
+
+        [Required(ErrorMessage = "Username is required")]
+        public string username { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string Email { get; set; }
+
+        [Display(Name = "Profile Image")]
+        public string imphgurl { get; set; } = string.Empty;
+
+        [Display(Name = "Specialist")]
+        [Required(ErrorMessage = "Role is required")]
+        [EnumDataType(typeof(spicialist))]
+        public spicialist spicialist { get; set; }
+
+        [Display(Name = "Status in System")]
+        [Required(ErrorMessage = "  is required")]
+        [EnumDataType(typeof(Cofimationdoctor))]
+        public Cofimationdoctor StatusDoctorInSystem { get; set; }
+
+        [Display(Name = "Postal Code")]
+        public string PostalCode { get; set; } = string.Empty;
+
+        [Display(Name = "Date of Birth")]
+        [DataType(DataType.Date)]
+        public DateTime Dateofbarth { get; set; }
+    
 
 
-            public string PostalCode { get; set; }
 
-            public DateTime Dateofbarth { get; set; }
-
-
-
-
-            //public ApplicationuserVm(ApplicationUser ApplicationUser)
-            //{
-            //    id = ApplicationUser.Id;
-            //    username = ApplicationUser.UserName;
-            //    Email = ApplicationUser.Email;
-            //    RoleRegeseter = ApplicationUser.RoleRegeseter;
-            //    Gender = ApplicationUser.Gender;
-            //    StreetAddress = ApplicationUser.StreetAddress;
-            //    City = ApplicationUser.City;
-            //    Dateofbarth= ApplicationUser.Dateofbarth;
-            //    Phonenumber = ApplicationUser.PhoneNumber;
-            //    Nationality = ApplicationUser.Nationality;
-            //    imphgurl = ApplicationUser.imphgurl;
-            //    PostalCode= ApplicationUser.PostalCode;
+    //public ApplicationuserVm(ApplicationUser ApplicationUser)
+    //{
+    //    id = ApplicationUser.Id;
+    //    username = ApplicationUser.UserName;
+    //    Email = ApplicationUser.Email;
+    //    RoleRegeseter = ApplicationUser.RoleRegeseter;
+    //    Gender = ApplicationUser.Gender;
+    //    StreetAddress = ApplicationUser.StreetAddress;
+    //    City = ApplicationUser.City;
+    //    Dateofbarth= ApplicationUser.Dateofbarth;
+    //    Phonenumber = ApplicationUser.PhoneNumber;
+    //    Nationality = ApplicationUser.Nationality;
+    //    imphgurl = ApplicationUser.imphgurl;
+    //    PostalCode= ApplicationUser.PostalCode;
 
 
-            //}
-            //public ApplicationuserVm()
-            //{
+    //}
+    //public ApplicationuserVm()
+    //{
 
-            //}
+    //}
 
-            public static ApplicationUser CanconvertViewmodel(DoctorVm ApplicationUser)
+    public static ApplicationUser CanconvertViewmodel(DoctorVm ApplicationUser)
         {
             return new ApplicationUser
             {

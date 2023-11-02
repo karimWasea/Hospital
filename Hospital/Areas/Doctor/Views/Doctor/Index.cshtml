@@ -1,211 +1,100 @@
-﻿ @*@using hospitalUtilities
-
-@model IEnumerable<hospitalVm.DoctorVm>
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *,Cloudscribe.Web.Pagination
-
-@{
-    ViewData["Title"] = "Index";
-    Layout = "_Layout";
-}
-<style>
-    .form-group {
-        display: inline-block;
-        margin-right: 20px;
-    }
-
-    .form-control-inline {
-        display: inline-block;
-        width: auto;
-    }
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-<a asp-controller="Doctor" asp-action="Save">
-    <i class="fas fa-plus-circle"></i> Add New Doctor
-</a>
-
-
-
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>username</th>
-                <th>Phonenumber</th>
-                <th>spicialist</th>
-                <th>Gender</th>
-                <th>Nationality</th>
-                <th>StreetAdress</th>
-                <th>Dateofbarth</th>
-                <th>HiringDate</th>
-                <th>Contracturl</th>
-                <th>Email</th>
-                <th>StatusDoctorInSystem</th>
-                <th>Title</th>
-                <th>img</th>
-                <th>contract</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var hospital in Model)
-            {
-                <tr>
-
-                    <td>@hospital.username</td>
-                    <td>@hospital.Phonenumber</td>
-                    <td>@hospital.spicialist</td>
-                    <td>@hospital.Gender</td>
-                    <td>@hospital.Nationality</td>
-                    <td>@hospital.StreetAddress</td>
-                    <td>@hospital.Dateofbarth</td>
-                    <td>@hospital.HiringDate</td>
-                    <td>@hospital.Email</td>
-
-                    <td>@hospital.StatusDoctorInSystem</td>
-                    <td>@hospital.Title</td>
-                    <td>
-                        <img class="rounded-circle" src="@hospital.Contracturl" alt="@hospital.username" width="50">
-                    </td>
-
-                    <td>
-                        <img class="rounded-circle" src="@hospital.imphgurl" alt="@hospital.username" width="50">
-                    </td>
-                    <td>
-
-                    <a asp-controller="Doctor" asp-action="Details" asp-route-id="@hospital.id">
-                        <i class="fas fa-trash-alt" title="Details">
-                            </i> SHowedetails&MakeEditing
-                        </a> 
-                        
-                        
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*@
-@model IEnumerable<hospitalVm.DoctorVm>
+﻿@model PagedList.IPagedList<hospitalVm.DoctorVm>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Cloudscribe.Web.Pagination
 
 @{
-    ViewData["Title"] = "Doctor List";
+    ViewData["Title"] = "All  confirmed Doctor ";
     Layout = "_Layout";
 }
+
+<style>
+    /* CSS to set fixed width for table columns */
+    .table th, .table td {
+        width: 30px;
+        height:30px;
+        word-wrap: break-word; /* Wrap text if it's too long */
+    }
+</style>
+<h2 class="mb-4">All  confirmed Doctor</h2>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="~/css/contactindex.css" rel="stylesheet" />
 
 <div class="container mt-4">
-    <h2 class="mb-4">Doctor List</h2>
+    <partial name="_AlertMessage" />
+
+    <form id="search-form" method="get" action="@Url.Action("GetRegisterdoctor")">
+        <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input" class="form-control">
+    </form>
+
     <a asp-controller="Doctor" asp-action="Save" class="btn btn-primary mb-3">
         <i class="fas fa-plus-circle"></i> Add New Doctor
     </a>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover table-success
-            table-bordered">
-            <thead class="thead-dark">
+
+        <table class="table table-bordered table-hover table-success">
+            <thead>
                 <tr>
                     <th>Username</th>
-                    <th>Phone Number</th>
-                    <th>Specialist</th>
-                    <th>Gender</th>
-                    <th>Title</th>
 
-                    @* <th>Nationality</th>
-                    <th>Street Address</th>
-                    <th>Date of Birth</th>
-                    <th>Hiring Date</th>
+
                     <th>Email</th>
-                    <th>Status in System</th>
-
-                    <th>Image</th>
-                    <th>Contract</th> *@
+                    <th>Img</th>
+                    <th>Confirmation</th>
                     <th>Action</th>
+                    <th>Mang</th>
+
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var doctor in Model)
+            <tbody id="patientTableBody">
+                @foreach (var hospital in Model)
                 {
-                    <tr>
-                        <td>@doctor.username</td>
-                        <td>@doctor.Phonenumber</td>
-                        <td>@doctor.spicialist</td>
-                        <td>@doctor.Gender</td>
-                        <td>@doctor.Title</td>
+                    <tr class="patient">
+                        <td>@hospital.username</td>
+                        <td>@hospital.Email</td>
 
-                        @*  <td>@doctor.Nationality</td>
-                        <td>@doctor.StreetAddress</td>
-                        <td>@doctor.Dateofbarth</td>
-                        <td>@doctor.HiringDate</td>
-                        <td>@doctor.Email</td>
-                        <td>@doctor.StatusDoctorInSystem</td>
-                        <td>@doctor.Title</td> 
-                        *@
-                        <td>
-                            <img class="rounded-circle img-fluid" src="@doctor.Contracturl" alt="@doctor.username" width="50">
-                        </td>
-                        <td>
-                            <img class="rounded-circle img-fluid" src="@doctor.imphgurl" alt="@doctor.username" width="50">
-                        </td>
-                        <td>
 
-                            <a asp-controller="Daywork" asp-action="Save" asp-route-id="@doctor.id" class="btn btn-sm btn-info"> addshift</a>
 
-                            <a asp-controller="Doctor" asp-action="Details" asp-route-id="@doctor.id" class="btn btn-sm btn-info">
-                                <i class="fas fa-info-circle"></i> Details & Edit
-                            </a>  <a asp-controller="Doctor" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">
-                                <i class="fas fa-info-circle"></i> Details & Edit
-                            </a>
+
+                        <td>@hospital.StatusDoctorInSystem</td>
+                        <td>
+                            <img class="rounded-circle img-fluid" src="@hospital.imphgurl" alt="@hospital.username" width="50">
                         </td>
+                    <td>
+                        <a asp-controller="Doctor" asp-action="Save" asp-route-id="@hospital.id" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a asp-controller="Doctor" asp-action="Delete" asp-route-id="@hospital.id" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                        <a asp-controller="Doctor" asp-action="Details" asp-route-id="@hospital.id" class="btn btn-sm btn-info">
+                            <i class="fas fa-info-circle"></i> Details
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Doctor" asp-action="Details" asp-route-id="@hospital.id" class="btn btn-sm btn-info">
+                            <i class="fas fa-info-circle"></i> Details
+                        </a>
+                        <a asp-controller="Daywork" asp-action="Index" asp-route-id="@hospital.id" class="btn btn-sm btn-success">
+                            <i class="fas fa-plus-circle"></i> Add Shifts
+                        </a>
+                    </td>
+
+                   
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<partial name="_PaginationPartial" model="@Model" />
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="~/js/doctorindex.js"></script>
+
+}

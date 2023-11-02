@@ -25,18 +25,16 @@ namespace Hospital.Areas.Admin.Controllers
         }
 
         //  GET: HomeController
-        public async Task<ActionResult> Index(int? page , string search)
+        public async Task<ActionResult> Index(int? page, string search)
         {
-            search = search?.ToLower();
 
-            var model = await _unitOfWork.Doctor.Search(search);
-            int pageNumber = page ?? 1;
-            var pagedPatients =  _unitOfWork.Doctor.GetPagedData(model.AsEnumerable(), pageNumber);
+
+            var pagedPatients = await _unitOfWork.Doctor.Search(page, search);
 
 
             return View(pagedPatients);
         }
-        
+
 
 
         public IActionResult Privacy()

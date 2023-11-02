@@ -2,12 +2,14 @@
 using hospitalVm;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
     public class DoctorController : Controller
-    { // GET: HomeController
+    { 
+
         UnitOfWork _unitOfWork;
         lookupServess _lookupServess;
         public DoctorController(UnitOfWork unitOfWork , lookupServess lookupServess)
@@ -21,23 +23,31 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
         //  GET: HomeController
-        public  async  Task< ActionResult> Index()
+        public async Task<ActionResult> Index(int? page, string search)
         {
-            var model = await  _unitOfWork.Doctor.GetallconfirmedDoctor();
-            return View(model);
-        }
-        
 
 
+            var pagedPatients = await _unitOfWork.Doctor.Search(page, search);
 
 
-        public async Task< ActionResult > GetRegisterdoctor()
-        {
-            var model = await _unitOfWork.Doctor.GetAllDoctorRegester();
-            return View(model);
+            return View(pagedPatients);
         }
 
-        // GET: HomeController/Details/5
+
+
+
+        public async Task<ActionResult> GetRegisterdoctor(int? pageget, string search)
+        {
+           
+            var pagedPatients =  await _unitOfWork.Doctor.GetAllDoctorRegester(pageget, search);
+
+
+            return View(pagedPatients);
+        }
+
+
+      
+
         public async Task<ActionResult> Details(string id)
         {
             var model = await _unitOfWork.Doctor.GetByIdasconfirmed(id);
@@ -54,7 +64,7 @@ namespace Hospital.Areas.Doctor.Controllers
             ViewBag.Doctorspicialist=_lookupServess.Doctorspicialist();
             ViewBag.jop=_lookupServess.jop();
             ViewBag.StatusDoctorInSystem = _lookupServess.StatusDoctorInSystem();
-            if (id != null)
+            if (id != null )
             {
 
                 var model = await _unitOfWork. Doctor.GetByIdasRegisterdoctor(id);
@@ -73,13 +83,22 @@ namespace Hospital.Areas.Doctor.Controllers
         // [ValidateAntiForgeryToken]
         public async Task<ActionResult> Save(DoctorVm HospitalVm)
         {
+            ViewBag.Gender = _lookupServess.Gender();
+            ViewBag.Doctorspicialist = _lookupServess.Doctorspicialist();
+            ViewBag.jop = _lookupServess.jop();
+            ViewBag.StatusDoctorInSystem = _lookupServess.StatusDoctorInSystem();
+            if (ModelState.IsValid)
+            {
+                await _unitOfWork.Doctor.Save(HospitalVm);
+                TempData["Message"] = $" successfully!";
+                TempData["MessageType"] = "Save";
 
-           await  _unitOfWork.Doctor.Save(HospitalVm);
+                return RedirectToAction("Index");
 
+            }
+         
 
-            return RedirectToAction("Index");
-
-
+             return View(HospitalVm);
 
          }
 
@@ -114,6 +133,8 @@ namespace Hospital.Areas.Doctor.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             await _unitOfWork.Doctor.Delete(id);
+            TempData["Message"] = $" successfully!";
+            TempData["MessageType"] = "Save";
             return RedirectToAction("Index");
         }
 

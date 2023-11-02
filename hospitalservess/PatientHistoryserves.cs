@@ -17,13 +17,13 @@ namespace hospitalservess
 
     public class PatientHistoryserves : PaginationHelper<PatientHistoryVm>, IGenericRepository<PatientHistoryVm> ,IPatientHistory
     {
-        //Apointmentservesses  _apointment;
+
         UserManager<ApplicationUser> _userManager;
 
         private ApplicationDBcontext _db;
         public PatientHistoryserves(ApplicationDBcontext db ,UserManager<ApplicationUser> userManager
  )        {
-            // GetApplicationuser = applicationuserserves;
+
             _db = db;
             _userManager = userManager;
         }
@@ -78,7 +78,7 @@ namespace hospitalservess
 
         public IEnumerable<PatientHistoryVm> GetAll()
         {
-            var model = _db.PatientHistory.
+            var model = _db.PatientHistory.Include(p=>p.Patient).
                 Where(p=> p.IsDeleted == IsDeleted.NotDeleted).Select(PatientHistory => new PatientHistoryVm
             {
 
