@@ -5,6 +5,7 @@ using Hospital.Areas.Doctor.Models;
 using hospitalIrepreatory;
 
 using hospitalservess;
+
 using hospitalVm;
 
 using Microsoft.AspNetCore.Identity;
@@ -23,23 +24,24 @@ namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
     public class ApointmentController : Controller
-    { // GET: HomeController
-        UnitOfWork _unitOfWork;
-        //lookupServess _lookupServess;
-      
-        //private readonly UserManager<ApplicationUser> _userManager;
+    {
 
-        public ApointmentController(UnitOfWork unitOfWork )
+        UnitOfWork _unitOfWork;
+
+
+
+
+        public ApointmentController(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            //_lookupServess = lookupServess;
-            //_userManager = userManager;
+
+
         }
 
         //  GET: HomeController
         public ActionResult Index()
         {
-            
+
             return View(_unitOfWork.Apointment.GetAll());
         }
 
@@ -53,15 +55,15 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        public  IActionResult Save( int id)
+        public IActionResult Save(int id)
         {
-            
 
 
-          
+
+
 
             if (id > 0)
-             
+
 
                 return View(_unitOfWork.Apointment.GetById(id));
 
@@ -75,7 +77,8 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-     public async Task< IActionResult > ConfimedApiontmentfordoctor() {
+        public async Task<IActionResult> ConfimedApiontmentfordoctor()
+        {
 
 
 
@@ -91,12 +94,12 @@ namespace Hospital.Areas.Doctor.Controllers
             var Roleregester = _unitOfWork._userManager.Users.FirstOrDefault(i => i.Id == userId).RoleRegeseter;
 
 
-            if (string.IsNullOrEmpty(userId)&& Roleregester!=RoleRegeseter.Doctor)
+            if (string.IsNullOrEmpty(userId) && Roleregester != RoleRegeseter.Doctor)
             {
                 // Handle the case where the user identifier is not found in claims (optional).
                 return Redirect("/Admin/Home/Index");
             }
-            var conappfordoc =  _unitOfWork.Apointment.GetBookingAppiontmentbydocid(userId);
+            var conappfordoc = _unitOfWork.Apointment.GetBookingAppiontmentbydocid(userId);
 
 
 
@@ -104,10 +107,10 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-            return View(conappfordoc); 
-        
-        
-        
+            return View(conappfordoc);
+
+
+
         }
 
 
@@ -115,12 +118,12 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        public async Task< IActionResult> getapientment( string id) 
-        
-        
+        public async Task<IActionResult> CreatApientment(string id)
+
+
         {
 
-     
+
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             if (!claimsIdentity.IsAuthenticated)
             {
@@ -135,17 +138,17 @@ namespace Hospital.Areas.Doctor.Controllers
                 // Handle the case where the user identifier is not found in claims (optional).
                 return Redirect("/Admin/Home/Index");
             }
-            ViewBag.AvailableSlots =  _unitOfWork. _lookupServess.AvailableAppointments(id);
-          //  ViewBag.AvailableSlots = availableSlots;
-            ViewBag.Visitetype = _unitOfWork. _lookupServess.Visitetype();
+            ViewBag.AvailableSlots = _unitOfWork._lookupServess.AvailableAppointments(id);
+            //  ViewBag.AvailableSlots = availableSlots;
+            ViewBag.Visitetype = _unitOfWork._lookupServess.Visitetype();
             var m = await _unitOfWork.Apointment.GetAvilablebydocid(id);
 
             return View(m);
-                
-                
-                
-                
-                }
+
+
+
+
+        }
 
         [HttpPost]
         // [ValidateAntiForgeryToken]
@@ -172,13 +175,13 @@ namespace Hospital.Areas.Doctor.Controllers
                 return Redirect("/Admin/Home/Index");
             }
 
-            appointment.patientid = userId;    
+            appointment.patientid = userId;
 
 
             _unitOfWork.Apointment.Save(appointment);
 
 
-            return Redirect("yourappiontisconfermed");
+            return Redirect("/Admin/Appiontmentvisite/GetAllVistitsbyPatientid");
 
 
 
@@ -191,10 +194,10 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        public IActionResult  yourappiontisconfermed()
+        public IActionResult yourappiontisconfermed()
         {
 
-             return View();
+            return View();
 
 
 

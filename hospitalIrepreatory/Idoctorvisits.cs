@@ -1,13 +1,16 @@
 ﻿using hospitalUtilities;
 using hospitalVm;
 
+using PagedList;
+
 namespace hospitalIrepreatory
 {
     public interface Idoctorvist : IGenericRepository<ApointmentVm> ,IPaginationHelper<ApointmentVm> {
 
-        IEnumerable<ApointmentVm> getvistitsbydoctorid( string id );
-        IEnumerable<ApointmentVm> getvistitsbypatientid(string id);
-       IEnumerable<ApointmentVm> GetAll(int pageNumber);
+
+        IPagedList<ApointmentVm> GettAllVistitsByDoctorid( string id ,int? pagnumber, string searchTerm = null);
+        IPagedList<ApointmentVm> GetAllVistitsbyPatientid (string id,int? pagnumber, string searchTerm = null);
+        IPagedList<ApointmentVm> GetAllVaisits (int? pagnumber, string searchTerm = null);
 
     }
 }

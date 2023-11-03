@@ -1,4 +1,4 @@
-﻿ using Dataaccesslayer;
+﻿using Dataaccesslayer;
 
 using hospitalIrepreatory;
 
@@ -15,18 +15,19 @@ using System.Linq.Expressions;
 namespace hospitalservess
 {
 
-    public class Apointmentserves : IGenericRepository<ApointmentVm> , Apointmentservesses
+    public class Apointmentserves : PaginationHelper<ApointmentVm>, Apointmentservesses
     {
         IApplicationuser GetApplicationuser;
-        Idoctorvist idoctorvist;    
-            UserManager<ApplicationUser> _userManager;
+        Idoctorvist idoctorvist;
+        UserManager<ApplicationUser> _userManager;
 
         private ApplicationDBcontext _db;
-        public Apointmentserves(ApplicationDBcontext db, Hospitalserves ihospital, UserManager<ApplicationUser> userManager ,Applicationuserserves applicationuserserves  , idoctorvisittserves idoctorvisittserves)
-        { idoctorvist = idoctorvisittserves;
-           // GetApplicationuser = applicationuserserves;
+        public Apointmentserves(ApplicationDBcontext db, Hospitalserves ihospital, UserManager<ApplicationUser> userManager, Applicationuserserves applicationuserserves, idoctorvisittserves idoctorvisittserves)
+        {
+            idoctorvist = idoctorvisittserves;
+            // GetApplicationuser = applicationuserserves;
             _db = db;
-            _userManager = userManager; 
+            _userManager = userManager;
         }
 
 
@@ -51,19 +52,18 @@ namespace hospitalservess
             {
                 EntityEntry<Apointment>? save = _db.Apointment.Update(model);
 
-             
-
-
             }
             else
             {
-                
 
-              EntityEntry<Apointment>? save=   _db.Apointment.Add(model);
+
+                EntityEntry<Apointment>? save = _db.Apointment.Add(model);
 
                 _db.SaveChanges();
-                entity.id=save.Entity.id;
+
+                entity.id = save.Entity.id;
                 entity.VisitStatus = VisitStatus.Scheduled;
+
                 idoctorvist.Save(entity);
 
 
@@ -91,7 +91,7 @@ namespace hospitalservess
         {
             var model = _db.Apointment.Select(p => new ApointmentVm
             {
-                
+
 
 
             }).ToList();
@@ -101,17 +101,17 @@ namespace hospitalservess
 
         public ApointmentVm GetById(int id)
         {
-             
+
             return _db.Apointment.Where(p => p.id == id).Select(p => new ApointmentVm
             {
-                 id=p.id,
-                 CreateDate=p.CreateDate,
-                 doctorid=p.discreaption,
-                
+                id = p.id,
+                CreateDate = p.CreateDate,
+                doctorid = p.discreaption,
+
             }).FirstOrDefault();
         }
-        
-     
+
+
 
 
 
@@ -126,11 +126,11 @@ namespace hospitalservess
 
             var _users = await _userManager.Users.Where(p => p.Id == id).Select(ap => new ApointmentVm
             {
-                 
-                 
-                 
-                 doctorid = ap.Id,
-                  DoctorName=ap.UserName,
+
+
+
+                doctorid = ap.Id,
+                DoctorName = ap.UserName,
 
             }).FirstOrDefaultAsync();
             return _users;
@@ -155,7 +155,7 @@ namespace hospitalservess
 
             if (entity.id > 0)
             {
-            var m=    _db.Apointment.Update(model);
+                var m = _db.Apointment.Update(model);
                 await _db.SaveChangesAsync();
                 return GetById(m.Entity.id);
                 // Use async SaveChangesAsync()
@@ -163,7 +163,7 @@ namespace hospitalservess
             }
             else
             {
-              var  m=  _db.Apointment.Add(model);
+                var m = _db.Apointment.Add(model);
 
                 await _db.SaveChangesAsync(); // Use async SaveChangesAsync()
                 return GetById(m.Entity.id);
@@ -174,7 +174,6 @@ namespace hospitalservess
 
         }
 
-   
 
 
 
@@ -182,52 +181,54 @@ namespace hospitalservess
 
 
 
-    #region pagnation
 
-    public PagedREsult<ApointmentVm> Getallpag(int pagnumber, int pagesize)
-    {
-        int totalcount;
-        var Vmlist = new List<ApointmentVm>();
+        #region pagnation
 
-        try
+        public PagedREsult<ApointmentVm> Getallpag(int pagnumber, int pagesize)
         {
-            int Excluderecored = (pagesize * pagnumber) - pagesize;
-            var molist = GetAll().Skip(Excluderecored).Take(pagesize).ToList();
-            totalcount = GetAll().ToList().Count;
+            int totalcount;
+            var Vmlist = new List<ApointmentVm>();
 
-            Vmlist = molist;
+            try
+            {
+                int Excluderecored = (pagesize * pagnumber) - pagesize;
+                var molist = GetAll().Skip(Excluderecored).Take(pagesize).ToList();
+                totalcount = GetAll().ToList().Count;
+
+                Vmlist = molist;
 
 
 
+
+
+            }
+            catch (Exception) { throw; }
+
+
+            var rsult = new PagedREsult<ApointmentVm>
+            {
+
+                Data = Vmlist,
+                pageSize = pagesize,
+                TotalItens = totalcount,
+                pageNumber = pagnumber,
+
+
+            };
+            return rsult;
 
 
         }
-        catch (Exception) { throw; }
 
-
-        var rsult = new PagedREsult<ApointmentVm>
-        {
-
-            Data = Vmlist,
-            pageSize = pagesize,
-            TotalItens = totalcount,
-            pageNumber = pagnumber,
-
-
-        };
-        return rsult;
-
-
-    }
-
-        public   IEnumerable< ApointmentVm> GetBookingAppiontmentbydocid(string id)
+        public IEnumerable<ApointmentVm> GetBookingAppiontmentbydocid(string id)
         {
 
 
 
 
 
-            var model = _db.DoctorAppointmentVIsit.Where(i => i.DoctorId == id).Select(p => new ApointmentVm {
+            var model = _db.DoctorAppointmentVIsit.Include(i => i.patient).Include(i => i.Doctor).Where(i => i.DoctorId == id).Select(p => new ApointmentVm
+            {
 
                 DoctorName = _userManager.Users.Where(i => i.Id == id).Select(i => i.UserName).FirstOrDefault(),
 
@@ -235,14 +236,14 @@ namespace hospitalservess
 
                 CreateDate = _db.Apointment.Where(i => i.id == p.AppointmentId && p.DoctorId == id).Select(i => i.CreateDate).FirstOrDefault(),
                 VisitType = p.VisitType,
-                VisitStatus=p.visitStatus,
-                 patientid=p.patientid,
-                 doctorid=id,
+                VisitStatus = p.visitStatus,
+                patientid = p.patientid,
+                doctorid = id,
 
 
             }).ToList();
             return model;
-         }
+        }
 
 
         #endregion

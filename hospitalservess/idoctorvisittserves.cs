@@ -10,20 +10,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
+using PagedList;
+
 using System.Linq.Expressions;
 
 namespace hospitalservess
 {
 
-    public class idoctorvisittserves : PaginationHelper<ApointmentVm>, IGenericRepository<ApointmentVm>, Idoctorvist
+    public class idoctorvisittserves : PaginationHelper<ApointmentVm>, Idoctorvist
     {
-        //Apointmentservesses  _apointment;
         UserManager<ApplicationUser> _userManager;
 
         private ApplicationDBcontext _db;
         public idoctorvisittserves(ApplicationDBcontext db ,UserManager<ApplicationUser> userManager
  )        {
-            // GetApplicationuser = applicationuserserves;
             _db = db;
             _userManager = userManager;
         }
@@ -37,38 +37,25 @@ namespace hospitalservess
 
 
 
-        public IEnumerable<ApointmentVm> GetAll(int pageNumber)
-        {
-            int pageSize = 10; // Set the page size to 10
-            var model = _db.DoctorAppointmentVIsit
-                .Include(p => p.Appointment)
-                .Include(p => p.Doctor)
-                .Include(p => p.patient)
-                .Select(p => new ApointmentVm
-                {
-                    DoctorAppointmentVIsitid = p.Id,
-                    patientid = p.patientid,
-                    doctorid = p.DoctorId,
-                    id = (int)p.AppointmentId,
-                    VisitStatus = p.visitStatus,
-                    DoctorName = p.Doctor.UserName,
-                    PatientName = p.patient.UserName,
-                    CreateDate = p.Appointment.CreateDate,
-                    VisitType = p.VisitType,
-                })
-                .OrderByDescending(i => i.CreateDate.Date)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
 
-            return model;
-        }
+
 
 
 
 
         public void Save(ApointmentVm entity)
         {
+
+
+
+
+
+
+
+
+
+
+
 
 
             var model = ApointmentVm.CanconvertViewmodeldoctorvisite(entity);
@@ -147,7 +134,7 @@ namespace hospitalservess
 
 
 
-            }).DefaultIfEmpty(). ToList().OrderBy(i=>i.CreateDate);
+            }).OrderBy(i=>i.CreateDate);
 
             return model;
         }
@@ -174,36 +161,6 @@ namespace hospitalservess
             return model;
         }
 
-        //public Task ApointmentVm bydocid(string id)
-        //{
-
-        //    return _db.Doctors.Where(p => p.Id == id).Select(p => new ApointmentVm
-        //    {
-        //        doctorid =
-        //    }).FirstOrDefault();
-        //}
-
-
-
-
-
-
-
-
-        //public ApointmentVm GetAvilablebydocid(string id)
-        //{
-
-        //    var _users =  _userManager.Users.Where(p => p.Id == id).Select(ap => new ApointmentVm
-        //    {
-
-
-
-        //        doctorid = ap.Id,
-        //        doctorName = ap.UserName,
-
-        //    }).FirstOrDefault();
-        //    return _users;
-        //}
 
 
 
@@ -216,100 +173,124 @@ namespace hospitalservess
 
 
 
-
-
-
-
-        #region pagnation
-
-
-        public IEnumerable<ApointmentVm> GetBookingAppiontmentbydocid(string id)
-        {
-
-
-
-
-
-            var model = _db.DoctorAppointmentVIsit.Where(i => i.DoctorId == id &&i.IsDeleted==IsDeleted.NotDeleted).Select(p => new ApointmentVm
-            {
-
-                DoctorName = _userManager.Users.Where(i => i.Id == id).Select(i => i.UserName).FirstOrDefault(),
-
-                PatientName = _userManager.Users.Where(i => i.Id == p.patientid).Select(i => i.UserName).FirstOrDefault(),
-
-                CreateDate = _db.Apointment.Where(i => i.id == p.AppointmentId && p.DoctorId == id).Select(i => i.CreateDate).FirstOrDefault(),
-                VisitType = p.VisitType,
-                patientid = p.patientid,
-                doctorid = id,
-
-
-            }).ToList();
-            return model;
-        }
-
-        public IEnumerable<ApointmentVm> getvistitsbydoctorid(string id)
-        {
-            var model = _db.DoctorAppointmentVIsit.Where(p=>p.DoctorId==id &&p.IsDeleted==IsDeleted.NotDeleted&&p.visitStatus!=VisitStatus.Cancelled).Include(p => p.Appointment).Include(p => p.Doctor).Include(p => p.patient).Select(p => new ApointmentVm
-            {
-                DoctorAppointmentVIsitid = p.Id,
-                patientid = p.patientid,
-                doctorid = p.DoctorId,
-                id = (int)p.AppointmentId,
-                VisitStatus = p.visitStatus,
-                DoctorName = p.Doctor.UserName,
-                PatientName = p.patient.UserName,
-                CreateDate = p.Appointment.CreateDate,
-                VisitType = p.VisitType,
-                VisiteNotebydoctor
-                = p.VisiteNotebydoctor,
-            }).ToList().OrderBy(p=>p.VisitStatus==VisitStatus.Arrived);
-
-            return model;
-        }
-
-        public IEnumerable<ApointmentVm> getvistitsbypatientid(string id)
-        {
-            var model = _db.DoctorAppointmentVIsit.Where(i=>i.patientid==id &&i.IsDeleted==IsDeleted.Deleted).Include(p => p.Appointment).Include(p => p.Doctor).Include(p => p.patient).Select(p => new ApointmentVm
-            {
-                DoctorAppointmentVIsitid = p.Id,
-                patientid = p.patientid,
-                doctorid = p.DoctorId,
-                id = (int)p.AppointmentId,
-                VisitStatus = p.visitStatus,
-                DoctorName = p.Doctor.UserName,
-                PatientName = p.patient.UserName,
-                CreateDate = p.Appointment.CreateDate,
-                VisitType = p.VisitType,
-                VisiteNotebydoctor
-                = p.VisiteNotebydoctor,
-            }).ToList();
-
-            return model;
-
-
-            #endregion
-
-
-        }
+        
 
 
         public void Delete(int id)
         {
-            var model = GetById(id);
 
 
 
-            model.isdeleted = IsDeleted.Deleted;
-            Save(model);
-            //var mode = _db. DoctorAppointmentVIsit.Find(id);
 
 
-            //_db.DoctorAppointmentVIsit.Remove(mode);
-            //_db.SaveChanges();
+            var mode = _db.DoctorAppointmentVIsit.Find(id);
+
+            _db.DoctorAppointmentVIsit.Remove(mode);
+            var apiontment = _db.Apointment.Find(mode.Appointment.id);
+            _db.Remove(apiontment);
+            _db.SaveChanges();
 
 
 
         }
+
+        public IPagedList<ApointmentVm> GettAllVistitsByDoctorid(string id, int? pageNumber, string searchTerm = null)
+        {
+            var searchTermLower = searchTerm?.ToLower();
+            int pageNum = pageNumber ?? 1;
+
+            var doctorAppointments = _db.DoctorAppointmentVIsit.Where(i=>i.Doctor.RoleRegeseter==RoleRegeseter.Doctor).Include(i=>i.Doctor).Include(i=>i.Doctor).Include(i=>i.Appointment)
+                .Where(a => a.DoctorId == id &&
+                    (string.IsNullOrWhiteSpace(searchTerm) ||
+                    EF.Functions.Like(a.Doctor.UserName, "%" + searchTermLower + "%") ||
+                    EF.Functions.Like(a.patient.UserName, "%" + searchTermLower + "%")))
+                .Select(p => new ApointmentVm
+                {
+                    DoctorAppointmentVIsitid = p.Id,
+                    discreaption = p.Appointment.discreaption,
+                    DoctorName = p.Doctor.UserName,
+                    PatientName = p.patient.UserName,
+                    CreateDate = p.Appointment.CreateDate,
+                    VisitType = p.VisitType,
+                    patientid = p.patientid,
+                    doctorid = p.DoctorId,
+                    VisitStatus = p.visitStatus,
+                    VisiteNotebydoctor = p.VisiteNotebydoctor
+                }).OrderBy(i => i.CreateDate);
+
+    
+
+
+            var paglist = GetPagedData(doctorAppointments, pageNum);
+
+            return paglist;
+        }
+
+
+        public IPagedList<ApointmentVm> GetAllVistitsbyPatientid(string id, int? pagnumber, string searchTerm = null)
+        {
+            var searchTermLower = searchTerm?.ToLower();
+            int pageNum = pagnumber ?? 1;
+
+            var doctorAppointments = _db.DoctorAppointmentVIsit.Include(i => i.Doctor).Include(i => i.Doctor).Include(i => i.Appointment)
+                .Where(a => a.patientid == id &&
+                    (string.IsNullOrWhiteSpace(searchTerm) ||
+                    EF.Functions.Like(a.Doctor.UserName, "%" + searchTermLower + "%") ||
+                    EF.Functions.Like(a.patient.UserName, "%" + searchTermLower + "%")))
+                .Select(p => new ApointmentVm
+                {
+                    DoctorAppointmentVIsitid = p.Id,
+                    discreaption = p.Appointment.discreaption,
+                    DoctorName = p.Doctor.UserName,
+                    PatientName = p.patient.UserName,
+                    CreateDate = p.Appointment.CreateDate,
+                    VisitType = p.VisitType,
+                    patientid = p.patientid,
+                    doctorid = p.DoctorId,
+                    VisitStatus = p.visitStatus,
+                    VisiteNotebydoctor = p.VisiteNotebydoctor
+                }).OrderBy(i => i.CreateDate)
+                ;
+
+  
+
+
+            var paglist = GetPagedData(doctorAppointments, pageNum);
+
+            return paglist;
+        }
+
+        public IPagedList<ApointmentVm> GetAllVaisits(int? pagnumber, string searchTerm = null)
+        {
+            var searchTermLower = searchTerm?.ToLower();
+            int pageNum = pagnumber ?? 1;
+
+            var doctorAppointments = _db.DoctorAppointmentVIsit
+                .Include(i => i.Doctor)
+                .Include(i => i.Appointment)
+                .Where(a =>
+                    string.IsNullOrWhiteSpace(searchTerm) ||
+                    EF.Functions.Like(a.Doctor.UserName, "%" + searchTermLower + "%") ||
+                    EF.Functions.Like(a.patient.UserName, "%" + searchTermLower + "%"))
+                .Select(p => new ApointmentVm
+                { DoctorAppointmentVIsitid=p.Id,
+                    discreaption= p.Appointment.discreaption,
+                    DoctorName = p.Doctor.UserName,
+                    PatientName = p.patient.UserName,
+                    CreateDate = p.Appointment.CreateDate,
+                    VisitType = p.VisitType,
+                    patientid = p.patientid,
+                    doctorid = p.DoctorId,
+                    VisitStatus=p.visitStatus,
+                    VisiteNotebydoctor =p.VisiteNotebydoctor
+                }).OrderBy(i => i.CreateDate);
+
+            var paglist = GetPagedData(doctorAppointments, pageNum);
+
+            return paglist;
+        }
+
+     
 
     }
 

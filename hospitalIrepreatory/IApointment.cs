@@ -6,7 +6,7 @@ using hospitalVm;
 
 namespace hospitalIrepreatory
 {
-    public interface Apointmentservesses : IGenericRepository<ApointmentVm>
+    public interface Apointmentservesses : IGenericRepository<ApointmentVm> ,IPaginationHelper<ApointmentVm>
     {
         Task< ApointmentVm> GetAvilablebydocid(string id);
         IEnumerable< ApointmentVm> GetBookingAppiontmentbydocid(string id);
