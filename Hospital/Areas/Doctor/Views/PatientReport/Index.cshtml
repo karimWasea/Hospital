@@ -6,7 +6,7 @@
 
 @{
     ViewData["Title"] = "ConfimedApiontmentfordoctor";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_Layout";
 }
 
 <h1>ConfimedApiontmentfordoctor</h1>
@@ -18,10 +18,10 @@
     }
 
 </style>
-
+<link href="~/css/contactindex.css" rel="stylesheet" />
 
 <div class="container mt-4">
-    <h2 class="mb-4">Doctor List</h2>
+    <h2 class="mb-4">patientreport List</h2>
 
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-success
@@ -30,7 +30,7 @@
                 <tr>
                     <th>dignouses</th>
                     <th>patientName</th>
-                    <th>patientName</th>
+
                     <th>Reportdate</th>
 
                     <th>Action</th>
@@ -42,7 +42,7 @@
                     <tr class="appointment-row">
                         <td>@doctor.dignouses</td>
                         <td>@doctor.patientName</td>
-                        <td>@doctor.patientName</td>
+
                         <td>@doctor.Reportdate</td>
 
 

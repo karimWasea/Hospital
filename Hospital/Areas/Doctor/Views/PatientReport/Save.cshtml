@@ -4,7 +4,7 @@
 @model hospitalVm.patientreportVm
 @{
     ViewData["Title"] = "Save";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_Layout";
 }
 <style>
     body {
@@ -20,9 +20,9 @@
             <h2 class="text-center mb-4">Create Prescription</h2>
             
             <form asp-controller="PatientReport" asp-action="Save" method="post" id="saveform">
-                <input asp-for="patientid" type="hidden" id="patientid" value="@ViewBag.patientid" class="form-control">
-                <input asp-for="doctorid" type="hidden" id="doctorid" value="@ViewBag.doctorid" class="form-control">
-                <input asp-for="DoctorAppointmentVIsitid" type="hidden" id="doctorid" value="@ViewBag.DoctorAppointmentVIsitid" class="form-control">
+                <input asp-for="patientid" type="hidden" id="patientid" value="@Model.patientid" class="form-control">
+                <input asp-for="doctorid" type="hidden" id="doctorid" value="@Model.doctorid" class="form-control">
+                <input asp-for="DoctorAppointmentVIsitid" type="hidden" id="doctorid" value="@Model.DoctorAppointmentVIsitid" class="form-control">
     
                @* <div class="form-group">
                     <label asp-for="Reportdate">Report Date:</label>
@@ -52,7 +52,7 @@
             <a asp-area="Admin"
                asp-controller="Appiontmentvisite"
                asp-action="AddDoctorNoteForVisit"
-               asp-route-DoctorAppointmentVisitid="@ViewBag.DoctorAppointmentVisitid"
+               asp-route-DoctorAppointmentVisitid="@Model.DoctorAppointmentVIsitid"
                class="btn btn-sm btn-info">Visit Note</a>
 
         </div>

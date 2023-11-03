@@ -28,15 +28,15 @@ namespace Hospital.Areas.Doctor.Controllers
     public class PatientReportController : Controller
     {
 
-        UserManager<ApplicationUser> _userManager;
+
         UnitOfWork _unitOfWork;
-        lookupServess _lookupServess;
+
         public PatientReportController(UnitOfWork unitOfWork, lookupServess lookupServess, UserManager<ApplicationUser> userManager
      )
         {
-            _userManager = userManager;
+
             _unitOfWork = unitOfWork;
-            _lookupServess = lookupServess;
+
         }
 
         //  GET: HomeController
@@ -52,35 +52,48 @@ namespace Hospital.Areas.Doctor.Controllers
         }
         [HttpGet]
 
-        public    IActionResult Save( string patientid, int id, int  DoctorAppointmentVIsitid) //dd88ca62-be8a-483b-822b-02d2daa9b5e0"
+        public    IActionResult Save(  int id, int  DoctorAppointmentVIsitid) //dd88ca62-be8a-483b-822b-02d2daa9b5e0"
         {
-       //     string?  myObject = JsonSerializer.Deserialize<string>(patientid);
-       // var pd=patientid.Trim();
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
 
-            if (!claimsIdentity.IsAuthenticated)
-            {
-                return Redirect("/Admin/Home/Index");
-            }
-        
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userId))
-            {
-                // Handle the case where the user identifier is not found in claims (optional).
-                return Redirect("/Admin/Home/Index");
-            }
-           
-            ViewBag.doctorName = _userManager.Users.FirstOrDefault(i => i.Id == userId).UserName;
-            ViewBag.doctorid = userId;
-            ViewBag.DoctorAppointmentVIsitid = DoctorAppointmentVIsitid;
-            ViewBag.patientid = patientid;
-           // var m = _userManager.FindByIdAsync(userId); 
-            ViewBag.patientname = 
-                _userManager.Users. Where(i => i.Id == patientid).Select(i=>i.UserName).FirstOrDefault();
-            int numberToPass = DoctorAppointmentVIsitid; // The number you want to pass
-            TempData["Number"] = numberToPass;
+
+            //var claimsIdentity = (ClaimsIdentity)User.Identity;
+
+            //if (!claimsIdentity.IsAuthenticated)
+            //{
+            //    return Redirect("/Admin/Home/Index");
+            //}
+
+            //var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //if (string.IsNullOrEmpty(userId))
+            //{
+            //    // Handle the case where the user identifier is not found in claims (optional).
+            //    return Redirect("/Admin/Home/Index");
+            //}
+
+            //ViewBag.doctorName = _unitOfWork._userManager.Users.FirstOrDefault(i => i.Id == userId).UserName;
+            //ViewBag.doctorid = userId;
+            //ViewBag.DoctorAppointmentVIsitid = DoctorAppointmentVIsitid;
+            //ViewBag.patientid = patientid;
+            // var m = _userManager.FindByIdAsync(userId); 
+            //ViewBag.patientname =
+            //   _unitOfWork. _userManager.Users. Where(i => i.Id == patientid).Select(i=>i.UserName).FirstOrDefault();
+            //int numberToPass = DoctorAppointmentVIsitid; // The number you want to pass
+            //TempData["Number"] = numberToPass;
             //ViewBag.Appiontmentvisiid = _unitOfWork._context.DoctorAppointmentVIsit.
 
+         var model=   _unitOfWork.Idoctorvist.GetById(DoctorAppointmentVIsitid);
+            var patientrteort = new patientreportVm()
+            {
+
+                doctorname = model.DoctorName,
+                patientName= model.PatientName,
+                 DoctorAppointmentVIsitid= model.DoctorAppointmentVIsitid,  
+                  
+                 patientid= model.patientid,
+                 doctorid =model.doctorid,
+                  
+            
+            };
 
             if (id > 0)
 
@@ -89,7 +102,7 @@ namespace Hospital.Areas.Doctor.Controllers
             else
 
 
-                return View();
+                return View(patientrteort);
 
 
         }
@@ -99,15 +112,25 @@ namespace Hospital.Areas.Doctor.Controllers
         // [ValidateAntiForgeryToken]
         public IActionResult Save(patientreportVm HospitalVm)
         {
-            if (TempData.ContainsKey("Number") && TempData["Number"] is int number)
+            var model = _unitOfWork.Idoctorvist.GetById(HospitalVm.DoctorAppointmentVIsitid);
+            var patientrteort = new patientreportVm()
             {
-                ViewBag.DoctorAppointmentVIsitid = number;
-            }
 
-                _unitOfWork.genericRepositorypatientreport.Save(HospitalVm);
+                doctorname = model.DoctorName,
+                patientName = model.PatientName,
+                DoctorAppointmentVIsitid = model.DoctorAppointmentVIsitid,
+
+                patientid = model.patientid,
+                doctorid = model.doctorid,
 
 
-            return View();
+            };
+
+
+            _unitOfWork.genericRepositorypatientreport.Save(HospitalVm);
+
+
+            return View( "index");
 
 
 
