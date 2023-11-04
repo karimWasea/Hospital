@@ -4,20 +4,38 @@
 }
 @model hospitalVm.PatientHistoryVm
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *,Cloudscribe.Web.Pagination
-@if (Model == null || Model.Id == 0 ||Model.PatientId==null)
-{
-    <p>No  PatientHistoryVm.</p>
-}
+@addTagHelper *, Cloudscribe.Web.Pagination
 
+@if (Model == null || Model.Id == 0 || Model.PatientId == null)
+{
+    <p>No PatientHistoryVm.</p>
+}
+ <style>
+
+body{
+        background-image: url('/Images/hospital.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        color: black;
+    }
+.row1{
+        background-color: gray;
+        color:black;
+    }
+
+ </style>
 
 <div class="container text-center">
-    <h1>Patient History Details</h1>
+    <h1 style="color: #007BFF;">Patient History Details</h1>
 
-    <div>
+    <div class="row1" >
         <dl class="row">
-            <dt class="col-sm-3">Patient ID</dt>
-            <dd class="col-sm-9">@Model.PatientId</dd>
+          
+
 
             <dt class="col-sm-3">Patient Name</dt>
             <dd class="col-sm-9">@Model.PatientName</dd>

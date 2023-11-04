@@ -25,6 +25,7 @@ background-attachment: fixed;
 
 <form id="saveform" asp-area="Patient" asp-controller="PatientHistory" method="post" >
 <input type="hidden" asp-for="Id" />
+<input type="hidden" asp-for="PatientId" />
 
         <div class="form-row">
 
@@ -124,7 +125,7 @@ background-attachment: fixed;
 <label asp-for="IsFollowUp">Is Follow Up:</label>
 <input asp-for="IsFollowUp" type="checkbox"  />
 </div>
-        <div class="form-group glass-input col-4">
+  @*       <div class="form-group glass-input col-4">
 
 <label asp-for="PatientId">patient</label>
 <select asp-for="PatientId" class="form-control" asp-items="@ViewBag.allpatient">
@@ -134,14 +135,14 @@ background-attachment: fixed;
     <option value="@item.Value" selected>@item.Text</option>
 }
 </select>
-        </div>
+        </div> *@
+                    <div class="form-group glass-input col-4">
+                        <label asp-for="HistoryOfPresentIllness">Lab Results:</label>
+                        <input asp-for="HistoryOfPresentIllness" class="form-control" />
+                    </div>
 
         </div>
-                <div class="form-group glass-input col-7">
-                    <label asp-for="HistoryOfPresentIllness">Lab Results:</label>
-                    <input asp-for="HistoryOfPresentIllness" class="form-control" />
-                </div>
-
+              
         <div class="button-group">
             <button type="submit" class="btn btn-primary">
                 @if (Model != null && Model.Id > 0)

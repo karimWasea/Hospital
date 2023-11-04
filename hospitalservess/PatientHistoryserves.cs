@@ -237,6 +237,7 @@ namespace hospitalservess
 
 
                        PatientId = PatientHistory.PatientId,
+
                        Id = PatientHistory.Id,
                        Allergies = PatientHistory.Allergies,
                        LabResults = PatientHistory.LabResults,

@@ -159,7 +159,7 @@ namespace Hospital.Areas.Doctor.Controllers
             _unitOfWork.genericRepositorypatientreport.Save(HospitalVm);
 
 
-            return View( "index");
+            return RedirectToAction( "Index" );
 
 
 
