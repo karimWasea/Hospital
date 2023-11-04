@@ -1,108 +1,94 @@
-﻿@model PagedList.IPagedList<hospitalVm.PatientVm>
+﻿@model PagedList.IPagedList<hospitalVm. PatientVm>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
 
 @{
+    ViewData["Title"] = "All  confirmed Doctor ";
     Layout = "_Layout";
-    ViewData["Title"] = "All Patients";
 }
 
-<h2>@ViewData["Title"]</h2>
-
 <style>
-    body {
-        background-image: url('/Images/hospital17.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+    /* CSS to set fixed width for table columns */
+    .table th, .table td {
+        width: 30px;
+        height: 30px;
+        word-wrap: break-word; /* Wrap text if it's too long */
     }
 </style>
-<!-- Add the search input form -->
-<form id="search-form" method="get" action="@Url.Action("Index")">
-    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
-</form>
+<h2 class="mb-4">All  confirmed Doctor</h2>
 
-<a asp-controller="Patient" asp-action="Save" id="Add">
-    <i class="fas fa-plus-circle"></i> Add New Patient
-</a>
-<div id="search-results">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="~/css/contactindex.css" rel="stylesheet" />
+
+<div class="container mt-4">
+    <partial name="_AlertMessage" />
+
+    <form id="search-form" method="get" action="@Url.Action("Index")">
+        <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input" class="form-control">
+    </form>
+
+    <a asp-controller="Doctor" asp-action="Save" class="btn btn-primary mb-3">
+        <i class="fas fa-plus-circle"></i> Add New Doctor
+    </a>
+
+
     <table class="table table-bordered table-hover table-success">
         <thead>
-        <tr>
-            <th>Id</th>
-            <th>Create Date</th>
-            <th>Description</th>
-            <th>Confirmation</th>
-            <th>Action</th>
-            <th>Addinfo</th>
-        </tr>
-    </thead>
+            <tr>
+                <th>Username</th>
+
+
+                <th>Email</th>
+                <th>Img</th>
+
+
+                <th>Action</th>
+
+
+            </tr>
+        </thead>
         <tbody id="patientTableBody">
-            *   @foreach (var patient in Model)
-                {
-                <tr>
-                    <td>@patient.id</td>
-                    <td>@patient.Dateofbarth</td>
-                    <td>@patient.Email</td>
-                    <td>@patient.City</td>
+            @foreach (var hospital in Model)
+            {
+                <tr class="patient">
+                    <td>@hospital.username</td>
+                    <td>@hospital.Email</td>
+
+
+
+
+
                     <td>
-                        <a asp-controller="Patient" asp-action="Details" asp-route-id="@patient.id">
-                            <i class="fas fa-info-circle" title="Details"></i>
-                        </a>
-                        <a asp-controller="Patient" asp-action="Save" asp-route-id="@patient.id" data-action="edit">
-                            <i class="fas fa-edit" title="Edit"></i>
-                        </a>
-                        <a asp-controller="Patient" asp-action="Delete" asp-route-id="@patient.id" data-action="delete">
-                            <i class="fas fa-trash-alt" title="Delete"></i>
-                        </a>
+                        <img class="rounded-circle img-fluid" src="@hospital.imphgurl" alt="@hospital.username" width="50">
                     </td>
                     <td>
-                        <a asp-controller="Patient" asp-action="gethistory" asp-route-id="@patient.id">
-                            <i class="fas fa-info-circle" title="Details"></i>
+                        <a asp-controller="Patient" asp-action="Save" asp-route-id="@hospital.id" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i> Edit
                         </a>
-                        <a asp-controller="Patient" asp-action="getvisits" asp-route-id="@patient.id" >
-                            <i class="fas fa-info-circle" title="Details"></i>
+                        <a asp-controller="Patient" asp-action="Delete" asp-route-id="@hospital.id" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                        <a asp-controller="Patient" asp-action="Details" asp-route-id="@hospital.id" class="btn btn-sm btn-info">
+                            <i class="fas fa-info-circle"></i> Details
                         </a>
                     </td>
+                   
+
 
                 </tr>
-                }
-           </tbody>
-</table>
-</div>
-<partial name="_PaginationPartial" model="Model" />
-
-
-<!-- Add the search input form --
-
-<!-- Display the search results -->
-!-<!-- JavaScript to handle search input -->
-<script>
-    // Get the search input element
-    const searchInput = document.getElementById('search-input');
-
-    // Get the patient elements
-    const patientElements = document.querySelectorAll('.patient');
-
-    // Function to update the search results
-    function updateSearchResults() {
-        const searchText = searchInput.value.toLowerCase();
-
-        patientElements.forEach(patient => {
-            const patientText = patient.textContent.toLowerCase();
-            if (patientText.includes(searchText)) {
-                patient.style.display = 'block';
-            } else {
-                patient.style.display = 'none';
             }
-        });
-    }
+        </tbody>
+    </table>
+</div>
 
-    // Add an event listener to the search input to listen for input changes
-    searchInput.addEventListener('input', function () {
-        updateSearchResults();
-    });
+<partial name="_PaginationPartial" model="@Model" />
 
-    // Initial call to populate search results
-    updateSearchResults();
-</script>
+@section Scripts{
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="~/js/doctorindex.js"></script>
+
+}

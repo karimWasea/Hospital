@@ -16,8 +16,6 @@ namespace Hospital.Areas.Patient.Controllers
 
         UnitOfWork _unitOfWork;
         lookupServess _lookupServess;
-
-
         public PatientController(UnitOfWork unitOfWork, lookupServess lookupServess)
         {
             _unitOfWork = unitOfWork;
@@ -25,67 +23,20 @@ namespace Hospital.Areas.Patient.Controllers
         }
 
 
-        public async Task<IActionResult> Index(int? page, string search)
+
+
+
+        //  GET: HomeController
+        public async Task<ActionResult> Index(int? page, string search)
         {
-            var model = await _unitOfWork.Patient.Getall();
-            int pageNumber = page ?? 1;
 
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                // Apply search filtering here based on your model properties
-                model = model.Where(patient =>
-                    SearchProperty(patient.username, search) ||
-                    SearchProperty(patient.Email, search) ||
-                    SearchProperty(patient.Phonenumber, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.PostalCode, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.Nationality, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.StreetAddress, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.City, search, StringComparison.OrdinalIgnoreCase)
-                // Add more properties for search as needed
-                );
-            }
 
-            var pagedPatients = _unitOfWork.Patient.GetPagedData(model.AsQueryable(), pageNumber);
+            var pagedPatients = await _unitOfWork.Patient.Search(page, search);
 
-            ViewBag.Search = search;
 
             return View(pagedPatients);
         }
 
-        // Helper method for case-insensitive search
-        private bool SearchProperty(string propertyValue, string search, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
-        {
-            return !string.IsNullOrWhiteSpace(propertyValue) &&
-                   propertyValue.Contains(search, comparison);
-        }
-
-        //  GET: HomeController
-
-
-        //public async Task<IActionResult> Index(int? page)
-        //{
-        //    var model = await _unitOfWork.Patient.Getall();
-        //    int pageNumber = page ?? 1;
-
-        //    var pagedPatients = _unitOfWork.Patient.GetPagedData(model.AsQueryable(), pageNumber);
-
-        //    return View(pagedPatients);
-        //}
-
-
-
-
-        //public async Task<IActionResult> _Pagnatination(int? page)
-        //{
-        //    var model = await _unitOfWork.Patient.Getall();
-        //    var pagedPatients = _unitOfWork.Patient.GetPagedData(model.AsQueryable(), page ?? 1);
-
-
-
-
-
-        //    return PartialView("_Pagnatination", pagedPatients);
-        //}
 
 
 
@@ -94,25 +45,26 @@ namespace Hospital.Areas.Patient.Controllers
 
 
 
-
-        // GET: HomeController/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            var model = await _unitOfWork.Patient.GetById(id);
+            var model = await _unitOfWork.Patient.GetBy(id);
             return View(model);
         }
 
 
 
 
+
         public async Task<ActionResult> Save(string id)
         {
-            ViewBag.jop = _lookupServess.jop();
             ViewBag.Gender = _lookupServess.Gender();
+            ViewBag.Doctorspicialist = _lookupServess.Doctorspicialist();
+            ViewBag.jop = _lookupServess.jop();
+            ViewBag.StatusDoctorInSystem = _lookupServess.StatusDoctorInSystem();
             if (id != null)
             {
 
-                var model = await _unitOfWork.Patient.GetById(id);
+                var model = await _unitOfWork.Patient.GetBy(id);
                 return View(model);
             }
             else
@@ -126,15 +78,24 @@ namespace Hospital.Areas.Patient.Controllers
 
         [HttpPost]
         // [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Save(DoctorVm HospitalVm)
+        public async Task<ActionResult> Save( PatientVm HospitalVm)
         {
+            ViewBag.Gender = _lookupServess.Gender();
+            ViewBag.Doctorspicialist = _lookupServess.Doctorspicialist();
+            ViewBag.jop = _lookupServess.jop();
+            ViewBag.StatusDoctorInSystem = _lookupServess.StatusDoctorInSystem();
+            if (ModelState.IsValid)
+            {
+                await _unitOfWork.Patient.Save(HospitalVm);
+                TempData["Message"] = $" successfully!";
+                TempData["MessageType"] = "Save";
 
-            await _unitOfWork.Doctor.Save(HospitalVm);
+                return RedirectToAction("Index");
+
+            }
 
 
-            return RedirectToAction("Index");
-
-
+            return View(HospitalVm);
 
         }
 
@@ -169,9 +130,10 @@ namespace Hospital.Areas.Patient.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             await _unitOfWork.Patient.Delete(id);
+            TempData["Message"] = $" successfully!";
+            TempData["MessageType"] = "Save";
             return RedirectToAction("Index");
         }
-
 
 
 
