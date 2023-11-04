@@ -37,8 +37,10 @@ namespace Hospital.Areas.Patient.Controllers
         {
             var model =  _unitOfWork.patientHistory.GetById(id);
             return View(model);
-        } 
+        }
 
+
+     
 
 
         public ActionResult GetALLpatientHistory(string PatientId, int? page, string search)

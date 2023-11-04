@@ -33,93 +33,59 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                       
-
-
-
-                        <li class="nav-item">
-
-                        <li class="nav-item dropdown">
+                        <!-- Admin Submenu -->
+                        <li class="nav-item dropdown bg-info">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Admin
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="adminDropdown">
+                            <div class="dropdown-menu bg-info" aria-labelledby="adminDropdown">
                                 <!-- Submenu Items -->
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Hospitail" asp-action="Index">Hospitail</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Room" asp-action="Index">Room</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Roles" asp-action="Index">Roles</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Contact" asp-action="Index">Contact</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="Index">Appiontmentvisite</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Role"  asp-action="Index">GetALLRols</a>
-
-
-
-                </div>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Role" asp-action="Index">GetALLRols</a>
+                            </div>
                         </li>
 
-                        <!-- Doctor Submenu -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="doctorDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Doctor
+                        <!-- Reception Submenu -->
+                        <li class="nav-item dropdown bg-info">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="receptionDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Reception
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="doctorDropdown">
-                                <a class="dropdown-item" asp-area="Doctor" asp-controller="TimingShifts" asp-action="Index">TimingShifts</a>
-                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Apointment" asp-action="Index">Apointment</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="Getalldoctorvisit">DocApointment</a>
-                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">Mangdoctor</a>
-                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="GetRegisterdoctor">GetRegisterdoctor</a>
-                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="Index">Daywork</a>
+                            <div class="dropdown-menu bg-info" aria-labelledby="receptionDropdown">
+                                <a class="dropdown-item" asp-area="Doctor" asp-controller="TimingShifts" asp-action="Index">DayShifts</a>
+                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">ConfirmedDoctor</a>
+                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="GetRegisterdoctor">Registerdoctor</a>
+                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="Index">WeekShifts</a>
                                 <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="AllDayShifts">AllDayShifts</a>
                                 <a class="dropdown-item" asp-area="Patient" asp-controller="Patient" asp-action="Index">Allpatient</a>
-
-
-                               
-                               
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="Index">Appiontmentvisite</a>
+                                <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">PatientHistory</a>
                             </div>
                         </li>
 
-
-
-
-
-
-
-
-                        <li class="nav-item dropdown">
+                        <!-- Doctors Submenu -->
+                        <li class="nav-item dropdown bg-info">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="doctorDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Appiontmentvisite
+                                Doctors
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="doctorDropdown">
-                                 
-
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="Index">DocApointment</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GetAllVistitsbyPatientid">GetAllVistitsbyPatient</a>
+                            <div class="dropdown-menu bg-info" aria-labelledby="doctorDropdown">
+                                <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory">PatientHistory</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GettAllVistitsByDoctorid">GettAllVistitsByDoctor</a>
                                 <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="Index">Allprescreaption</a>
-                                <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="GetAllPatientReportsbyPatientId">patientReports</a>
-                                <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">PatientHistory</a>
-
-
-
-
                             </div>
                         </li>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <!-- Patient Submenu -->
+                        <li class="nav-item dropdown bg-info">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="patientDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Patient
+                            </a>
+                            <div class="dropdown-menu bg-info" aria-labelledby="patientDropdown">
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GetAllVistitsbyPatientid">GetAllVistitsbyPatient</a>
+                                <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="GetAllPatientReportsbyPatientId">patientReports</a>
+                            </div>
                         </li>
                     </ul>
 
@@ -131,43 +97,7 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
         </nav>
 
     </header>
-    @*nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-        <div class="position-sticky">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active text-dark" asp-area="Admin" asp-controller="Hospitail" asp-action="Index">Hospitail</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Room" asp-action="Index">Room</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Roles" asp-action="Index">Roles</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Contact" asp-action="Index">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Doctor" asp-controller="TimingShifts" asp-action="Index">TimingShifts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Apointment" asp-action="Index">Apointment</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Apointment" asp-action="ConfimedApiontmentfordoctor">DocApointment</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">Mangdoctor</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Doctor" asp-action="GetRegisterdoctor">GetRegisterdoctor</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Daywork" asp-action="Index">Daywork</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-*@
+   
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
