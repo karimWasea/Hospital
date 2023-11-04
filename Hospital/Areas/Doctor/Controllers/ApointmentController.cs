@@ -122,9 +122,9 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
         {
+         
 
-
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
             if (!claimsIdentity.IsAuthenticated)
             {
                 return Redirect("/Admin/Home/Index");
@@ -138,11 +138,11 @@ namespace Hospital.Areas.Doctor.Controllers
                 return Redirect("/Admin/Home/Index");
             }
             ViewBag.AvailableSlots = _unitOfWork._lookupServess.AvailableAppointments(id);
-            //  ViewBag.AvailableSlots = availableSlots;
-            ViewBag.Visitetype = _unitOfWork._lookupServess.Visitetype();
-            var m = await _unitOfWork.Apointment.GetAvilablebydocid(id);
 
-            return View(m);
+            ViewBag.Visitetype = _unitOfWork._lookupServess.Visitetype();
+            var model = await _unitOfWork.Apointment.GetAvilablebydocid(id);
+        
+            return View(model);
 
 
 
@@ -156,33 +156,34 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
+       
 
 
 
 
 
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            if (!claimsIdentity.IsAuthenticated)
-            {
-                return Redirect("/Admin/Home/Index");
-            }
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                if (!claimsIdentity.IsAuthenticated)
+                {
+                    return Redirect("/Admin/Home/Index");
+                }
 
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userId))
-            {
-                // Handle the case where the user identifier is not found in claims (optional).
-                return Redirect("/Admin/Home/Index");
-            }
+                var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    // Handle the case where the user identifier is not found in claims (optional).
+                    return Redirect("/Admin/Home/Index");
+                }
 
-            appointment.patientid = userId;
-
-
-            _unitOfWork.Apointment.Save(appointment);
+                appointment.patientid = userId;
 
 
-            return Redirect("/Admin/Appiontmentvisite/GetAllVistitsbyPatientid");
+                _unitOfWork.Apointment.Save(appointment);
 
 
+                return Redirect("/Admin/Appiontmentvisite/GetAllVistitsbyPatientid");
+
+           
 
         }
 

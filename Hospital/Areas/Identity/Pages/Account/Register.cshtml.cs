@@ -204,7 +204,7 @@ namespace Hospital.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.imphgurl = _imgoeration.Addrengofimges(Input.imphgurl);
+                user.imphgurl = _imgoeration. Addrengofimges(Input.imphgurl);
                 user.PhoneNumber = Input.Phonnumber;
                 user.Email = Input.Email;
                 user.City = Input.City; 

@@ -49,10 +49,9 @@
                     <a asp-area="Doctor"
                        asp-controller="PatientReport"
                        asp-action="Save"
-                       asp-route-patientid="@patient.patientid"
-
-                       class="btn btn-sm btn-info" style="background-color: #your_color;">
-                        Patient Report
+                       asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid"
+                       class="btn btn-sm btn-info" style="background-color: gray;">
+                      Add  Patient Report
                     </a>
 
 
@@ -60,8 +59,7 @@
                        asp-controller="PatientReport"
                        asp-action="GetAllPatientReportsbyPatientId"
                        asp-route-patientid="@patient.patientid"
-
-                       class="btn btn-sm btn-info" style="background-color: #your_color;">
+                       class="btn btn-sm btn-info" style="background-color: gray;">
                         Patient Reports
                     </a>
 
@@ -73,7 +71,7 @@
                        asp-action="GetALLpatientHistory"
                        asp-route-PatientId="@patient.patientid"
                        id="Add"
-                       class="btn btn-sm btn-success" style="background-color: #your_color;">
+                       class="btn btn-sm btn-success" style="background-color: gray;">
                         Get ALL Patient History
                     </a>
                @*      <a asp-route-PatientId="@patient.patientid" class="btn btn-sm btn-success" style="background-color: #your_color;" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">

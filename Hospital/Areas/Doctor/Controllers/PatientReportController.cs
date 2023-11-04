@@ -151,18 +151,23 @@ namespace Hospital.Areas.Doctor.Controllers
 
                 patientid = model.patientid,
                 doctorid = model.doctorid,
+                 
 
 
             };
 
+         
 
-            _unitOfWork.genericRepositorypatientreport.Save(HospitalVm);
+                _unitOfWork.genericRepositorypatientreport.Save(HospitalVm);
 
-            TempData["Message"] = $" successfully!";
-            TempData["MessageType"] = "Save";
-            return RedirectToAction( "Index" );
+                TempData["Message"] = $" successfully!";
+                TempData["MessageType"] = "Save";
+                //return RedirectToAction("Index");
 
+            
 
+ 
+            return View(patientrteort);
 
         }
 

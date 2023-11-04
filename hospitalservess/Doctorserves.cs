@@ -77,7 +77,7 @@ namespace hospitalservess
                 else
                 {
 
-                   existingUser.imphgurl = _lookupServess.Uploadimg(entity.imgurlupdated);
+                   existingUser.imphgurl = _lookupServess.Addrengofimges(entity.imgurlupdated);
                 }
 
 
@@ -106,11 +106,11 @@ namespace hospitalservess
                     Dateofbarth = entity.Dateofbarth,
                     PhoneNumber = entity.Phonenumber,
                     Nationality = entity.Nationality,
-                    imphgurl = _lookupServess.Uploadimg(entity.imgurlupdated),
+                    imphgurl = _lookupServess.Addrengofimges(entity.imgurlupdated),
                     PostalCode = entity.PostalCode,
                     Title = entity.Title,
                     HiringDate = entity.HiringDate,
-                    Contracturl = _lookupServess.Uploadimg(entity.Contracturluplod),
+                    Contracturl = _lookupServess.Addrengofimges(entity.Contracturluplod),
                     statusDoctorInSystem = entity.StatusDoctorInSystem,
                     WorkingDaysinWeek = entity.WorkingDaysinWeek,
                     Salary = entity.Salary,
