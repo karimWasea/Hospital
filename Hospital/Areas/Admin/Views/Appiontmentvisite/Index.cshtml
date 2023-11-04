@@ -2,6 +2,7 @@
 
 
 
+
 @model PagedList.IPagedList<hospitalVm.ApointmentVm>
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -80,7 +81,10 @@
                        asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid">
                             Complete
                         </a>
-                    </td>
+                    <a asp-route-PatientId="@patient.patientid" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
+                        GetALLpatientHistory
+                    </a>
+                </td>
 
                 </tr>
 

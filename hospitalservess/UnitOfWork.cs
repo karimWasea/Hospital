@@ -50,7 +50,7 @@ genericRepositoryAppiontment=apointmentserves;
              genericRepositorypatientreport = patientreportserves;
             patientHistory = patientHistoryserves;
 
-            GetGenericpatientHistory = patientHistoryserves;
+
         }
 
         #region Implement the Dispose method to release resources
@@ -77,7 +77,7 @@ genericRepositoryAppiontment=apointmentserves;
         public IPatient Patient { get; }
         public Idoctorvist Idoctorvist  { get; }
         public IGenericRepository<ApointmentVm> GenericRepositoryvisit { get; }
-        public IGenericRepository<PatientHistoryVm> GetGenericpatientHistory { get; }
+
         public IPatientHistory patientHistory  { get; }
         public IRoleS roleS { get; }
         public Ipatientreportserves PatientReport { get; }

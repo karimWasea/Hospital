@@ -56,7 +56,7 @@ namespace hospitalVm
             return new PatientHistory
             {
 
-
+                PhysicalExamination= PatientHistory.PhysicalExamination,
 
                 PatientId = PatientHistory.PatientId,
                 Id = PatientHistory.Id,

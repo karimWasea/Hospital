@@ -3,27 +3,24 @@
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "All Patients";
+    ViewData["Title"] = "All Patient History ";
 }
-<style>
-    body {
-        background-image: url('/Images/hospital17.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-</style>
+
 <h2>@ViewData["Title"]</h2>
+
 @if (!Model.Any())
 {
-    <p>No  PatientHistoryVm.</p>
+    <p>No PatientHistoryVm.</p>
 }
-<form id="search-form" method="get" action="@Url.Action("Index")">
-    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
+
+<link href="~/css/contactindex.css" rel="stylesheet" />
+
+<form id="search-form" method="get">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input" class="form-control">
 </form>
 
-<a asp-area="Patient" asp-controller="PatientHistory" asp-action="Save" id="Add">
-    <i class="fas fa-plus-circle"></i> Add New Add nistory
+<a asp-area="Patient" asp-controller="PatientHistory" asp-action="Save" id="Add" class="btn btn-primary mb-3">
+    <i class="fas fa-plus-circle"></i> Add New Patient History
 </a>
 
 <div id="search-results">
@@ -50,30 +47,42 @@
                     <td>@patient.FamilyHistory</td>
                     <td>@patient.HistoryOfPresentIllness</td>
                     <td>
-                        <!-- Initial action button -->
-                        <a @* asp-controller="Room" asp-action="Details" asp-route-id="@hospital.id"
-                       *@ onclick="executeInitialAction('@Url.Action("Details", "PatientHistory", new { id = patient.Id })')">
+                        <a asp-controller="PatientHistory" asp-action="Details" asp-route-id="@patient.Id">
                             <i class="fas fa-info-circle" title="Details"></i>
                         </a>
-                        <!-- Subsequent action button -->
-                        <a @* asp-controller="Room" asp-action="Save" asp-route-id="@hospital.id"
-                       *@ onclick="return showEditConfirmation('@Url.Action("Save", "PatientHistory", new { id = patient.Id })')">
+                        <a asp-controller="PatientHistory" asp-action="Save" asp-route-id="@patient.Id">
                             <i class="fas fa-edit" title="Edit"></i>
                         </a>
-                        <a @* asp-controller="Room" asp-action="Save" asp-route-id="@hospital.id"
-                       *@ onclick="return DeletEditConfirmation('@Url.Action("Delete", "PatientHistory", new
-                   { id = patient.Id })')">
+                        <a asp-controller="PatientHistory" asp-action="Delete" asp-route-id="@patient.Id">
                             <i class="fas fa-trash-alt" title="Delete"></i>
                         </a>
-
-                        <a asp-route-PatientId="@patient.PatientId" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
-                        GetALLpatientHistory
-                        </a> <!-- ... -->
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
 <partial name="_PaginationPartial" model="Model" />
 
+@section Scripts{
+    <script>
+        // Function to update table visibility based on search input
+        function updateTableVisibility(searchTerm) {
+            const rows = document.querySelectorAll(".patient"); // Select all patient rows
+            rows.forEach(row => {
+                const patientNameCell = row.querySelector("td:nth-child(1)"); // Select the first cell for patient name
+                if (patientNameCell.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    row.style.display = "table-row";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        const searchInput = document.getElementById("search-input");
+        searchInput.addEventListener("input", function () {
+            updateTableVisibility(this.value);
+        });
+    </script>
+}

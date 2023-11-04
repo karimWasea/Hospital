@@ -75,6 +75,13 @@
                        class="btn btn-sm btn-success" style="background-color: #your_color;">
                         Get ALL Patient History
                     </a>
+                    <a asp-route-PatientId="@patient.patientid" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
+                        GetALLpatientHistory
+                    </a>
+
+                    <a asp-route-PatientId="@patient.patientid" asp-area="Doctor" asp-controller="PatientHistory" asp-action="GetAllPatientReportsbyPatientId" id="Add">
+                        PatientReport
+                    </a>
                 </td>
             </tr>
         }

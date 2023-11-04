@@ -22,6 +22,7 @@
             <th>Patient Name</th>
             <th>Doctor Name</th>
             <th>Visit Status</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody id="patientTableBody">
@@ -31,6 +32,15 @@
                 <td>@patient.CreateDate</td>
                 <td>@patient.DoctorName</td>
                 <td class="visit-status-cell">@patient.VisitStatus</td>
+                <td class="visit-status-cell">
+                    <a asp-route-PatientId="@patient.patientid" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
+                        GetALLpatientHistory
+                    </a>
+
+                    <a asp-route-PatientId="@patient.patientid" asp-area="Doctor" asp-controller="PatientHistory" asp-action="GetAllPatientReportsbyPatientId" id="Add">
+                        PatientReport
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

@@ -23,37 +23,14 @@ namespace Hospital.Areas.Patient.Controllers
 
         public IActionResult Index(int? page, string search)
         {
-            var model = _unitOfWork.patientHistory.GetAll();
-            int pageNumber = page ?? 1;
+            var model = _unitOfWork.patientHistory.Search(page,search);
+           
 
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                // Apply search filtering here based on your model properties
-                model = model.Where(patient =>
-                    SearchProperty(patient.FamilyHistory, search) ||
-                    SearchProperty(patient.Allergies, search) ||
-                    SearchProperty(patient.Medications, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.LabResults, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.Assessment, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.PastMedicalHistory, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.ChiefComplaint, search, StringComparison.OrdinalIgnoreCase)
-                // Add more properties for search as needed
-                );
-            }
-
-            var pagedPatients = _unitOfWork.patientHistory.GetPagedData(model.AsQueryable(), pageNumber);
-
-            ViewBag.Search = search;
-
-            return View(pagedPatients);
+            return View(model);
         }
 
-        // Helper method for case-insensitive search
-        private bool SearchProperty(string propertyValue, string search, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
-        {
-            return !string.IsNullOrWhiteSpace(propertyValue) &&
-                   propertyValue.Contains(search, comparison);
-        }
+    
+
 
 
         public ActionResult Details(int id)
@@ -66,35 +43,20 @@ namespace Hospital.Areas.Patient.Controllers
 
         public ActionResult GetALLpatientHistory(string PatientId, int? page, string search)
         {
-            var pagedPatients =  _unitOfWork.patientHistory.GetallPatientHistory(PatientId);
-            int pageNumber = page ?? 1;
+            var pagedPatients =  _unitOfWork.patientHistory.GetallPatientHistory(PatientId,page,search);
+           
 
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                // Apply search filtering here based on your model properties
-                pagedPatients = pagedPatients.Where(patient =>
-                    SearchProperty(patient.FamilyHistory, search) ||
-                    SearchProperty(patient.Allergies, search) ||
-                    SearchProperty(patient.Medications, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.LabResults, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.Assessment, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.PastMedicalHistory, search, StringComparison.OrdinalIgnoreCase) ||
-                    SearchProperty(patient.ChiefComplaint, search, StringComparison.OrdinalIgnoreCase)
-                // Add more properties for search as needed
-                );
-            }
+       
 
-            var pagedPatients2 = _unitOfWork.patientHistory.GetPagedData(pagedPatients.AsQueryable(), pageNumber);
-
-            ViewBag.Search = search;
-
-            return View(pagedPatients2);
+            return View(pagedPatients);
         }
 
 
         public async Task<IActionResult> Delete(int id)
         {
             _unitOfWork.patientHistory.Delete(id);
+            TempData["Message"] = $" successfully!";
+            TempData["MessageType"] = "Delete";
             return RedirectToAction("Index");
         }
 
@@ -118,12 +80,15 @@ namespace Hospital.Areas.Patient.Controllers
 
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
+
         public ActionResult Save(PatientHistoryVm HospitalVm)
         {
+            ViewBag.allpatient = _lookupServess.allpatient();
 
-             _unitOfWork.patientHistory.Save(HospitalVm);
 
+            _unitOfWork.patientHistory.Save(HospitalVm);
+            TempData["Message"] = $" successfully!";
+            TempData["MessageType"] = "Save";
 
             return RedirectToAction("Index");
 

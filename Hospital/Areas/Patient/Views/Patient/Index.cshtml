@@ -72,6 +72,16 @@
                         <a asp-controller="Patient" asp-action="Details" asp-route-id="@hospital.id" class="btn btn-sm btn-info">
                             <i class="fas fa-info-circle"></i> Details
                         </a>
+                        <a asp-route-PatientId="@hospital.id" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
+                            GetALLpatientHistory
+                        </a>
+
+                        <a asp-route-PatientId="@hospital.id" asp-area="Doctor" asp-controller="PatientHistory" asp-action="GetAllPatientReportsbyPatientId" id="Add">
+                            PatientReport
+                        </a>
+
+
+
                     </td>
                    
 
