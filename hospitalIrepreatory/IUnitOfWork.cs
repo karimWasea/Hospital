@@ -7,7 +7,9 @@ using Microsoft.Data.SqlClient;
 namespace hospitalIrepreatory
 {
     public interface IUnitOfWork : IDisposable
-    { Idoctorvist Idoctorvist { get; }
+    {   
+        Ipatientreportserves PatientReport { get; }
+        Idoctorvist Idoctorvist { get; }
                     IGenericRepository<ApointmentVm> GenericRepositoryvisit { get; }
         IRoleS roleS { get; }
         Idoctodayworinweek idoctodayworinweek {  get; }

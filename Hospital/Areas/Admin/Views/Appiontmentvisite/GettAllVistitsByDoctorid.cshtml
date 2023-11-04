@@ -50,13 +50,20 @@
                        asp-controller="PatientReport"
                        asp-action="Save"
                        asp-route-patientid="@patient.patientid"
-                       asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid"
+
                        class="btn btn-sm btn-info" style="background-color: #your_color;">
                         Patient Report
                     </a>
 
 
-
+                    <a asp-area="Doctor"
+                       asp-controller="PatientReport"
+                       asp-action="GetAllPatientReportsbyPatientId"
+                       asp-route-patientid="@patient.patientid"
+                       asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid"
+                       class="btn btn-sm btn-info" style="background-color: #your_color;">
+                        PatientReports
+                    </a>
 
 
 

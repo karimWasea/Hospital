@@ -10,12 +10,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
+using PagedList;
+
 using System.Linq.Expressions;
 
 namespace hospitalservess
 {
 
-    public class patientreportserves : IGenericRepository<patientreportVm> 
+    public class patientreportserves : PaginationHelper<patientreportVm> ,Ipatientreportserves
     {
 
         UserManager<ApplicationUser> _userManager;
@@ -81,6 +83,18 @@ namespace hospitalservess
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
         public IEnumerable<patientreportVm> GetAll()
         {
             var model = _db. Patientreports.Where(i=>i.IsDeleted==IsDeleted.NotDeleted).Select(p => new patientreportVm
@@ -127,49 +141,69 @@ namespace hospitalservess
             }).FirstOrDefault();
         }
 
-       
-        
+        public IPagedList<patientreportVm> GetAllReportsbyPatientid(string patientid, int? pagnumber, string searchTerm = null)
+        {
+            var searchTermLower = searchTerm?.ToLower();
+            int pageNum = pagnumber ?? 1;
 
-      
+            var doctorAppointments = _db.Patientreports.Include(i => i.doctor).Include(i => i.patient).Include(i => i.DoctorAppointmentVIsit)
+                .Where(a => a.patientid==patientid &&
+                    (string.IsNullOrWhiteSpace(searchTerm) ||
+                    EF.Functions.Like(a.doctor.UserName, "%" + searchTermLower + "%") ||
+                    EF.Functions.Like(a.patient.UserName, "%" + searchTermLower + "%")) || EF.Functions.Like(a.dignouses, "%" + searchTermLower + "%"))
+                .Select(p => new patientreportVm
+                {
+                    patientName = p.patient.UserName,
+                    doctorname = p.doctor.UserName,
+                    dignouses = p.dignouses,
+                    DoctorAppointmentVIsitid = p.DoctorAppointmentVIsitid,
+                    doctorid = p.doctorid,
+                    patientid = p.patientid,
+                    id = p.id,
+                    IsDeleted = p.IsDeleted,
+                    Reportdate = _db.DoctorAppointmentVIsit.Where(i => i.patientid == p.patientid && i.DoctorId == p.doctorid).Select(p => p.Appointment.CreateDate).FirstOrDefault(),
 
-     
-
-       
-      
-
-       
-     
-     
-       
-
-      
-
-   
-
-   
-
-
-
-
-
+                }).OrderBy(i => i.Reportdate);
 
 
 
 
+            var paglist = GetPagedData(doctorAppointments, pageNum);
+
+            return paglist;
+        }
+
+        public IPagedList<patientreportVm> Search(int? pagnumber, string searchTerm = null)
+        {
+            var searchTermLower = searchTerm?.ToLower();
+            int pageNum = pagnumber ?? 1;
+
+            var doctorAppointments = _db.Patientreports.Include(i => i.doctor).Include(i => i.patient).Include(i => i.DoctorAppointmentVIsit)
+                .Where(a => 
+                    (string.IsNullOrWhiteSpace(searchTerm) ||
+                    EF.Functions.Like(a.doctor.UserName, "%" + searchTermLower + "%") ||
+                    EF.Functions.Like(a.patient.UserName, "%" + searchTermLower + "%")) || EF.Functions.Like(a.dignouses, "%" + searchTermLower + "%")) 
+                .Select(p => new patientreportVm
+                {
+                    patientName = p.patient.UserName,
+                    doctorname = p.doctor.UserName,
+                    dignouses = p.dignouses,
+                    DoctorAppointmentVIsitid = p.DoctorAppointmentVIsitid,
+                    doctorid = p.doctorid,
+                    patientid = p.patientid,
+                    id = p.id,
+                    IsDeleted = p.IsDeleted,
+                    Reportdate = _db.DoctorAppointmentVIsit.Where(i => i.patientid == p.patientid && i.DoctorId == p.doctorid).Select(p => p.Appointment.CreateDate).FirstOrDefault(),
+
+                }).OrderBy(i => i.Reportdate);
 
 
 
 
+            var paglist = GetPagedData(doctorAppointments, pageNum);
 
-
-
-
-
-
-
-
-
-
+            return paglist;
+        }
     }
 
 

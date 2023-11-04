@@ -31,7 +31,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
         UnitOfWork _unitOfWork;
 
-        public PatientReportController(UnitOfWork unitOfWork, lookupServess lookupServess, UserManager<ApplicationUser> userManager
+        public PatientReportController(UnitOfWork unitOfWork
      )
         {
 
@@ -40,10 +40,65 @@ namespace Hospital.Areas.Doctor.Controllers
         }
 
         //  GET: HomeController
-        public ActionResult Index()
+        public async Task<ActionResult> Index(int? page, string search)
         {
-            return View(_unitOfWork.genericRepositorypatientreport.GetAll());
+
+            var pagedPatients = _unitOfWork.PatientReport.Search(page, search);
+
+
+            return View(pagedPatients);
         }
+
+
+
+
+
+        public ActionResult GetAllPatientReportsbyPatientId(string patientid, string search, int? page)
+        {
+            var searchTermLower = search?.ToLower();
+            int pageNumber = page ?? 1;
+
+            if (patientid != null)
+            {
+                var pagedPatientss = _unitOfWork.PatientReport.GetAllReportsbyPatientid(patientid, page, search);
+
+
+                return View(pagedPatientss);
+
+            }
+
+
+
+
+
+
+
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            if (!claimsIdentity.IsAuthenticated)
+            {
+                return Redirect("/Admin/Home/Index");
+            }
+
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+            {
+                // Handle the case where the user identifier is not found in claims (optional).
+                return Redirect("/Admin/Home/Index");
+            }
+
+            var pagedPatients 
+                = _unitOfWork.PatientReport.GetAllReportsbyPatientid(userId, page, search);
+
+
+
+            return View(pagedPatients);
+        }
+
+
+
+
+
 
         // GET: HomeController/Details/5
         public ActionResult Details(int id)
@@ -52,34 +107,8 @@ namespace Hospital.Areas.Doctor.Controllers
         }
         [HttpGet]
 
-        public    IActionResult Save(  int id, int  DoctorAppointmentVIsitid) //dd88ca62-be8a-483b-822b-02d2daa9b5e0"
+        public    IActionResult Save(  int id, int  DoctorAppointmentVIsitid) 
         {
-
-
-            //var claimsIdentity = (ClaimsIdentity)User.Identity;
-
-            //if (!claimsIdentity.IsAuthenticated)
-            //{
-            //    return Redirect("/Admin/Home/Index");
-            //}
-
-            //var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            //if (string.IsNullOrEmpty(userId))
-            //{
-            //    // Handle the case where the user identifier is not found in claims (optional).
-            //    return Redirect("/Admin/Home/Index");
-            //}
-
-            //ViewBag.doctorName = _unitOfWork._userManager.Users.FirstOrDefault(i => i.Id == userId).UserName;
-            //ViewBag.doctorid = userId;
-            //ViewBag.DoctorAppointmentVIsitid = DoctorAppointmentVIsitid;
-            //ViewBag.patientid = patientid;
-            // var m = _userManager.FindByIdAsync(userId); 
-            //ViewBag.patientname =
-            //   _unitOfWork. _userManager.Users. Where(i => i.Id == patientid).Select(i=>i.UserName).FirstOrDefault();
-            //int numberToPass = DoctorAppointmentVIsitid; // The number you want to pass
-            //TempData["Number"] = numberToPass;
-            //ViewBag.Appiontmentvisiid = _unitOfWork._context.DoctorAppointmentVIsit.
 
          var model=   _unitOfWork.Idoctorvist.GetById(DoctorAppointmentVIsitid);
             var patientrteort = new patientreportVm()

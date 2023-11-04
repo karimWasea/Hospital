@@ -1,26 +1,20 @@
-﻿@using hospitalUtilities
-@model PagedList.IPagedList<hospitalVm.patientreportVm>
-
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, Cloudscribe.Web.Pagination
-
-@{
-    ViewData["Title"] = "ConfimedApiontmentfordoctor";
+﻿@{
+    ViewData["Title"] = "All Patient Reports";
     Layout = "_Layout";
 }
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using hospitalUtilities
+@model PagedList.IPagedList<hospitalVm.patientreportVm>
 
-<h1>ALL Patient Reports</h1>
 <style>
     /* Style for rows marked as not confirmed */
     .not-confirmed-row {
         background-color: red; /* You can customize this color */
         color: white; /* You can customize the text color */
     }
-
 </style>
 <partial name="_AlertMessage" />
 <link href="~/css/contactindex.css" rel="stylesheet" />
-<h2 class="mb-4">Patient Report</h2>
 
 <form id="search-form" method="get">
     <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input" class="form-control">
@@ -31,17 +25,18 @@
         <table class="table table-bordered table-hover table-success table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th>Dignoses</th>
-                    <th>Patient Name</th>
-                    <th>Doctor Name</th>
-                    <th>Report Date</th>
+                    <th>dignoses</th>
+                    <th>patientName</th>
+                    <th>doctorname</th>
+                    <th>Reportdate</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var doctor in Model)
                 {
-                    <tr class="appointment-row">
+                    <tr class="row-style">
+                        <!-- Added a class for filtering -->
                         <td>@doctor.dignouses</td>
                         <td>@doctor.patientName</td>
                         <td>@doctor.doctorname</td>
@@ -49,7 +44,7 @@
                         <td>
 
                             <a asp-controller="PatientReport" asp-action="Save" asp-route-id="@doctor.id" asp-route-DoctorAppointmentVIsitid="@doctor.DoctorAppointmentVIsitid" class="btn btn-sm btn-info">Update</a>
-                            <a asp-controller="PatientReport" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Details</a>
+                            <a asp-controller="PatientReport" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Delete</a>
                             <a asp-controller="PatientReport" asp-action="Details" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Details</a>
                         </td>
                     </tr>
@@ -58,16 +53,34 @@
         </table>
     </div>
 </div>
-<partial name="_PaginationPartial" />
-
-@section Scripts{
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="GetAllPatientReportsbyPatientId" asp-route-page="1" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class "page-link" asp-action="GetAllPatientReportsbyPatientId" asp-route-page="@i">@i</a>
+            </li>
+        }
+        <li class="page-item @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
+            <a class="page-link" asp-action="GetAllPatientReportsbyPatientId" asp-route-page="@Model.PageCount" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+@section Scripts {
     <script>
         // Update table visibility based on search input
         function updateTableVisibility(searchTerm) {
-            const rows = document.querySelectorAll(".appointment-row");
+            const rows = document.querySelectorAll(".row-style");
             rows.forEach(row => {
-                const patientNameCell = row.querySelector("td:nth-child(2)"); // Adjust this selector as needed
-                if (patientNameCell.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+                const doctorNameCell = row.querySelector("td:nth-child(2)"); // Adjust this selector as needed
+                if (doctorNameCell.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
                     row.style.display = "table-row";
                 } else {
                     row.style.display = "none";

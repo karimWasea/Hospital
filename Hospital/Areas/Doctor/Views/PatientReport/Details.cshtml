@@ -1,0 +1,50 @@
+﻿@model hospitalVm.patientreportVm
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All visits";
+}
+<h1> Details</h1>
+<style>
+    body {
+        background-image: url('images/hospital.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">contacts</h5>
+        <p class="card-text">
+            <strong>doctorName:</strong> @Model.doctorname<br />
+            <strong>PatientName:</strong> @Model.patientName<br />
+
+            <strong>visitdate:</strong> @Model.Reportdate<br />
+            <strong>VisitType:</strong> @Model.dignouses<br />
+
+        </p>
+        @{
+            if (User.IsInRole("Admin"))
+            {
+                <div>
+                    <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
+                    Getalldoctorvisit
+                </div>
+
+
+            }
+            else
+            {
+                <div>
+                    <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
+                    Getalldoctorvisit
+                </div>
+            }
+        }
+
+
+    </div>
+</div>

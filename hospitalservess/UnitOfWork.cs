@@ -20,10 +20,11 @@ namespace hospitalservess
             ApplicationDBcontext context   , timingShiftservess timingShiftservess ,
             Apointmentserves apointmentserves , Applicationuserserves applicationuserserves , Doctorserves doctorserves 
              , DoctorDayworkserves doctorDayworkserves , patientreportserves patientreportserves , Patientserves patientserves  ,idoctorvisittserves idoctorvisittserves
-           , UserManager<ApplicationUser> userManager
+           , UserManager<ApplicationUser> userManager 
             )
 
         {
+            PatientReport = patientreportserves;
             _lookupServess = lookupServess;
             _userManager = userManager;  
            roleS = roleService;
@@ -79,6 +80,7 @@ genericRepositoryAppiontment=apointmentserves;
         public IGenericRepository<PatientHistoryVm> GetGenericpatientHistory { get; }
         public IPatientHistory patientHistory  { get; }
         public IRoleS roleS { get; }
+        public Ipatientreportserves PatientReport { get; }
 
         protected virtual void Dispose(bool disposing)
         {
