@@ -1,5 +1,9 @@
 ﻿@model hospitalVm.ApointmentVm
+@using System.Security.Claims
 
+@{
+    var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+}
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -7,55 +11,13 @@
     ViewData["Title"] = "AddNote";
 }
 
-<@*div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #f8f9fa;">
-    <div class="card" style="width: 80%;">
-        <div class="card-body">
-            <h1 class="card-title text-center">Details</h1>
-            <p class="card-text">
-                <strong>Doctor Name:</strong> @Model.doctorName<br />
-                <strong>Patient Name:</strong> @Model.PatientName<br />
-                <strong>Visit Note by Doctor:</strong> @Model.VisiteNotebydoctor<br />
-                <strong>Visit Date:</strong> @Model.CreateDate<br />
-                <strong>Visit Type:</strong> @Model.VisitType<br />
-                <strong>Visit Status:</strong> @Model.VisitStatus<br />
-            </p>
-        </div>
+<partial name="_AlertMessage" />
 
-<div class="container-fluid d-flex justify-content-center mt-3">
-            <form asp-action="AddDoctorNoteForVisit" method="post" id="saveform" enctype="multipart/form-data">
-        <input type="hidden" asp-for="id" />
-        <input asp-for="doctorid" type="hidden" />
-        <input asp-for="DoctorAppointmentVIsitid" type="hidden" />
-        <input asp-for="doctorid" type="hidden" />
-        <input asp-for="patientid" type="hidden" />
-        <input asp-for="id" type="hidden">
 
-        <div class="card" style="width: 60%;">
-            <div class="card-body">
-                <h5 class="card-title text-center">Add Notes</h5>
-                <div class="form-group">
-                    <label asp-for="VisiteNotebydoctor">Doctor's Note:</label>
-                    <textarea asp-for="VisiteNotebydoctor" style="width: 80vw; height: 80vh;"></textarea>
-                </div>
-                <button type="submit" id="savedata" class="btn btn-primary btn-block">Update</button>
-            </div>
-        </div>
-    </form>
-</div>
-         
-    </div>
-</div>
-<div class="container-fluid d-flex justify-content-center mt-3">
-    <a asp-area="Doctor" asp-controller="Apointment"
-       asp-action="ConfimedApiontmentfordoctor" class="btn btn-sm btn-info"> AllBooking</a>
-
-</div>
-
-//*@
 <style>
-body {
-    background-image: url('images/hospital.jpg');
-    background-size: cover;
+    body {
+        background-image: url('/Images/hospital17.jpg');
+        background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -88,12 +50,37 @@ body {
                     <label asp-for="VisiteNotebydoctor">Doctor's Note:</label>
                     <textarea asp-for="VisiteNotebydoctor" class="form-control" style="height: 60vh;"></textarea>
                 </div>
-                <button type="submit" id="savedata" class="btn btn-primary btn-block">Update</button>
+
+
+
+              
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                       @*  @if (userRole == "Admin")
+                        { *@
+                            <div>
+                                <a asp-area="Doctor" asp-controller="PatientReport" asp-action="Index" class="btn btn-sm btn-info">All Report</a>
+                            </div>
+                      @*   }
+                        else if (userRole == "Doctor")
+                        { *@
+                            <div>
+                                <a asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">All Booking</a>
+                            </div>
+@*                         }
+ *@                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" id="savedata" class="btn btn-primary btn-block">Update</button>
+                    </div>
+                </div>
+
             </form>
 
-            <!-- All Booking Link -->
-            <div class="text-center mt-3">
-                <a asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="Getalldoctorvisit" class="btn btn-sm btn-info">All Booking</a>
+
+            <div>
+
             </div>
         </div>
     </div>

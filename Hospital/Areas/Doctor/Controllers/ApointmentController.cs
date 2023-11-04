@@ -132,7 +132,6 @@ namespace Hospital.Areas.Doctor.Controllers
 
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-
             if (string.IsNullOrEmpty(userId))
             {
                 // Handle the case where the user identifier is not found in claims (optional).

@@ -30,21 +30,50 @@
         {
             <tr class="row-style">
                 <td>@patient.CreateDate</td>
+                <td>@patient.PatientName</td>
                 <td>@patient.DoctorName</td>
-                <td class="visit-status-cell">@patient.VisitStatus</td>
-                <td class="visit-status-cell">
-                    <a asp-route-PatientId="@patient.patientid" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
-                        GetALLpatientHistory
+                <td 
+                    >@patient.VisitStatus</td>
+                <td 
+                    >
+                    <a asp-route-PatientId="@patient.patientid" asp-area="Patient" asp-controller="PatientHistory" 
+                    asp-action="GetALLpatientHistory" class="btn btn-primary">
+                        Get All Patient History
                     </a>
 
-                    <a asp-route-PatientId="@patient.patientid" asp-area="Doctor" asp-controller="PatientHistory" asp-action="GetAllPatientReportsbyPatientId" id="Add">
-                        PatientReport
+                    <a asp-route-patientid="@patient.patientid" asp-area="Doctor" asp-controller="PatientReport"
+                       asp-action="GetAllPatientReportsbyPatientId" class="btn btn-primary">
+                        Patient Reports
                     </a>
+
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-page="1" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+            </li>
+        }
+        <li class="page-item @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-page="@Model.PageCount" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
 
 @section Scripts{
     <script>

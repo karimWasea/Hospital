@@ -53,7 +53,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        public ActionResult GetAllPatientReportsbyPatientId(string patientid, string search, int? page)
+        public ActionResult GetAllPatientReportsbyPatientId(string patientid, string ?search, int? page)
         {
             var searchTermLower = search?.ToLower();
             int pageNumber = page ?? 1;
@@ -158,7 +158,8 @@ namespace Hospital.Areas.Doctor.Controllers
 
             _unitOfWork.genericRepositorypatientreport.Save(HospitalVm);
 
-
+            TempData["Message"] = $" successfully!";
+            TempData["MessageType"] = "Save";
             return RedirectToAction( "Index" );
 
 
@@ -198,7 +199,8 @@ namespace Hospital.Areas.Doctor.Controllers
             _unitOfWork.genericRepositorypatientreport.Delete(id);
 
 
-
+            TempData["Message"] = $" successfully!";
+            TempData["MessageType"] = "Delete";
 
             return RedirectToAction("Index");
         }

@@ -40,7 +40,7 @@
                        asp-action="Details"
                        asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid"
                        class="btn btn-sm btn-primary" style="background-color: #your_color;">
-                        <i class="fas fa-info-circle" title="Details"></i>
+                        <i class="fas fa-info-circle" title="Details"></i>Details
                     </a>
 
 
@@ -60,33 +60,54 @@
                        asp-controller="PatientReport"
                        asp-action="GetAllPatientReportsbyPatientId"
                        asp-route-patientid="@patient.patientid"
-                       asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid"
+
                        class="btn btn-sm btn-info" style="background-color: #your_color;">
-                        PatientReports
+                        Patient Reports
                     </a>
 
 
 
-                    <a asp-route-PatientId="@patient.patientid"
+                    <a 
                        asp-area="Patient"
                        asp-controller="PatientHistory"
                        asp-action="GetALLpatientHistory"
+                       asp-route-PatientId="@patient.patientid"
                        id="Add"
                        class="btn btn-sm btn-success" style="background-color: #your_color;">
                         Get ALL Patient History
                     </a>
-                    <a asp-route-PatientId="@patient.patientid" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
+               @*      <a asp-route-PatientId="@patient.patientid" class="btn btn-sm btn-success" style="background-color: #your_color;" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
                         GetALLpatientHistory
                     </a>
 
-                    <a asp-route-PatientId="@patient.patientid" asp-area="Doctor" asp-controller="PatientHistory" asp-action="GetAllPatientReportsbyPatientId" id="Add">
+                    <a asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" asp-area="Doctor" class="btn btn-sm btn-success" style="background-color: #your_color;" asp-controller="PatientHistory" asp-action="GetAllPatientReportsbyPatientId" id="Add">
                         PatientReport
-                    </a>
+                    </a> *@
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="GettAllVistitsByDoctorid" asp-route-page="1" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" asp-action="GettAllVistitsByDoctorid" asp-route-page="@i">@i</a>
+            </li>
+        }
+        <li class="page-item @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
+            <a class="page-link" asp-action="GettAllVistitsByDoctorid" asp-route-page="@Model.PageCount" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 @section Scripts{
     <script>

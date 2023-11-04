@@ -42,11 +42,34 @@
                         <td>@doctor.doctorname</td>
                         <td>@doctor.Reportdate</td>
                         <td>
+                            @using System.Security.Claims
 
-                            <a asp-controller="PatientReport" asp-action="Save" asp-route-id="@doctor.id" asp-route-DoctorAppointmentVIsitid="@doctor.DoctorAppointmentVIsitid" class="btn btn-sm btn-info">Update</a>
-                            <a asp-controller="PatientReport" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Delete</a>
+                            @{
+                                var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+                            }
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                  @*   @if (userRole == "User" 
+                                    )
+                                    { *@
+                                         
                             <a asp-controller="PatientReport" asp-action="Details" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Details</a>
+                   
+                                  @*   }
+                                    else 
+ *@
+@*                                     {
+ *@                                        <a asp-controller="PatientReport" asp - action="Save" asp-route-id="@doctor.id" asp-route-DoctorAppointmentVIsitid="@doctor.DoctorAppointmentVIsitid" class="btn btn-sm btn-info">Update</a>
+                                                    <a asp-controller="PatientReport" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Delete</a>
+
+@*                                     }
+ *@                                </div>
+                               
+
+                            </div>
                         </td>
+                        
                     </tr>
                 }
             </tbody>

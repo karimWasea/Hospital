@@ -213,7 +213,8 @@ namespace Hospital.Areas.Admin.Controllers
             HospitalVm.VisitStatus = VisitStatus.InProgress;
 
             _unitOfWork.Idoctorvist.Save(HospitalVm);
-
+            TempData["Message"] = $" Note created successfully!";
+            TempData["MessageType"] = "Save";
 
             return View(_unitOfWork.Idoctorvist.GetById(HospitalVm.DoctorAppointmentVIsitid));
 
