@@ -43,13 +43,25 @@
         <div class="col-md-6">
             <a asp-area="Admin" asp-controller="Appiontmentvisite"
                asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">All Bookings</a>
-
+        </div>
+        <div class="col-md-3">
+        <a asp-area="Doctor"
+           asp-controller="PatientReport"
+           asp-action="GetAllPatientReportsbyPatientId"
+           asp-route-patientid="patientid"
+           class="btn btn-sm btn-info" style="background-color: gray;">
+            Patient Reports
+        </a>
+        </div>
+        <div class="col-md-3">
             <a asp-area="Admin"
                asp-controller="Appiontmentvisite"
                asp-action="AddDoctorNoteForVisit"
                asp-route-DoctorAppointmentVisitid="@Model.DoctorAppointmentVIsitid"
                class="btn btn-sm btn-info">Visit Note</a>
-        </div>
+         
+        
+    </div>
         <div class="col-md-6 text-md-right">
         </div>
     </div>

@@ -21,11 +21,12 @@ namespace hospitalVm
             [Required(ErrorMessage = "Patient ID is required.")]
             public string patientid { get; set; }
 
-            [Required(ErrorMessage = "Doctor name is required.")]
-            public string doctorname { get; set; }
+     
 
-            [Required(ErrorMessage = "Patient name is required.")]
-            public string patientName { get; set; }
+            public string doctorname { get; set; } = string.Empty;
+
+     
+            public string patientName { get; set; } = string.Empty; 
 
             [Required(ErrorMessage = "Report date is required.")]
             public DateTime Reportdate { get; set; }

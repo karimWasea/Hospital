@@ -1,9 +1,13 @@
 ﻿using Dataaccesslayer;
 
+using hospitalIrepreatory;
+
 using hospitalservess;
 using hospitalVm;
 
 using Microsoft.AspNetCore.Mvc;
+
+using System.Text;
 
 namespace Hospital.Areas.Patient.Controllers
 {
@@ -56,6 +60,7 @@ namespace Hospital.Areas.Patient.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+         
             _unitOfWork.patientHistory.Delete(id);
             TempData["Message"] = $" successfully!";
             TempData["MessageType"] = "Delete";
@@ -63,36 +68,50 @@ namespace Hospital.Areas.Patient.Controllers
         }
 
 
-        public async Task<ActionResult> Save(int id)
+    
+
+public async Task<ActionResult> Save(int id, string patientId)
+    {
+        ViewBag.allpatient = _lookupServess. allpatient();
+        StringBuilder sb = new StringBuilder();
+
+        if (id > 0)
         {
-            ViewBag.allpatient = _lookupServess.allpatient();
-            if (id > 0)
+            var model = _unitOfWork.patientHistory.GetById(id);
+            return View(model);
+        }
+        else
+        {
+            var user = _unitOfWork._userManager.Users.FirstOrDefault(i => i.Id == patientId);
+
+            if (user != null)
             {
-
-                var model =  _unitOfWork.patientHistory.GetById(id);
-                return View(model);
+                sb.Append(user.UserName);
+                // You can append more information to the string if needed
+                // sb.Append(" Additional Information");
             }
-            else
-
-
-                return View();
-
-
         }
 
+        return View(new PatientHistoryVm() { PatientName = sb.ToString() });
+    }
 
-        [HttpPost]
+
+    [HttpPost]
 
         public ActionResult Save(PatientHistoryVm HospitalVm)
         {
             ViewBag.allpatient = _lookupServess.allpatient();
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.patientHistory.Save(HospitalVm);
+                TempData["Message"] = $" successfully!";
+                TempData["MessageType"] = "Save";
 
+                return RedirectToAction("Index");
+            }
 
-            _unitOfWork.patientHistory.Save(HospitalVm);
-            TempData["Message"] = $" successfully!";
-            TempData["MessageType"] = "Save";
+            return View(HospitalVm);
 
-            return RedirectToAction("Index");
 
 
 

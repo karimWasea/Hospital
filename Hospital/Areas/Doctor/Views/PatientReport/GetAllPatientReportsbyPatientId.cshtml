@@ -60,9 +60,14 @@
                                     else 
  *@
 @*                                     {
- *@                                        <a asp-controller="PatientReport" asp - action="Save" asp-route-id="@doctor.id" asp-route-DoctorAppointmentVIsitid="@doctor.DoctorAppointmentVIsitid" class="btn btn-sm btn-info">Update</a>
-                                                    <a asp-controller="PatientReport" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Delete</a>
 
+
+ *@
+                                    <a asp-area="Admin" asp-controller="Appiontmentvisite"
+                                       asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">All Bookings</a>  
+                                       <a asp-controller="PatientReport" asp-action="Save" asp-route-id="@doctor.id" asp-route-DoctorAppointmentVIsitid="@doctor.DoctorAppointmentVIsitid" class="btn btn-sm btn-info">Update</a>
+                                                    <a asp-controller="PatientReport" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Delete</a>
+                                  
 @*                                     }
  *@                                </div>
                                

@@ -35,7 +35,7 @@ namespace Hospital.Areas.Doctor.Controllers
      )
         {
 
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork; 
 
         }
 
@@ -140,8 +140,10 @@ namespace Hospital.Areas.Doctor.Controllers
         [HttpPost]
         // [ValidateAntiForgeryToken]
         public IActionResult Save(patientreportVm HospitalVm)
+
         {
             var model = _unitOfWork.Idoctorvist.GetById(HospitalVm.DoctorAppointmentVIsitid);
+
             var patientrteort = new patientreportVm()
             {
 
@@ -151,12 +153,16 @@ namespace Hospital.Areas.Doctor.Controllers
 
                 patientid = model.patientid,
                 doctorid = model.doctorid,
-                 
+
 
 
             };
 
-         
+
+            if (ModelState.IsValid) {
+
+
+               
 
                 _unitOfWork.genericRepositorypatientreport.Save(HospitalVm);
 
@@ -164,10 +170,13 @@ namespace Hospital.Areas.Doctor.Controllers
                 TempData["MessageType"] = "Save";
                 //return RedirectToAction("Index");
 
-            
 
- 
-            return View(patientrteort);
+
+
+                return View(patientrteort);
+            }
+
+            return View(HospitalVm);
 
         }
 
