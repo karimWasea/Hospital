@@ -8,17 +8,13 @@ using hospitalVm;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-using Newtonsoft.Json.Linq;
+
 
 using PagedList;
 
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq.Expressions;
-using System.Security.Policy;
+
+
 using System.Transactions;
 
 namespace hospitalservess
@@ -29,13 +25,12 @@ namespace hospitalservess
 
         Imgoeration _lookupServess;
         private readonly UserManager<ApplicationUser> _user;
-        Idoctodayworinweek idoctodayworinweek;
 
 
         private ApplicationDBcontext _db;
-        public Patientserves(ApplicationDBcontext db, UserManager<ApplicationUser> user, Imgoeration lookupServess, DoctorDayworkserves doctorDayworkserves)
+        public Patientserves(ApplicationDBcontext db, UserManager<ApplicationUser> user, Imgoeration lookupServess)
         {
-            idoctodayworinweek = doctorDayworkserves;
+
             _lookupServess = lookupServess;
             _user = user;
             _db = db;
@@ -55,7 +50,7 @@ namespace hospitalservess
 
                 existingUser.Nationality = entity.Nationality;
 
-                existingUser.Title = entity.Title; 
+
 
 
                 existingUser.Email = entity.Email;
@@ -77,7 +72,7 @@ namespace hospitalservess
                 else
                 {
 
-                    existingUser.imphgurl = _lookupServess.Uploadimg(entity.imgurlupdated);
+                    existingUser.imphgurl = _lookupServess.Addrengofimges(entity.imgurlupdated);
                 }
 
 
@@ -106,9 +101,9 @@ namespace hospitalservess
                     Dateofbarth = entity.Dateofbarth,
                     PhoneNumber = entity.Phonenumber,
                     Nationality = entity.Nationality,
-                    imphgurl = _lookupServess.Uploadimg(entity.imgurlupdated),
+                    imphgurl = _lookupServess.Addrengofimges(entity.imgurlupdated),
                     PostalCode = entity.PostalCode,
-                    Title = entity.Title,
+
 
 
 
@@ -228,7 +223,7 @@ namespace hospitalservess
                     Nationality = ApplicationUser.Nationality,
                     imphgurl = ApplicationUser.imphgurl,
                     PostalCode = ApplicationUser.PostalCode,
-                    Title = ApplicationUser.Title,
+
              
 
                 })
@@ -256,7 +251,7 @@ namespace hospitalservess
                           Nationality = ApplicationUser.Nationality,
                           imphgurl = ApplicationUser.imphgurl,
                           PostalCode = ApplicationUser.PostalCode,
-                          Title = ApplicationUser.Title,
+
                  
 
 

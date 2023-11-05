@@ -16,19 +16,20 @@ namespace hospitalVm
 
 
         public int id { get; set; }
-        public string applicatinUserdictorid { get; set; }
-        public DateTime? startshift { get; set; } =
-        DateTime.Now;
-        public DateTime? Endsifit { get; set; }
-        //= new DateTime(2023, 8, 8, 8, 0, 0);  // Initialize with a specific date and time
-        //public TwelveHourClockAm MorningSifttimStarttimeAM { get; set; }
-        //public TwelveHourClockAm MorningSifttimEndtimeAM { get; set; }
-        //public TwelveHourClockPm AfternoonShiffttimStarttimePM { get; set; }
-        //public TwelveHourClockPm AftornoonShiftfttimEndtimePM { get; set; }
-        public double Duration { get; set; }
-        public string doctorName { get; set; }
-        //   [UIHint("InlineDropdown")]
+        [Required(ErrorMessage = "  is required.")]
 
+        public string applicatinUserdictorid { get; set; }
+        public DateTime? startshift { get; set; }
+        [Required(ErrorMessage = "Endsifit is required.")]
+
+        public DateTime? Endsifit { get; set; }
+        
+
+        public double Duration { get; set; }
+        public string doctorName { get; set; }=string.Empty;
+        [EnumDataType(typeof(Stutus))]
+
+        [Required(ErrorMessage = "Status is required.")]
 
         public Stutus Stutus
         {

@@ -39,10 +39,8 @@ namespace Hospital.Areas.Doctor.Controllers
         {
 
             ViewBag.avilabledoctoronsift = _lookupServess.avilabledoctoronsift();
-            //ViewBag.GetHoursListAmFinhed = _lookupServess.GetHoursListAmFinhed();
-            //ViewBag.GetHoursListAmstarted = _lookupServess.GetHoursListAmstarted();
-            //ViewBag.GetHoursListPmstarted = _lookupServess.GetHoursListPmstarted();
-            //ViewBag.GetHoursListPmfinsied = _lookupServess.GetHoursListPmfinsied();
+      
+
             ViewBag.getdoctorfromapplicationuserid = _lookupServess.getdoctorfromapplicationuserid();
 
             if (id > 0)
@@ -62,12 +60,19 @@ namespace Hospital.Areas.Doctor.Controllers
         // [ValidateAntiForgeryToken]
         public IActionResult Save(timingshiftVm HospitalVm)
         {
+            ViewBag.avilabledoctoronsift = _lookupServess.avilabledoctoronsift();
 
-            _unitOfWork.ItimingSHift.Save(HospitalVm);
+
+            ViewBag.getdoctorfromapplicationuserid = _lookupServess.getdoctorfromapplicationuserid();
+            if(ModelState.IsValid)
+            {
+                _unitOfWork.ItimingSHift.Save(HospitalVm);
 
 
-            return RedirectToAction("Index");
-
+                return RedirectToAction("Index");
+            }
+          
+            return View(HospitalVm);
 
 
         }
