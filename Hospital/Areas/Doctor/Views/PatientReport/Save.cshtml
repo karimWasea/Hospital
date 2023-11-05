@@ -1,4 +1,6 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@* Add your tag helpers and model declarations here *@
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Cloudscribe.Web.Pagination
 
 @model hospitalVm.patientreportVm
@@ -15,54 +17,78 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
+
+    /* Style for the background container */
+    .background-container {
+        background-color: #dff0d8; /* Bootstrap success background color */
+        border: 1px solid #c3e6cb; /* Border color */
+        padding: 20px;
+        border-radius: 5px; /* Rounded corners */
+    }
+
+    /* Style to make the textarea full width */
+    .full-width-textarea {
+        width: 100%;
+    }
 </style>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2 class="text-center mb-4">Create Prescription</h2>
 
-            <form asp-controller="PatientReport" asp-action="Save" method="post" id="saveform">
-                <input asp-for="patientid" type="hidden" value="@Model.patientid">
-                <input asp-for="doctorid" type="hidden" value="@Model.doctorid">
-                <input asp-for="DoctorAppointmentVIsitid" type="hidden" value="@Model.DoctorAppointmentVIsitid">
+            <div class="background-container">
+                <div class="row mt-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>patientName</th>
+                                <th>doctorname</th>
+                                <th>Reportdate</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contactTableBody">
+                            <tr>
+                                <td>@Model.patientName</td>
+                                <td>@Model.doctorname</td>
+                                <td>@Model.Reportdate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="form-group">
                     <label asp-for="dignouses">Prescription:</label>
-                    <textarea asp-for="dignouses" class="form-control" rows="6" required></textarea>
+                    <textarea asp-for="dignouses" class="form-control full-width-textarea" rows="6" required></textarea>
                     <span asp-validation-for="dignouses" class="text-danger"></span>
                 </div>
                 <hr />
                 <div class="text-center">
-                    <button type="submit" id="savedata" class="btn btn-primary btn-lg">Create Prescription</button>
+                    <button type="submit" id="savedata" class="btn btn-primary btn-lg" style="background-color: #007bff; width: 100%; margin-top: 10px;">Create Prescription</button>
                 </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <a asp-area="Admin" asp-controller="Appiontmentvisite"
-               asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">All Bookings</a>
-        </div>
-        <div class="col-md-3">
-        <a asp-area="Doctor"
-           asp-controller="PatientReport"
-           asp-action="GetAllPatientReportsbyPatientId"
-           asp-route-patientid="patientid"
-           class="btn btn-sm btn-info" style="background-color: gray;">
-            Patient Reports
-        </a>
-        </div>
-        <div class="col-md-3">
-            <a asp-area="Admin"
-               asp-controller="Appiontmentvisite"
-               asp-action="AddDoctorNoteForVisit"
-               asp-route-DoctorAppointmentVisitid="@Model.DoctorAppointmentVIsitid"
-               class="btn btn-sm btn-info">Visit Note</a>
-         
-        
-    </div>
-        <div class="col-md-6 text-md-right">
+                <div class="row mt-12">
+                    <div class="col-md-12">
+                        <div class="btn-group" style="width: 100%;">
+                            <a asp-area="Admin" asp-controller="Appiontmentvisite"
+                               asp-action="GettAllVistitsByDoctorid"
+                               class="btn btn-primary" style="width: 100%;">All Bookings</a>
+                            <a asp-area="Doctor"
+                               asp-controller="PatientReport"
+                               asp-action="GetAllPatientReportsbyPatientId"
+                               asp-route-patientid="patientid"
+                               class="btn btn-primary" style="width: 100%;">Patient Reports</a>
+                            <a asp-area="Admin"
+                               asp-controller="Appiontmentvisite"
+                               asp-action="AddDoctorNoteForVisit"
+                               asp-route-DoctorAppointmentVisitid="@Model.DoctorAppointmentVIsitid"
+                               class="btn btn-primary" style="width: 100%;">Add Visit Note</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-md-right">
+                        <!-- Left-aligned content here -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -95,4 +121,3 @@
         });
     </script>
 }
-

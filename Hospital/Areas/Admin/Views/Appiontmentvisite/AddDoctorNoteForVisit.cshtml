@@ -4,7 +4,7 @@
 @{
     var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 }
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = "_Layout";
@@ -59,18 +59,19 @@
                 <div class="row">
                     <div class="col-md-6">
                        @*  @if (userRole == "Admin")
-                        { *@
+                        { *
                             <div>
                                 <a asp-area="Doctor" asp-controller="PatientReport" asp-action="Index" class="btn btn-sm btn-info">All Report</a>
                             </div>
                       @*   }
                         else if (userRole == "Doctor")
-                        { *@
+                        { *
                             <div>
                                 <a asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">All Booking</a>
                             </div>
 @*                         }
- *@                    </div>
+
+ *                   </div>
                     <div class="col-md-6">
                         <button type="submit" id="savedata" class="btn btn-primary btn-block">Update</button>
                     </div>
@@ -81,6 +82,123 @@
 
             <div>
 
+            </div>
+        </div>
+    </div>
+</div>
+ *@
+
+
+
+@* Add your tag helpers and model declarations here *@
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Cloudscribe.Web.Pagination
+
+@* @model hospitalVm.patientreportVm
+ *@@{
+    ViewData["Title"] = "Save";
+    Layout = "_Layout";
+}
+<partial name="_AlertMessage" />
+
+<style>
+    body {
+        background-image: url('/Images/hospital17.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    /* Style for the background container */
+    .background-container {
+        background-color: #dff0d8; /* Bootstrap success background color */
+        border: 1px solid #c3e6cb; /* Border color */
+        padding: 20px;
+        border-radius: 5px; /* Rounded corners */
+    }
+
+    /* Style to make the textarea full width */
+    .full-width-textarea {
+        width: 100%;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">Create Prescription</h2>
+
+            <div class="background-container">
+                <div class="row mt-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>PatientName</th>
+                                <th>VisiteNotebydoctor</th>
+                                <th>VisitStatus</th>
+                                <th>CreateDate</th>
+                                <th>VisitType</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contactTableBody">
+                            <tr>
+                                <td>@Model.PatientName</td>
+                                <td>@Model.VisiteNotebydoctor</td>
+                                <td>@Model.VisitStatus</td>
+                                <td>@Model.CreateDate</td>
+                                <td>@Model.VisitType</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <form>
+                <div class="form-group">
+               
+                    <input type="hidden" asp-for="id" />
+                    <input asp-for="doctorid" type="hidden" />
+                    <input asp-for="DoctorAppointmentVIsitid" type="hidden" />
+                    <input asp-for="doctorid" type="hidden" />
+                    <input asp-for="patientid" type="hidden" />
+                    <input asp-for="id" type="hidden">
+                    <label asp-for="VisiteNotebydoctor">Prescription:</label>
+                    <textarea asp-for="VisiteNotebydoctor" class="form-control full-width-textarea" rows="6" required></textarea>
+                    <span asp-validation-for="VisiteNotebydoctor" class="text-danger"></span>
+                </div>
+                <hr />
+                <div class="text-center">
+                    <button type="submit" id="savedata" class="btn btn-primary btn-lg" style="background-color: #007bff; width: 100%; margin-top: 10px;">Create Visite Note</button>
+                </div>
+                </form>
+                <div class="row mt-12">
+                    <div class="col-md-12">
+                        @*  @if (userRole == "Admin")
+                        { *@
+                        <div class="btn-group" style="width: 100%;">
+                            <a asp-area="Admin" asp-controller="Appiontmentvisite"
+                               asp-action="GettAllVistitsByDoctorid"
+                               class="btn btn-primary" style="width: 100%;">All Bookings</a>
+
+                            @*   }
+                            else if (userRole == "Doctor")
+                            { *@
+
+
+                            <a asp-area="Doctor" asp-controller="PatientReport" asp-action="Index"
+                               class="btn btn-primary" style="width: 100%;">Patient Reports</a>
+
+
+                            @*                         }
+
+                            *@
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-md-right">
+                        <!-- Left-aligned content here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
