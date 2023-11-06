@@ -74,13 +74,13 @@ namespace Dataaccesslayer
             var passwordHasher = new PasswordHasher<ApplicationUser>();
 
             // Set the password
-            var hashedPassword = passwordHasher.HashPassword(null, "Karim.n.1995@gmail.com");
+            var hashedPassword = passwordHasher.HashPassword(null, "KarimH.n.1995@gmail.com");
 
             modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
                 Id = userid,
                 UserName = "SuperAdmin",
-                Email = "Karim.n.1995@gmail.com",
+                Email = "KarimH.n.1995@gmail.com",
                 AccessFailedCount = 1,
                 City = "cairo",
                 Contracturl = "SuperAdmin",
