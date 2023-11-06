@@ -145,14 +145,14 @@ background-attachment: fixed;
               
         <div class="button-group">
             <button type="submit" class="btn btn-primary">
-                @if (Model != null && Model.Id > 0)
-                {
-                    <text>Edit</text>
-                }
-                else
-                {
-                    <text>addnew</text>
-                }
+                        @if (Model != null )
+                        {
+                            <text>Edit</text>
+                        }
+                        else
+                        {
+                            <text>Add new</text>
+                        }
             </button>
 
             <a asp-area="Patient" asp-controller="PatientHistory" asp-action="Index" id="Add">

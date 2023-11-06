@@ -49,7 +49,7 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                            
                                 <div class="dropdown-menu bg-info" aria-labelledby="adminDropdown">
                                     <!-- Submenu Items -->
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Hospital" asp-action="Index">Hospitals</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Hospitail" asp-action="Index">Hospitals</a>
                                     <a class ="dropdown-item" asp-area="Admin" asp-controller="Room" asp-action="Index">Rooms</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Roles" asp-action="Index">Roles</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Contact" asp-action="Index">Contacts</a>
@@ -70,32 +70,36 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                         {
                             <!-- Reception Dropdown -->
 
-{
-                        <li class="nav-item dropdown bg-info">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="receptionDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Reception
-                            </a>
-                            <div class="dropdown-menu bg-info" aria-labelledby="receptionDropdown">
-                                        <a class="dropdown-item" asp-area="Patient" asp-controller="Patient" asp-action="Index">All Patients</a>
-                                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="Index">Week Shifts</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="AppointmentVisit" asp-action="Index">Appointment Visits</a>
-                                <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
+                            <li class="nav-item dropdown bg-info">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="receptionDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Reception
+                                </a>
+                                <div class="dropdown-menu bg-info" aria-labelledby="receptionDropdown">
+                                    <a class="dropdown-item" asp-area="Patient" asp-controller="Patient" asp-action="Index">All Patients</a>
+                                    <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="Index">Week Shifts</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="AppointmentVisit" asp-action="Index">Appointment Visits</a>
+                                    <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
 
-                                        <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
-                                        <a class="dropdown-item" asp-area="Doctor" asp-controller="TimingShifts" asp-action="Index">Day Shifts</a>
-                            </div>
-                        </li>
-                            }
-
+                                    <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
+                                    <a class="dropdown-item" asp-area="Doctor" asp-controller="TimingShifts" asp-action="Index">Day Shifts</a>
+                                </div>
+                            </li>
+                        }
 
 
 
+                   
+                            
+                        
+                            
 
 
-                            @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin) || User.IsInRole(WebSiteRoles.WebSite_Doctor)){
-                            <!-- Reception Dropdown -->
 
-                                {
+
+
+
+                            @if(User.IsInRole(WebSiteRoles.WebSite_SuperAdmin) || User.IsInRole(WebSiteRoles.WebSite_Doctor)){
+                            <!-- Reception Dropdown --> 
                                     <li class="nav-item dropdown bg-info">
                                         <a class="nav-link dropdown-toggle text-dark" href="#" id="receptionDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 MangDoctor
@@ -104,23 +108,30 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                                     <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="AllDayShifts">All Day Shifts</a>
 
                                             <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">  Doctors</a>
-                                            <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="GetRegisterDoctors">Register Doctors</a>
-                            /a>
+                                    <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="GetRegisterdoctor">Register Doctors</a>
+                            
                      
                             </div>
-                        </li>}
-                            }
-                        <!-- Doctors Dropdown -->
-                        <li class="nav-item dropdown bg-info">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="doctorDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Doctors Works
-                            </a>
-                            <div class="dropdown-menu bg-info" aria-labelledby="doctorDropdown">
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="AppointmentVisit" asp-action="GetAllVisitsByDoctorId">All Visits by Doctor</a>
-                                <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="Index">All Prescriptions</a>
-                            </div>
-                        </li>
-                            }                
+                                    </li>
+                                }
+                                @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin) || User.IsInRole(WebSiteRoles.WebSite_Doctor))
+                                {
+
+                                    <!-- Doctors Dropdown -->
+                                    <li class="nav-item dropdown bg-info">
+                                        <a class="nav-link dropdown-toggle text-dark" href="#" id="doctorDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Doctors Works
+                                        </a>
+                                        <div class="dropdown-menu bg-info" aria-labelledby="doctorDropdown">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AppointmentVisit" asp-action="GettAllVistitsByDoctorid">All Visits by Doctor</a>
+                                            <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="Index">All Prescriptions</a>
+                                        </div>
+                                    </li>
+                                }
+
+                       
+                      
+                                          
                             
                             @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin) || User.IsInRole(WebSiteRoles.WebSite_patient))
                         {

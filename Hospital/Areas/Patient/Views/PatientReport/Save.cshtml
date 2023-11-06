@@ -42,7 +42,23 @@
             <textarea asp-for="dignouses" class="form-control" rows="6" required></textarea>
             <span asp-validation-for="dignouses" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Create Prescription</button>
+        <button type="submit" class="btn btn-primary">Create 
+
+            @if (Model != null && Model.id > 0)
+            {
+                <text>Edit Prescription</text>
+            }
+            else
+            {
+                <text>Add Prescription</text>
+            }
+
+
+
+
+
+
+        </button>
     </form>
 </div>
 

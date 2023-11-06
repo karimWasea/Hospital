@@ -30,13 +30,13 @@ IServiceCollection serviceCollection = builder.Services.AddDbContext<Application
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount =  false)
 .AddEntityFrameworkStores<ApplicationDBcontext>().AddDefaultTokenProviders();
-//builder.Services.Configure<IdentityOptions>(options =>
-//{
-//    // Default Lockout settings.
-//    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-//    options.Lockout.MaxFailedAccessAttempts = 5;
-//    options.Lockout.AllowedForNewUsers = true;
-//});
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+});
 
 
 

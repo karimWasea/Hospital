@@ -11,7 +11,10 @@
     Layout = "_Layout";
     ViewData["Title"] = "All Patients";
 }
-
+@if (!Model.Any())
+{
+    <h1>No Data</h1>
+}
 
 <partial name="_AlertMessage" />
 <link href="~/css/contactindex.css" rel="stylesheet" />

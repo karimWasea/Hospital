@@ -14,6 +14,10 @@
         background-attachment: fixed;
     }
 </style>
+@if (!Model.Any())
+{
+    <h1>No Data</h1>
+}
 <form id="search-form" method="get" asp-action="Index">
     <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
 </form>

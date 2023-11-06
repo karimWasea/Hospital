@@ -10,7 +10,10 @@
 }
 <link href="~/css/hospitalindex.css" rel="stylesheet" />
 
-
+@if (!Model.Any())
+{
+    <h1>No Data</h1>
+}
 
 @*<partial name="_AlertMessage" />
 *@<div class="container p-3">

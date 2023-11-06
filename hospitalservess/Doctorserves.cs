@@ -165,7 +165,7 @@ namespace hospitalservess
 
                     if (result.Succeeded)
                     {
-                        await _db.SaveChangesAsync();
+                          _db.SaveChanges();
                         return true;
                     }
                     else
