@@ -33,14 +33,14 @@
     </a>
 
 
-        <table class="table table-bordered table-hover table-success">
+        <table class="table  table-hover table-success">
             <thead>
                 <tr>
                     <th>Username</th>
                     <th>Email</th>
                     <th>Img</th>
                     <th>Confirmation</th>
-                <th>Mang</th>
+                  <th>Mang</th>
 
                     <th>Action</th>
 
@@ -77,9 +77,15 @@
                         </a>
                         <a asp-controller="Daywork" asp-action="Index" asp-route-id="@hospital.id" class="btn btn-sm btn-success">
                             <i class="fas fa-plus-circle"></i> Add Shifts
+
+                        </a>
+                        <a asp-controller="TimingShifts" asp-action="Save" asp-route-Doctorname="@hospital.username"
+                           asp-route-DoctoId="@hospital.id" class="btn btn-sm btn-info">
+                            <i class="fas fa-plus-circle"></i> Add 
+                            Day Shifts
                         </a>
                     </td>
-
+                   
                    
                     </tr>
                 }

@@ -27,9 +27,10 @@
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-<a asp-controller="TimingShifts" asp-action="Save">
+@* <a asp-controller="TimingShifts" asp-action="Save">
     <i class="fas fa-plus-circle"></i> Add New TimingShifts
-</a>
+</a> *@
+<partial name="_AlertMessage" />
 
 <table class="table table-bordered table-hover table-success
             table-bordered">
@@ -42,7 +43,7 @@
             <th>Duration</th>
             <th>Action</th>
         </tr>
-    </thead>
+    </thead>Doctorname
     <tbody>
 
         @foreach (var hospital in Model.Data)
@@ -54,9 +55,9 @@
                 <td>@hospital.Stutus</td>
                 <td>@hospital.Duration</td>
                 <td>
-                  @*  <a asp-controller="TimingShifts" asp-action="Details" asp-route-id="@hospital.id">
+                    @* <a asp-controller="TimingShifts" asp-action="Details" asp-route-id="@hospital.id">
                         <i class="fas fa-info-circle" title="Details"></i>
-                    </a>*@
+                    </a> *@
                     <a asp-controller="TimingShifts" asp-action="Save" asp-route-id="@hospital.id">
                         <i class="fas fa-edit" title="Edit"></i>
                     </a>

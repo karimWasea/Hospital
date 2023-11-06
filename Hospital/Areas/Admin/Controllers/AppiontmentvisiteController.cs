@@ -278,7 +278,6 @@ namespace Hospital.Areas.Admin.Controllers
             appvm.patientid = getbyid.patientid;
             appvm.doctorid = getbyid.doctorid;
             appvm.VisitType = getbyid.VisitType;
-            //_unitOfWork._context.DoctorAppointmentVIsit.Find(DoctorAppointmentVIsitid).VisitType;
             appvm.isdeleted = getbyid.isdeleted;
             appvm.id =
             (int)_unitOfWork._context.DoctorAppointmentVIsit.Where(i => i.Id == DoctorAppointmentVIsitid).Select(i => i.AppointmentId).FirstOrDefault();
@@ -310,14 +309,9 @@ namespace Hospital.Areas.Admin.Controllers
             var getbyid = _unitOfWork.Idoctorvist.GetById(DoctorAppointmentVIsitid);
 
             appvm.DoctorAppointmentVIsitid = DoctorAppointmentVIsitid;
-            //appvm.patientid = getbyid.patientid;
-            //appvm.doctorid = getbyid.doctorid;
-            //appvm.VisitType = getbyid.VisitType;
+           
             appvm.VisitStatus= VisitStatus.Cancelled;
-            //_unitOfWork._context.DoctorAppointmentVIsit.Find(DoctorAppointmentVIsitid).VisitType;
-            //appvm.isdeleted = getbyid.isdeleted;
-            //appvm.id =
-            //(int)_unitOfWork._context.DoctorAppointmentVIsit.Where(i => i.Id == DoctorAppointmentVIsitid).Select(i => i.AppointmentId).FirstOrDefault();
+        
             _unitOfWork.Idoctorvist.Save(appvm);
 
 

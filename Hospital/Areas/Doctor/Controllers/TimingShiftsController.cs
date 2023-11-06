@@ -1,10 +1,15 @@
 ﻿
 
+using Dataaccesslayer;
+
 using hospitalservess;
 
 using hospitalVm;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGeneration.CommandLine;
+
+using System.Runtime.InteropServices;
 
 namespace Hospital.Areas.Doctor.Controllers
 {
@@ -34,44 +39,51 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-
-        public IActionResult Save(int id)
+        public IActionResult Save(int id, [Optional] string Doctorname , [Optional] string DoctoId)
         {
-
             ViewBag.avilabledoctoronsift = _lookupServess.avilabledoctoronsift();
-      
-
-            ViewBag.getdoctorfromapplicationuserid = _lookupServess.getdoctorfromapplicationuserid();
 
             if (id > 0)
-
-                return View(_unitOfWork.ItimingSHift.GetById(id));
-
+            {
+                var existingTimingShift = _unitOfWork.ItimingSHift.GetById(id);
+                if (existingTimingShift == null)
+                {
+                    // Handle the case where the timing shift with the specified ID is not found.
+                    return NotFound();
+                }
+                return View(existingTimingShift);
+            }
             else
-
-
-                return View();
-
-
+            {
+                var timingshiftVms = new timingshiftVm
+                {
+                    doctorName = Doctorname,
+                    applicatinUserdictorid= DoctoId
+                    // Initialize other properties as needed
+                };
+                return View(timingshiftVms);
+            }
         }
+
 
 
         [HttpPost]
         // [ValidateAntiForgeryToken]
         public IActionResult Save(timingshiftVm HospitalVm)
         {
-            ViewBag.avilabledoctoronsift = _lookupServess.avilabledoctoronsift();
 
 
-            ViewBag.getdoctorfromapplicationuserid = _lookupServess.getdoctorfromapplicationuserid();
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _unitOfWork.ItimingSHift.Save(HospitalVm);
 
-
+                TempData["Message"] = $" successfully!";
+                TempData["MessageType"] = "Save";
                 return RedirectToAction("Index");
             }
-          
+
+            ViewBag.avilabledoctoronsift = _lookupServess.avilabledoctoronsift();
+
             return View(HospitalVm);
 
 
@@ -109,7 +121,8 @@ namespace Hospital.Areas.Doctor.Controllers
         {
             _unitOfWork.ItimingSHift.Delete(id);
 
-
+            TempData["Message"] = $" successfully!";
+            TempData["MessageType"] = "Delete";
 
 
             return RedirectToAction("Index");

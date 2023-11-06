@@ -23,7 +23,8 @@ namespace hospitalVm
         [Required(ErrorMessage = "Endsifit is required.")]
 
         public DateTime? Endsifit { get; set; }
-        
+        [Required(ErrorMessage = "Status is required.")]
+
 
         public double Duration { get; set; }
         public string doctorName { get; set; }=string.Empty;
@@ -44,15 +45,12 @@ namespace hospitalVm
             return new TimingShifts
             {
                 
-                // MorningSifttimEndtimeAM=model.MorningSifttimEndtimeAM,
-                //MorningSifttimStarttimeAM = model.MorningSifttimStarttimeAM, 
+
                 Duration=model.Duration,
                  id=model.id,
                  startshift=model.startshift,
                  Endsifit=model.Endsifit,
-                // DoctorId   = model.applicatinUserdictorid,
-                 //AfternoonShiffttimStarttimePM=model.AfternoonShiffttimStarttimePM,
-                 //AftornoonShiftfttimEndtimePM=model.AftornoonShiftfttimEndtimePM,
+       
                  Stutus=model.Stutus,
                   
             

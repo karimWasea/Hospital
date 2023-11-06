@@ -7,6 +7,7 @@ using hospitalUtilities;
 using hospitalVm;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Formatters.Xml;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -17,7 +18,7 @@ using System.Linq.Expressions;
 namespace hospitalservess
 {
 
-    public class timingShiftservess : IGenericRepository<timingshiftVm>, ItimingShift
+    public class timingShiftservess : ItimingShift
     {
         Ihospital IhospitalRepository { get; set; }
 
@@ -46,83 +47,81 @@ namespace hospitalservess
 
         public void Save(timingshiftVm entity)
         {
-            TimeSpan timeDifference = (TimeSpan)(entity. Endsifit - entity.startshift);
-            int durationInMinutes = (int)timeDifference.TotalMinutes;
-            entity.Duration=durationInMinutes;
-
-            //if (Endsifit > StartShift)
-            //{
-            //    // Perform some action
-            //}
-            // entity.Duration =  entity.Endsifit - entity.startshift;
+              using (var transaction = _db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var model = timingshiftVm.CanconvertViewmodel(entity);
 
 
+                        if (entity.id > 0)
+                        {
+                            _db.TimingShifts.Update(model);
+                        }
+                        else
+                        {
+                            var timshifting = _db.TimingShifts.Add(model);
 
-            var model = timingshiftVm.CanconvertViewmodel(entity);
+                        _db.SaveChanges();
+                        var DoctorTimingShift = new DoctorTimingShift
+                            {
+                                DoctorId = entity.applicatinUserdictorid,
+                                TimingShiftId = timshifting.Entity.id
+                            };
 
-            if (entity.id > 0)
-            {
-                _db.TimingShifts.Update(model);
+                            _db.DoctorTimingShift.Add(DoctorTimingShift);
+                        }
 
-                _db.SaveChanges();
+                          _db.SaveChanges();
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle and log exceptions here
+                        transaction.Rollback();
+                    }
+                }
 
 
             }
-            else
-            {
+        
 
 
-                _db.TimingShifts.Add(model);
-
-                _db.SaveChanges();
-
-
-            }
-        }
-
-
-        //public int CalculateShiftDurationInMinutes()
-        //{
-        //    TimeSpan timeDifference = Endsifit - StartShift;
-        //    int durationInMinutes = (int)timeDifference.TotalMinutes;
-        //    return durationInMinutes;
-        //}
+   
 
 
         public void Delete(int id)
         {
 
             var mode = _db.TimingShifts.Find(id);
-
+            var DoctorTimingShift = _db.DoctorTimingShift.FirstOrDefault(m => m.TimingShiftId == id);
+            _db.SaveChanges();
 
             _db.TimingShifts.Remove(mode);
             _db.SaveChanges();
-
 
 
         }
 
         public IEnumerable<timingshiftVm> GetAll()
         {
-            var model = _db.TimingShifts.Select(p => new timingshiftVm
-            {
-                id = p.id,
-                //AfternoonShiffttimStarttimePM = p.AfternoonShiffttimStarttimePM
-                //,
-                //AftornoonShiftfttimEndtimePM=p.AftornoonShiftfttimEndtimePM,
-                //applicatinUserdictorid=p.ApplicationUserId,
-                //MorningSifttimEndtimeAM=p.MorningSifttimEndtimeAM,
-                startshift = p.startshift,
-                Endsifit = p.Endsifit,
-                Duration= (double)p.Duration,
-                    //MorningSifttimStarttimeAM=p.MorningSifttimStarttimeAM,  
-                    Stutus=p.Stutus,
-                doctorName = _user.Users.Select(p => p.UserName).FirstOrDefault(),
+            var models = _db.TimingShifts
+                .Include(ts => ts.DoctorTimingShifts)
+                .ThenInclude(dts => dts.Doctor)
+                .Select(p => new timingshiftVm
+                {
+                    id = p.id,
+                    startshift = p.startshift,
 
+                    Endsifit = p.Endsifit,
+                    Duration = (double)p.Duration,
+                    Stutus = p.Stutus,
+                    doctorName =p.DoctorTimingShifts.FirstOrDefault().Doctor.UserName,
+                })
+                .ToList().OrderBy(p=>p.Endsifit);
 
-            }).ToList();
-
-            return model;
+            return models;
         }
 
 
@@ -132,52 +131,27 @@ namespace hospitalservess
 
 
 
-       
-            //public IPagedList<T> GetPagedData<T>(IQueryable<T> data, int pageNumber)
-            //{
-            //    int pageSize = 10; // Set the page size to 10
-            //    int totalItemCount = GetAll().Count();
-            //    int totalPages = (int)Math.Ceiling(totalItemCount / (double)pageSize);
-
-            //    pageNumber = Math.Max(1, Math.Min(totalPages, pageNumber));
-
-            //    int startIndex = (pageNumber - 1) * pageSize;
-            //    int endIndex = Math.Min(startIndex + pageSize - 1, totalItemCount - 1);
-
-            //    var pagedData = data.Skip(startIndex).Take(pageSize).ToList();
-
-            //    return new StaticPagedList<T>(pagedData, pageNumber, pageSize, totalItemCount);
-
-
-            //}
-
-
-
-        
+    
 
 
 
 
 
-            public timingshiftVm GetById(int id)
+
+
+
+        public timingshiftVm GetById(int id)
         {
-            var getentity = _db.TimingShifts.Find(id);
-            TimeSpan timeDifference = (TimeSpan)(getentity.Endsifit - getentity.startshift);
-            int durationInMinutes = (int)timeDifference.TotalHours;
-            getentity.Duration = durationInMinutes;
-            return _db.TimingShifts.Where(p => p.id == id).Select(p => new timingshiftVm
+           
+            return _db.TimingShifts.Include(p=>p.DoctorTimingShifts).ThenInclude(p=>p.Doctor).Where(p => p.id == id).Select(p => new timingshiftVm
             {
                 id = p.id,
-                //AfternoonShiffttimStarttimePM = p.AfternoonShiffttimStarttimePM
-                //,
-                //AftornoonShiftfttimEndtimePM = p.AftornoonShiftfttimEndtimePM,
-                //applicatinUserdictorid = p.ApplicationUserId,
-                //MorningSifttimEndtimeAM = p.MorningSifttimEndtimeAM,
+            
                 startshift = p.startshift,
                 Endsifit = p.Endsifit,
-                Duration = durationInMinutes,
-                //MorningSifttimStarttimeAM = p.MorningSifttimStarttimeAM,
+                Duration = (double)p.Duration,
                 Stutus = p.Stutus,
+                doctorName=p.DoctorTimingShifts.Where(i=>i.TimingShiftId==id).FirstOrDefault().Doctor.UserName
 
             }).FirstOrDefault();
         }
@@ -199,34 +173,7 @@ namespace hospitalservess
 
 
 
-        public Task<timingshiftVm> DeleteAcync(timingshiftVm entity)
-        {
-            throw new NotImplementedException();
-        }
-        public async Task<timingshiftVm> SaveAsync(timingshiftVm entity)
-        {
-            var model = timingshiftVm.CanconvertViewmodel(entity);
-
-            if (entity.id > 0)
-            {
-                var m = _db.TimingShifts.Update(model);
-                await _db.SaveChangesAsync();
-                return GetById(m.Entity.id);
-                // Use async SaveChangesAsync()
-
-            }
-            else
-            {
-                var m = _db.TimingShifts.Add(model);
-
-                await _db.SaveChangesAsync(); // Use async SaveChangesAsync()
-                return GetById(m.Entity.id);
-
-
-            }
-
-
-        }
+     
 
 
 
