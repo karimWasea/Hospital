@@ -50,17 +50,8 @@ namespace Dataaccesslayer
         public DbSet<suplier> Supliers { get; set; }
         public DbSet<DoctorAppointmentVIsit> DoctorAppointmentVIsit { get; set; }
 
-        //        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //        {
-        //           // Apply TPC to each entity type
-        //         //  modelBuilder.Entity<IdentityUser>().ToTable("AspNetUsers");
-        //          //  modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers");
-        //            //modelBuilder.Entity<IdentityUser
-        //            //    >().UseTpcMappingStrategy(); ;
-        ////modelBuilder.Entity<Patient>().UseTpcMappingStrategy(); ;
-        //            base.OnModelCreating(modelBuilder);
+      
 
-        //        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DoctorAppointmentVIsit>()
@@ -71,9 +62,7 @@ namespace Dataaccesslayer
 
 
             base.OnModelCreating(modelBuilder);
-            //}
-            //protected override void OnModelCreating(ModelBuilder modelBuilder)
-            //{
+           
 
 
             var userid = Guid.NewGuid().ToString();
@@ -82,8 +71,14 @@ namespace Dataaccesslayer
             var RoleSuperAdminId = Guid.NewGuid().ToString();
 
 
+            var passwordHasher = new PasswordHasher<ApplicationUser>();
+
+            // Set the password
+            var hashedPassword = passwordHasher.HashPassword(null, "Karim.n.1995@gmail.com");
+
             modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
+                Id = userid,
                 UserName = "SuperAdmin",
                 Email = "Karim.n.1995@gmail.com",
                 AccessFailedCount = 1,
@@ -100,10 +95,11 @@ namespace Dataaccesslayer
                 RoleRegeseter = RoleRegeseter.Doctor,
                 statusDoctorInSystem = Cofimationdoctor.Confirmed,
                 spicialist = spicialist.Pediatrics,
-                PasswordHash = "Karim.n.1995@gmail.com",
-
-
+                PasswordHash = hashedPassword, // Set the hashed password
+                Nationality = string.Empty,
+                PostalCode = string.Empty,
             });
+
 
 
 

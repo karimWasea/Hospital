@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using hospitalIrepreatory;
 using hospitalVm;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,19 @@ IServiceCollection serviceCollection = builder.Services.AddDbContext<Application
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount =  false)
 .AddEntityFrameworkStores<ApplicationDBcontext>().AddDefaultTokenProviders();
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+});
+
+
+
+
+
+
 
 
 // Add services to the container.
@@ -103,9 +117,19 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 Dataeding();
 app.UseRouting();
-app.UseAuthentication();
 
+
+
+app.UseAuthentication();
 app.UseAuthorization();
+
+
+
+
+
+
+
+
 app.MapRazorPages();
 
        app.MapControllerRoute(

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Dataaccesslayer.Migrations
 {
     /// <inheritdoc />
-    public partial class ddff : Migration
+    public partial class final : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,6 +46,7 @@ namespace Dataaccesslayer.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -65,7 +66,8 @@ namespace Dataaccesslayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     pplicynumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     startdate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Enddate = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Enddate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,6 +80,7 @@ namespace Dataaccesslayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     discreaption = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -99,7 +102,8 @@ namespace Dataaccesslayer.Migrations
                     company = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    phone = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,7 +119,8 @@ namespace Dataaccesslayer.Migrations
                     startshift = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Endsifit = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Duration = table.Column<double>(type: "float", nullable: true),
-                    Stutus = table.Column<int>(type: "int", nullable: false)
+                    Stutus = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,7 +135,8 @@ namespace Dataaccesslayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WeekDaysName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StratingAmShafit = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartingPmShift = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    StartingPmShift = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -164,6 +170,7 @@ namespace Dataaccesslayer.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     hospitalid = table.Column<int>(type: "int", nullable: false),
                     phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -176,7 +183,7 @@ namespace Dataaccesslayer.Migrations
                         column: x => x.hospitalid,
                         principalTable: "Hospitals",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,6 +192,7 @@ namespace Dataaccesslayer.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     Hospitalid = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     discraption = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -208,7 +216,8 @@ namespace Dataaccesslayer.Migrations
                     hospitalid = table.Column<int>(type: "int", nullable: false),
                     RoomName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Stuts = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -228,6 +237,7 @@ namespace Dataaccesslayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     medicineId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     suplierid = table.Column<int>(type: "int", nullable: false),
                     company = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -243,13 +253,13 @@ namespace Dataaccesslayer.Migrations
                         column: x => x.medicineId,
                         principalTable: "Medicines",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MedicineReport_Supliers_suplierid",
                         column: x => x.suplierid,
                         principalTable: "Supliers",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,6 +268,7 @@ namespace Dataaccesslayer.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     HiringDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -337,7 +348,7 @@ namespace Dataaccesslayer.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -355,13 +366,13 @@ namespace Dataaccesslayer.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -381,7 +392,7 @@ namespace Dataaccesslayer.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -390,6 +401,7 @@ namespace Dataaccesslayer.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     Chargedoctor = table.Column<int>(type: "int", nullable: false),
                     Chargemedicine = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Roomcharge = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -411,13 +423,13 @@ namespace Dataaccesslayer.Migrations
                         column: x => x.patientId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bills_Insurances_Insuranceid",
                         column: x => x.Insuranceid,
                         principalTable: "Insurances",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -428,10 +440,12 @@ namespace Dataaccesslayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DoctorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AppointmentId = table.Column<int>(type: "int", nullable: false),
-                    patientid = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    patientid = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     VisiteNotebydoctor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VisiteDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    VisitType = table.Column<int>(type: "int", nullable: false)
+                    VisitType = table.Column<int>(type: "int", nullable: false),
+                    visitStatus = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -452,8 +466,7 @@ namespace Dataaccesslayer.Migrations
                         name: "FK_DoctorAppointmentVIsit_AspNetUsers_patientid",
                         column: x => x.patientid,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -462,9 +475,9 @@ namespace Dataaccesslayer.Migrations
                 {
                     DoctorDayworkId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     WeekDaystId = table.Column<int>(type: "int", nullable: false),
-                    WeekDaysId = table.Column<int>(type: "int", nullable: false),
                     FormalStartingShift = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -477,8 +490,8 @@ namespace Dataaccesslayer.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_doctorDayworks_weekDays_WeekDaysId",
-                        column: x => x.WeekDaysId,
+                        name: "FK_doctorDayworks_weekDays_WeekDaystId",
+                        column: x => x.WeekDaystId,
                         principalTable: "weekDays",
                         principalColumn: "WeekDaysId",
                         onDelete: ReferentialAction.NoAction);
@@ -491,7 +504,8 @@ namespace Dataaccesslayer.Migrations
                     DoctorTimingShiftId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DoctorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TimingShiftId = table.Column<int>(type: "int", nullable: false)
+                    TimingShiftId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -516,6 +530,7 @@ namespace Dataaccesslayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Netsalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     hoursalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -541,6 +556,7 @@ namespace Dataaccesslayer.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
                     hight = table.Column<int>(type: "int", nullable: false),
                     wight = table.Column<int>(type: "int", nullable: false),
                     bloodpressur = table.Column<int>(type: "int", nullable: false),
@@ -563,6 +579,38 @@ namespace Dataaccesslayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PatientHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PatientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VisitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ChiefComplaint = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HistoryOfPresentIllness = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PastMedicalHistory = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FamilyHistory = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhysicalExamination = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Assessment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Plan = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Medications = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Allergies = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LabResults = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false),
+                    IsFollowUp = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PatientHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PatientHistory_AspNetUsers_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Patientreports",
                 columns: table => new
                 {
@@ -570,7 +618,9 @@ namespace Dataaccesslayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     dignouses = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     doctorid = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    patientid = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    patientid = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DoctorAppointmentVIsitid = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -580,11 +630,17 @@ namespace Dataaccesslayer.Migrations
                         column: x => x.doctorid,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Patientreports_AspNetUsers_patientid",
                         column: x => x.patientid,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Patientreports_DoctorAppointmentVIsit_DoctorAppointmentVIsitid",
+                        column: x => x.DoctorAppointmentVIsitid,
+                        principalTable: "DoctorAppointmentVIsit",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
@@ -598,7 +654,8 @@ namespace Dataaccesslayer.Migrations
                     labid = table.Column<int>(type: "int", nullable: false),
                     testcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     tesstprice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    billid = table.Column<int>(type: "int", nullable: false)
+                    billid = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -608,13 +665,13 @@ namespace Dataaccesslayer.Migrations
                         column: x => x.billid,
                         principalTable: "Bills",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Testprices_Labs_labid",
                         column: x => x.labid,
                         principalTable: "Labs",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -624,7 +681,8 @@ namespace Dataaccesslayer.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Medicineid = table.Column<int>(type: "int", nullable: false),
-                    Patientreportid = table.Column<int>(type: "int", nullable: false)
+                    Patientreportid = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -642,6 +700,21 @@ namespace Dataaccesslayer.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.NoAction);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "c55d1ab3-a02d-4af6-ad8f-41d57ee95bba", "c55d1ab3-a02d-4af6-ad8f-41d57ee95bba", "SuperAdmin", "SuperAdmin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "City", "ConcurrencyStamp", "Contracturl", "Dateofbarth", "Departmentid", "Discriminator", "Email", "EmailConfirmed", "Gender", "HiringDate", "IsDeleted", "LockoutEnabled", "LockoutEnd", "Nationality", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PostalCode", "RoleRegeseter", "Salary", "SecurityStamp", "StreetAddress", "Title", "TwoFactorEnabled", "UserName", "WorkingDaysinWeek", "imphgurl", "spicialist", "statusDoctorInSystem" },
+                values: new object[] { "652c8825-368e-4dfc-85fa-a4db109933c9", 1, "cairo", "11/6/2023 7:32:33 PM", "SuperAdmin", new DateTime(2023, 11, 6, 19, 32, 33, 677, DateTimeKind.Local).AddTicks(2096), null, "ApplicationUser", "Karim.n.1995@gmail.com", false, 0, new DateTime(2023, 11, 6, 19, 32, 33, 677, DateTimeKind.Local).AddTicks(2168), 0, false, null, "", null, null, "Karim.n.1995@gmail.com", null, false, "", 1, 0.0m, "d5b2b103-cf88-490d-b216-2737f4c4bf05", "SuperAdmin", "SuperAdmin", false, "SuperAdmin", 0, "SuperAdmin", 2, 0 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "c55d1ab3-a02d-4af6-ad8f-41d57ee95bba", "652c8825-368e-4dfc-85fa-a4db109933c9" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -728,9 +801,9 @@ namespace Dataaccesslayer.Migrations
                 column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_doctorDayworks_WeekDaysId",
+                name: "IX_doctorDayworks_WeekDaystId",
                 table: "doctorDayworks",
-                column: "WeekDaysId");
+                column: "WeekDaystId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DoctorTimingShift_DoctorId",
@@ -766,6 +839,16 @@ namespace Dataaccesslayer.Migrations
                 name: "IX_MedicineReport_suplierid",
                 table: "MedicineReport",
                 column: "suplierid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PatientHistory_PatientId",
+                table: "PatientHistory",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patientreports_DoctorAppointmentVIsitid",
+                table: "Patientreports",
+                column: "DoctorAppointmentVIsitid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patientreports_doctorid",
@@ -820,9 +903,6 @@ namespace Dataaccesslayer.Migrations
                 name: "Contacts");
 
             migrationBuilder.DropTable(
-                name: "DoctorAppointmentVIsit");
-
-            migrationBuilder.DropTable(
                 name: "doctorDayworks");
 
             migrationBuilder.DropTable(
@@ -838,6 +918,9 @@ namespace Dataaccesslayer.Migrations
                 name: "MedicineReport");
 
             migrationBuilder.DropTable(
+                name: "PatientHistory");
+
+            migrationBuilder.DropTable(
                 name: "Prescribmedicines");
 
             migrationBuilder.DropTable(
@@ -845,9 +928,6 @@ namespace Dataaccesslayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Apointment");
 
             migrationBuilder.DropTable(
                 name: "weekDays");
@@ -871,7 +951,13 @@ namespace Dataaccesslayer.Migrations
                 name: "Labs");
 
             migrationBuilder.DropTable(
+                name: "DoctorAppointmentVIsit");
+
+            migrationBuilder.DropTable(
                 name: "Insurances");
+
+            migrationBuilder.DropTable(
+                name: "Apointment");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -800,6 +800,15 @@ namespace Dataaccesslayer.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c55d1ab3-a02d-4af6-ad8f-41d57ee95bba",
+                            ConcurrencyStamp = "c55d1ab3-a02d-4af6-ad8f-41d57ee95bba",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SuperAdmin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -960,6 +969,13 @@ namespace Dataaccesslayer.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "652c8825-368e-4dfc-85fa-a4db109933c9",
+                            RoleId = "c55d1ab3-a02d-4af6-ad8f-41d57ee95bba"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -1046,6 +1062,38 @@ namespace Dataaccesslayer.Migrations
                     b.HasIndex("Departmentid");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "652c8825-368e-4dfc-85fa-a4db109933c9",
+                            AccessFailedCount = 1,
+                            ConcurrencyStamp = "11/6/2023 7:32:33 PM",
+                            Email = "Karim.n.1995@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "Karim.n.1995@gmail.com",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d5b2b103-cf88-490d-b216-2737f4c4bf05",
+                            TwoFactorEnabled = false,
+                            UserName = "SuperAdmin",
+                            City = "cairo",
+                            Contracturl = "SuperAdmin",
+                            Dateofbarth = new DateTime(2023, 11, 6, 19, 32, 33, 677, DateTimeKind.Local).AddTicks(2096),
+                            Gender = 0,
+                            HiringDate = new DateTime(2023, 11, 6, 19, 32, 33, 677, DateTimeKind.Local).AddTicks(2168),
+                            IsDeleted = 0,
+                            Nationality = "",
+                            PostalCode = "",
+                            RoleRegeseter = 1,
+                            Salary = 0.0m,
+                            StreetAddress = "SuperAdmin",
+                            Title = "SuperAdmin",
+                            WorkingDaysinWeek = 0,
+                            imphgurl = "SuperAdmin",
+                            spicialist = 2,
+                            statusDoctorInSystem = 0
+                        });
                 });
 
             modelBuilder.Entity("Dataaccesslayer.Bill", b =>
