@@ -1,5 +1,4 @@
-﻿
-@using hospitalUtilities
+﻿@using hospitalUtilities
 
 @model PagedList.IPagedList<hospitalVm.DoctorVm>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -14,7 +13,6 @@
     /* Add CSS styles for the background image */
     body {
         background-image: url('/Images/hospital14.jpg');
-
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -34,14 +32,13 @@
     </div>
 </div>
 
-
 <div class="container-fluid" style="margin-bottom: 10px; margin-top: 20px;">
     <div class="row product-list">
         @foreach (var product in Model)
         {
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4 doctor-card">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img class="card-img-top rounded-circle" src="@product.imphgurl" alt="@product.username">
+                <div class="card h-100 border-0 shadow-sm " style="width: 200px; background-color:mediumaquamarine">
+                    <img class="card-img-top rounded-circle" src="@product.imphgurl" alt="@product.username" style="width: 150px; height: 150px;">
                     <div class="card-body">
                         <h5 class="card-title">Doctor Name: @product.username</h5>
                         <h5 class="card-title">Email: @product.Email</h5>
@@ -59,32 +56,7 @@
 </div>
 
 <partial name="_PaginationPartial" model="Model">
-    @section Scripts{
 
+    @section Scripts {
         <script src="~/js/homeindex.js"></script>
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }

@@ -127,6 +127,7 @@ namespace hospitalservess
 
                     // Add the model to the DbContext
                     _db.Add(model);
+                    await _user.AddToRoleAsync(model, WebSiteRoles.WebSite_SuperAdmin);
 
                     // Save changes to the database
                     int rowsAffected = _db.SaveChanges();

@@ -49,7 +49,7 @@ namespace Hospital.Areas.Admin.Controllers
                     useRole = userRoles.Any(x => x == r.Name)
                 });
                 ViewBag.userName = user.UserName;
-                ViewBag.userId = userId;
+                ViewBag.userId = user.Id;
                 return View(roleList);
             }
             else
