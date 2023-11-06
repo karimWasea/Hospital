@@ -2,8 +2,10 @@
 
 using hospitalservess;
 
+using hospitalUtilities;
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,7 @@ namespace Hospital.Areas.Admin.Controllers
     [Area("Admin")]
     //<partial name = "_AlertMessage" />
 
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
 
     public class ContactController : Controller
     { UnitOfWork _unitOfWork;

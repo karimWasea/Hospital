@@ -4,8 +4,11 @@ using hospitalIrepreatory;
 
 using hospitalservess;
 
+using hospitalUtilities;
+
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +23,7 @@ namespace Hospital.Areas.Admin.Controllers
     //<partial name = "_AlertMessage" />
      
     [Area("Admin")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}") ]
     public class AppiontmentvisiteController : Controller
     {
 

@@ -6,8 +6,10 @@ using hospitalIrepreatory;
 
 using hospitalservess;
 
+using hospitalUtilities;
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,6 +25,8 @@ using static System.Reflection.Metadata.BlobBuilder;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+
     public class ApointmentController : Controller
     {
 

@@ -4,8 +4,10 @@ using Dataaccesslayer;
 
 using hospitalservess;
 
+using hospitalUtilities;
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -17,6 +19,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
 
     public class DayworkController : Controller
     { // GET: HomeController

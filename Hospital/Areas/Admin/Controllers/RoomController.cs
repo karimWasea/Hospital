@@ -2,8 +2,10 @@
 
 using hospitalservess;
 
+using hospitalUtilities;
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +14,8 @@ using System.Drawing.Printing;
 namespace Hospital.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+
     public class RoomController : Controller
     { UnitOfWork _unitOfWork;
         public RoomController(UnitOfWork unitOfWork)

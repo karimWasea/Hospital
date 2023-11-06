@@ -10,11 +10,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Differencing;
 
 using System.Drawing.Printing;
+using hospitalUtilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hospital.Areas.Admin.Controllers
 {
     [Area("Admin")]
-  //<partial name = "_AlertMessage" />
+    //<partial name = "_AlertMessage" />
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
 
     public class RoleController : Controller
     {

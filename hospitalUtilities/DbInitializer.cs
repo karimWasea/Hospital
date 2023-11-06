@@ -127,27 +127,28 @@ namespace hospitalUtilities
                     _Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_Doctor)).GetAwaiter().GetResult();
                     _Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_patient)).GetAwaiter().GetResult();
                     _Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_User)).GetAwaiter().GetResult();
-                    _Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_Employee)).GetAwaiter().GetResult(); _Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_Nursing)).GetAwaiter().GetResult();
-                    _Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_SuperAdmin)).GetAwaiter().GetResult();
+                    _Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_Employee)).GetAwaiter().GetResult();
+                _Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_Nursing)).GetAwaiter().GetResult();
+                    //_Rolemanger.CreateAsync(new IdentityRole(WebSiteRoles.WebSite_SuperAdmin)).GetAwaiter().GetResult();
 
 
 
 
 
 
-                    _usermanger.CreateAsync(new ApplicationUser
-                    {
+                //    _usermanger.CreateAsync(new ApplicationUser
+                //    {
 
 
 
-                        PhoneNumber = "01066451058",
-                        EmailConfirmed = true,
-                        City = "zag",
-                        PostalCode = "55555555555555",
-                        UserName = "karim",
-                        Email = "Karim.1995@gmail.com",
+                //        PhoneNumber = "01066451058",
+                //        EmailConfirmed = true,
+                //        City = "zag",
+                //        PostalCode = "55555555555555",
+                //        UserName = "karim",
+                //        Email = "Karim.1995@gmail.com",
 
-                    }, "Karim.1995@gmail.com").GetAwaiter().GetResult();
+                //    }, "Karim.1995@gmail.com").GetAwaiter().GetResult();
 
                 }
 

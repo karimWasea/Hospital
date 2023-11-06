@@ -4,9 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dataaccesslayer
 {
@@ -30,7 +34,7 @@ namespace Dataaccesslayer
 
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Apointment> Apointment { get; set; }
-       
+
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Lab> Labs { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -67,59 +71,80 @@ namespace Dataaccesslayer
 
 
             base.OnModelCreating(modelBuilder);
-            }
+            //}
             //protected override void OnModelCreating(ModelBuilder modelBuilder)
             //{
 
 
-            //var userid = Guid.NewGuid().ToString();
-            //var useradminid = Guid.NewGuid().ToString();
-            //var RoleuserId = Guid.NewGuid().ToString();
-            //var RoleSuperAdminId = Guid.NewGuid().ToString();
-            //var RoleAdminId = Guid.NewGuid().ToString();
+            var userid = Guid.NewGuid().ToString();
+
+
+            var RoleSuperAdminId = Guid.NewGuid().ToString();
+
+
+            modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
+            {
+                UserName = "SuperAdmin",
+                Email = "Karim.n.1995@gmail.com",
+                AccessFailedCount = 1,
+                City = "cairo",
+                Contracturl = "SuperAdmin",
+                Dateofbarth = DateTime.Now,
+                Gender = Gender.Male,
+                HiringDate = DateTime.Now,
+                ConcurrencyStamp = DateTime.Now.ToString(),
+                imphgurl = "SuperAdmin",
+                Salary = 0.0m,
+                StreetAddress = "SuperAdmin",
+                Title = "SuperAdmin",
+                RoleRegeseter = RoleRegeseter.Doctor,
+                statusDoctorInSystem = Cofimationdoctor.Confirmed,
+                spicialist = spicialist.Pediatrics,
+                PasswordHash = "Karim.n.1995@gmail.com",
+
+
+            });
 
 
 
-            //modelBuilder.Entity<IdentityRole>().HasData(
-
-
-            //new IdentityRole()
-            //{
-            //    Id = RoleAdminId,
-
-
-            //    Name = "Admin",
-            //    NormalizedName = "admin",
-            //    ConcurrencyStamp = RoleAdminId,
-
-            //},
-
-
-            //new IdentityRole()
-            //{
-            //    Id = RoleSuperAdminId,
-
-
-            //    Name = "SuperAdmin",
-            //    NormalizedName = "SuperAdmin",
-            //    ConcurrencyStamp = RoleSuperAdminId,
-
-            //},
-            //new IdentityRole()
-            //{
-            //    Id = RoleuserId,
-
-
-            //    Name = "User",
-            //    NormalizedName = "user",
-
-            //    ConcurrencyStamp = RoleuserId,
-            //}
+            modelBuilder.Entity<IdentityRole>().HasData(
 
 
 
-            //);
-            //}
+
+ new IdentityRole()
+ {
+     Id = RoleSuperAdminId,
+
+
+     Name = "SuperAdmin",
+     NormalizedName = "SuperAdmin",
+     ConcurrencyStamp = RoleSuperAdminId,
+
+ }
+
+
+
+
+
+
+
+
+ );
+
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+        new IdentityUserRole<string>
+        {
+            UserId = userid,  // Use the userId you generated earlier
+            RoleId = RoleSuperAdminId,  // Use the RoleSuperAdminId you generated earlier
+        }
+                );
+
+
+
+
 
         }
+    }
     }

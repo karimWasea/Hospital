@@ -1,12 +1,17 @@
 ﻿using hospitalservess;
+
+using hospitalUtilities;
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+
     public class DoctorController : Controller
     { 
 

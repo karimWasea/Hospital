@@ -3,14 +3,19 @@
 using hospitalIrepreatory;
 
 using hospitalservess;
+
+using hospitalUtilities;
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Areas.Patient.Controllers
 {
 
     [Area("Patient")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+
     public class PatientController : Controller
     {
 

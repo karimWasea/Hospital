@@ -2,8 +2,10 @@
 
 using hospitalservess;
 
+using hospitalUtilities;
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,8 @@ using Newtonsoft.Json;
 namespace Hospital.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+
     //[Authorize("Admin")]
     // [Authorize(Roles = clsRoles.roleAdmin)]
     public class RolesController : Controller

@@ -3,8 +3,11 @@
 using hospitalIrepreatory;
 
 using hospitalservess;
+
+using hospitalUtilities;
 using hospitalVm;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Text;
@@ -13,6 +16,8 @@ namespace Hospital.Areas.Patient.Controllers
 {
 
     [Area("Patient")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+
     public class PatientHistoryController : Controller
     { // GET: HomeController
         UnitOfWork _unitOfWork;
