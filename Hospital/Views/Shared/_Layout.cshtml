@@ -4,9 +4,8 @@
 @using System.Security.Claims
 @using hospitalUtilities;
 
-@{
-    var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
-}
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -40,9 +39,8 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <!-- Admin Dropdown --> 
-                        
-                        @if (userRole == WebSiteRoles.WebSite_SuperAdmin || userRole == WebSiteRoles.WebSite_Doctor)
+                        <!-- Admin Dropdown -->
+                        @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin) )
                         {
                         <li class="nav-item dropdown bg-info">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,7 +53,7 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                                     <a class ="dropdown-item" asp-area="Admin" asp-controller="Room" asp-action="Index">Rooms</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Roles" asp-action="Index">Roles</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Contact" asp-action="Index">Contacts</a>
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Role" asp-action="GetAllRoles">All Roles</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Role" asp-action="Index">All Roles</a>
                                 </div>
                                 </li>
                             }
@@ -68,8 +66,10 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                             
 
 
-                        @if(userRole == WebSiteRoles.WebSite_SuperAdmin || userRole == WebSiteRoles.WebSite_Doctor){
+                        @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin))
+                        {
                             <!-- Reception Dropdown -->
+
 {
                         <li class="nav-item dropdown bg-info">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="receptionDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,7 +78,6 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                             <div class="dropdown-menu bg-info" aria-labelledby="receptionDropdown">
                                         <a class="dropdown-item" asp-area="Patient" asp-controller="Patient" asp-action="Index">All Patients</a>
                                                 <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="Index">Week Shifts</a>
-                                <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="AllDayShifts">All Day Shifts</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="AppointmentVisit" asp-action="Index">Appointment Visits</a>
                                 <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
 
@@ -93,14 +92,16 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
 
 
 
-                        @if  (userRole == WebSiteRoles.WebSite_SuperAdmin || userRole == WebSiteRoles.WebSite_Doctor){
-                                <!-- Reception Dropdown -->
+                            @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin) || User.IsInRole(WebSiteRoles.WebSite_Doctor)){
+                            <!-- Reception Dropdown -->
+
                                 {
                                     <li class="nav-item dropdown bg-info">
                                         <a class="nav-link dropdown-toggle text-dark" href="#" id="receptionDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 MangDoctor
                             </a>
                             <div class="dropdown-menu bg-info" aria-labelledby="receptionDropdown">
+                                    <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="AllDayShifts">All Day Shifts</a>
 
                                             <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">  Doctors</a>
                                             <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="GetRegisterDoctors">Register Doctors</a>
@@ -121,8 +122,8 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                         </li>
                             }                
                             
-                            @if(userRole == WebSiteRoles.WebSite_SuperAdmin || userRole == WebSiteRoles.WebSite_patient)
-                            {
+                            @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin) || User.IsInRole(WebSiteRoles.WebSite_patient))
+                        {
                                 <!-- Patient Dropdown -->
                                 <li class="nav-item dropdown bg-info">
                                     <a class="nav-link dropdown-toggle text-dark" href="#" id="patientDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
