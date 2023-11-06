@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using hospitalUtilities.SystemEnums;
+
+
 namespace Dataaccesslayer
 {
     public class TimingShifts 
@@ -31,21 +34,7 @@ namespace Dataaccesslayer
 
 
 
-    public enum Stutus
-    {
-        [Display(Name = " is Available")]
-        Available = 1,
-
-        [Display(Name = " is doctorleavework")]
-        doctorleavework = 2,
-
-        [Display(Name = " is Finsiedshift")]
-        Finsiedshift = 3,
-        [Display(Name = " is Notavilable")]
-
-        Notavilable = 4
-
-    }
+  
    
 
 }

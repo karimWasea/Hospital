@@ -4,19 +4,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Dataaccesslayer;
 using hospitalUtilities;
 using hospitalservess;
-using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
 using hospitalIrepreatory;
-using hospitalVm;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-
-
-
-
 
 
 
@@ -41,6 +31,16 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 
 
+// In ConfigureServices method
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("DoctorAndPatientandsuperadmin", policy =>
+    {
+        policy.RequireRole(WebSiteRoles.WebSite_patient, WebSiteRoles.WebSite_Doctor,WebSiteRoles.WebSite_SuperAdmin);
+    });
+
+    // If you have other policies for "Manager" or other roles, define them here.
+});
 
 
 
@@ -57,7 +57,6 @@ builder.Services.AddTransient<lookupServess>();
 builder.Services.AddTransient<Apointmentserves>();
 builder.Services.AddTransient<timingShiftservess>();
 builder.Services.AddTransient<Applicationuserserves>();
-//builder.Services.AddScoped(typeof(IPagination<PatientVm>), typeof(PaginationService<PatientVm>));
 builder.Services.AddTransient<Doctorserves>();
 builder.Services.AddTransient<PatientHistoryserves>();
 builder.Services.AddTransient<DoctorDayworkserves>();
@@ -81,7 +80,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/Identity/Account/Logout";
 
     //    // Set the cookie expiration time (in this example, it's set to 7 days).
-    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 
     //    Set whether the cookie is essential for authentication.If set to true,
     //    authentication will fail if the cookie is not present.

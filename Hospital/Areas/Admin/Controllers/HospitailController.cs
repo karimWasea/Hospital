@@ -14,7 +14,7 @@ using System.Drawing.Printing;
 namespace Hospital.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class HospitailController : Controller
     { UnitOfWork _unitOfWork;

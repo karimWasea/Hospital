@@ -4,6 +4,7 @@ using Dataaccesslayer;
 using hospitalIrepreatory;
 
 using hospitalUtilities;
+using hospitalUtilities.SystemEnums;
 
 using hospitalVm;
 
@@ -67,6 +68,11 @@ namespace hospitalservess
                      existingUser.PostalCode=entity.PostalCode;
                      existingUser.StreetAddress=entity.StreetAddress;
                      existingUser.UserName=entity.username;
+                if (!string.IsNullOrEmpty(entity.PassWord))
+                {
+                    var passwordHash = _user.PasswordHasher.HashPassword(existingUser, entity.PassWord);
+                    existingUser.PasswordHash = passwordHash;
+                }
 
                 if (entity.imgurlupdated == null)
 
@@ -91,9 +97,10 @@ namespace hospitalservess
                     }
             else
             {
+               
 
 
-          var model=    new ApplicationUser
+            var model=    new ApplicationUser
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserName = entity.username,
@@ -114,9 +121,14 @@ namespace hospitalservess
                     statusDoctorInSystem = entity.StatusDoctorInSystem,
                     WorkingDaysinWeek = entity.WorkingDaysinWeek,
                     Salary = entity.Salary,
+                    PasswordHash=entity.PassWord,
                 };
 
-
+                if (!string.IsNullOrEmpty(entity.PassWord))
+                {
+                    var passwordHash = _user.PasswordHasher.HashPassword(model, entity.PassWord);
+                    model.PasswordHash = passwordHash;
+                }
                 using (var transactionScope = new TransactionScope())
                 {
 
@@ -127,7 +139,7 @@ namespace hospitalservess
 
                     // Add the model to the DbContext
                     _db.Add(model);
-                    await _user.AddToRoleAsync(model, WebSiteRoles.WebSite_SuperAdmin);
+                      _user.AddToRoleAsync(model, WebSiteRoles.WebSite_Doctor);
 
                     // Save changes to the database
                     int rowsAffected = _db.SaveChanges();
@@ -339,7 +351,7 @@ namespace hospitalservess
                 .ToListAsync();
          var paglist=   GetPagedData(doctorsList , pageNum);
 
-            return paglist;
+            return (IPagedList<DoctorVm>)paglist;
         }
 
         public async Task<IPagedList<DoctorVm>> GetAllDoctorRegester(int? pageNumber, string searchTerm = null)

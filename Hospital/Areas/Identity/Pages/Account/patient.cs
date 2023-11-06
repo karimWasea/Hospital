@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using hospitalUtilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using hospitalUtilities.SystemEnums;
 
 namespace Hospital.Areas.Identity.Pages.Account
 {
@@ -218,7 +219,7 @@ namespace Hospital.Areas.Identity.Pages.Account
                 user.PostalCode = Input.PostalCode;
                 user.Dateofbarth = Input.dateofbarth;
                 user.PostalCode = Input.PostalCode;
-                user.spicialist = Dataaccesslayer.spicialist.None;
+                user.spicialist = hospitalUtilities.SystemEnums.spicialist.None;
 
 
                 //await _userStore.SetUserNameAsync(user, Input.Usename, CancellationToken.None);

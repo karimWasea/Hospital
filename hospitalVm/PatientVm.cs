@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using System.Net.NetworkInformation;
 using hospitalUtilities;
+using hospitalUtilities.SystemEnums;
 
 namespace hospitalVm
 {

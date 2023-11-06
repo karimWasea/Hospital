@@ -7,6 +7,8 @@ using hospitalIrepreatory;
 using hospitalservess;
 
 using hospitalUtilities;
+using hospitalUtilities.SystemEnums;
+
 using hospitalVm;
 
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +27,6 @@ using static System.Reflection.Metadata.BlobBuilder;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
 
     public class ApointmentController : Controller
     {
@@ -41,6 +42,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
         }
+
 
         //  GET: HomeController
         public ActionResult Index()
@@ -119,8 +121,8 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-
-
+        [Authorize(Policy = "DoctorAndPatientandsuperadmin")]
+        //[Authorize(Roles = WebSiteRoles.WebSite_Doctor)]
 
         public async Task<IActionResult> CreatApientment(string id)
 
@@ -153,6 +155,9 @@ namespace Hospital.Areas.Doctor.Controllers
 
         }
 
+
+        [Authorize(Policy = "DoctorAndPatientandsuperadmin")]
+        //[Authorize(Roles = WebSiteRoles.WebSite_Doctor)]
         [HttpPost]
         // [ValidateAntiForgeryToken]
         public IActionResult Save(ApointmentVm appointment)
@@ -196,6 +201,9 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
+
+
+        [Authorize(Policy = "DoctorAndPatientandsuperadmin")]
 
 
         public IActionResult yourappiontisconfermed()

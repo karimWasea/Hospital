@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using hospitalUtilities.SystemEnums;
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Dataaccesslayer
 {
@@ -15,20 +17,7 @@ namespace Dataaccesslayer
 
     }
 
-    public enum AppointmentConfirmation
-    {
-        [Display(Name = "Pending Confirmation")]
-        PendingConfirmation = 0,
-
-        [Display(Name = "Confirmed by Doctor")]
-        ConfirmedByDoctor = 1,
-
-        [Display(Name = "Cancelled by Doctor")]
-        CancelledByDoctor = 2,
-
-        [Display(Name = "Cancelled by Patient")]
-        CancelledByPatient = 3,
-    }
+ 
 
 
 

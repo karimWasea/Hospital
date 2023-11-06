@@ -16,7 +16,7 @@ namespace Hospital.Areas.Patient.Controllers
 {
 
     [Area("Patient")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class PatientHistoryController : Controller
     { // GET: HomeController
@@ -49,7 +49,8 @@ namespace Hospital.Areas.Patient.Controllers
         }
 
 
-     
+
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_patient},{WebSiteRoles.WebSite_Doctor}")]
 
 
         public ActionResult GetALLpatientHistory(string PatientId, int? page, string search)

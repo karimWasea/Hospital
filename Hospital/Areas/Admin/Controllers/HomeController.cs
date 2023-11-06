@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Hospital.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor},{WebSiteRoles.WebSite_patient}")]
 
     public class HomeController : Controller
     {

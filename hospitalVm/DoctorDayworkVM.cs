@@ -10,6 +10,8 @@ namespace hospitalVm
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using hospitalUtilities.SystemEnums;
+
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Newtonsoft.Json;
 

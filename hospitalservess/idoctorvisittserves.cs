@@ -3,6 +3,7 @@
 using hospitalIrepreatory;
 
 using hospitalUtilities;
+using hospitalUtilities.SystemEnums;
 
 using hospitalVm;
 

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace Dataaccesslayer
+namespace hospitalIrepreatory
 {
- 
+    public interface IDbInitializer
+    {
 
 
+        public void Initialize();
 
 
+    }
 }

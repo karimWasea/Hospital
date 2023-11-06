@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using hospitalUtilities.SystemEnums;
+
 
 namespace Dataaccesslayer
 {
@@ -28,37 +30,7 @@ namespace Dataaccesslayer
 
 
     }
-   public  enum VisitStatus
-    {
-        Scheduled,
-        InProgress,
-        Completed,
-        Cancelled,
-        Rescheduled,
-        Postponed,
-        NoShow,
-        Arrived,
-        Unknown
-    }
-    public enum IsDeleted
-    {
-        NotDeleted,
-        Deleted
-    }
 
-    public enum VisitType
-    {
-        FirstVisit  ,
-
-        FollowUpVisit ,
-
-        RegularCheckup ,
-
-        EmergencyVisit ,
-
-        // Add more visit types as needed
-    }
-   
 
 
 }

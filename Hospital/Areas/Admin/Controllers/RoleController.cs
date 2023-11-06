@@ -16,8 +16,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace Hospital.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //<partial name = "_AlertMessage" />
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class RoleController : Controller
     {

@@ -1,4 +1,4 @@
-﻿using Dataaccesslayer;
+﻿
 using Microsoft.AspNetCore.Mvc;
 
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;

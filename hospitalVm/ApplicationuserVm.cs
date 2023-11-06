@@ -3,6 +3,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Net.NetworkInformation;
+using hospitalUtilities.SystemEnums;
 
 namespace hospitalVm
 {

@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using hospitalUtilities.SystemEnums;
+
 
 namespace Dataaccesslayer
 {
@@ -78,41 +80,7 @@ namespace Dataaccesslayer
 
     }
 
-    public enum Gender
-    {
-        Male, femail, other
-    }
-
-    public enum Cofimationdoctor
-    {
-        Confirmed,
-        pending,
-        Refused,
-        Regeseter
-         
-
-    }
-
-
-    public enum RoleRegeseter 
-    {
-        None ,
-        Doctor ,
-        Nurse ,
-        Receptionist ,
-        Employee ,
-        Patient 
-
-    };
-    public enum spicialist
-    {
-        None,
-        Emergency,
-        Pediatrics,
-        Surgery,
-        InternalMedicine,
-        ObstetricsGynecology
-    }
+   
 
 
 }

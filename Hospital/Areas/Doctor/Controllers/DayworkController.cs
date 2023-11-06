@@ -5,6 +5,8 @@ using Dataaccesslayer;
 using hospitalservess;
 
 using hospitalUtilities;
+using hospitalUtilities.SystemEnums;
+
 using hospitalVm;
 
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +21,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class DayworkController : Controller
     { // GET: HomeController
@@ -42,10 +44,11 @@ namespace Hospital.Areas.Doctor.Controllers
             return View(model);
 
         }
-      
 
 
-        // GET: HomeController/Details/5
+
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_Doctor}")]
+
         public ActionResult  AllDayShifts(int? page)
         {
             var model = _unitOfWork.idoctodayworinweek.GetAll();

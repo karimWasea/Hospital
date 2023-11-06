@@ -5,6 +5,7 @@ using hospitalIrepreatory;
 using hospitalservess;
 
 using hospitalUtilities;
+using hospitalUtilities.SystemEnums;
 
 using hospitalVm;
 
@@ -23,7 +24,7 @@ namespace Hospital.Areas.Admin.Controllers
     //<partial name = "_AlertMessage" />
      
     [Area("Admin")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}") ]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}") ]
     public class AppiontmentvisiteController : Controller
     {
 
@@ -61,8 +62,11 @@ namespace Hospital.Areas.Admin.Controllers
 
 
 
+        [Authorize(Roles = WebSiteRoles.WebSite_patient )]
+        [Authorize(Roles = WebSiteRoles.WebSite_Doctor )]
 
-        public  ActionResult GetAllVistitsbyPatientid(string id, string search, int? page)
+
+        public ActionResult GetAllVistitsbyPatientid(string id, string search, int? page)
         {
             var searchTermLower = search?.ToLower();
             int pageNumber = page ?? 1;
@@ -107,6 +111,7 @@ namespace Hospital.Areas.Admin.Controllers
 
 
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_Doctor}")]
 
 
         public ActionResult GettAllVistitsByDoctorid(string id, string ? search, int? page)

@@ -26,7 +26,7 @@ using static System.Reflection.Metadata.BlobBuilder;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class PatientReportController : Controller
     {
@@ -54,12 +54,13 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_patient} ,{WebSiteRoles.WebSite_Doctor}")]
 
 
         public ActionResult GetAllPatientReportsbyPatientId(string patientid, string ?search, int? page)
         {
-            var searchTermLower = search?.ToLower();
-            int pageNumber = page ?? 1;
+            
+
 
             if (patientid != null)
             {
@@ -101,6 +102,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_patient} ,{WebSiteRoles.WebSite_Doctor}")]
 
 
         // GET: HomeController/Details/5

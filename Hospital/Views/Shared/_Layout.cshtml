@@ -77,7 +77,7 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                                 <div class="dropdown-menu bg-info" aria-labelledby="receptionDropdown">
                                     <a class="dropdown-item" asp-area="Patient" asp-controller="Patient" asp-action="Index">All Patients</a>
                                     <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="Index">Week Shifts</a>
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="AppointmentVisit" asp-action="Index">Appointment Visits</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisit" asp-action="Index">All Visits</a>
                                     <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
 
                                     <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
@@ -143,8 +143,8 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                                     <div class="dropdown-menu bg-info" aria-labelledby="patientDropdown">
                                     <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetAllPatientHistory">All Patient History</a>
 
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AppointmentVisit" asp-action="GetAllVisitsByPatientId">All Visits by Patient</a>
-                                        <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="GetAllPatientReportsByPatientId">Patient Reports</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GetAllVistitsbyPatientid">All Patient Visits  </a>
+                                    <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="GetAllPatientReportsbyPatientId">Patient Reports</a>
                                     </div>
                                 </li>
                             }

@@ -1,11 +1,11 @@
-﻿namespace hospitalUtilities
-{
-    public interface IDbInitializer
-    {
+﻿//namespace hospitalUtilities
+//{
+//    public interface IDbInitializer
+//    {
 
 
-        public void Initialize();
+//        public void Initialize();
 
 
-    }
-}
+//    }
+//}

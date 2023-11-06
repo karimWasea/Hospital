@@ -14,7 +14,7 @@ namespace Hospital.Areas.Patient.Controllers
 {
 
     [Area("Patient")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class PatientController : Controller
     {

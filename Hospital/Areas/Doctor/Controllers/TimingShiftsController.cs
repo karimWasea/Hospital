@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class TimingShiftsController : Controller
     { // GET: HomeController

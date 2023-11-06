@@ -7,6 +7,7 @@ using System;
 
 using Microsoft.AspNetCore.Mvc;
 using hospitalUtilities;
+using hospitalUtilities.SystemEnums;
 
 namespace hospitalVm
 {
@@ -17,6 +18,10 @@ namespace hospitalVm
         [Required(ErrorMessage = "Phone Number is required")]
         [Display(Name = "Phone Number")]
         public string Phonenumber { get; set; }
+        [Required(ErrorMessage = "Password is required")]
+        [Display(Name = "Phone Password")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and be at least 8 characters long.")]
+        public string PassWord { get; set; }
 
         public string Title { get; set; } = string.Empty;
 
@@ -148,6 +153,7 @@ namespace hospitalVm
                 statusDoctorInSystem = ApplicationUser.StatusDoctorInSystem,
                  WorkingDaysinWeek = ApplicationUser.WorkingDaysinWeek,
                 Salary = ApplicationUser.Salary,
+                 PasswordHash= ApplicationUser.PassWord,
             };
         }
 

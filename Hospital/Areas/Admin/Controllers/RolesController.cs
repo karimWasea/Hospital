@@ -15,10 +15,10 @@ using Newtonsoft.Json;
 namespace Hospital.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
-    //[Authorize("Admin")]
-    // [Authorize(Roles = clsRoles.roleAdmin)]
+   
+
     public class RolesController : Controller
     {
         public RolesController(UserManager<ApplicationUser> user, RoleManager<IdentityRole> roles, UnitOfWork unitOfWork)

@@ -2,6 +2,8 @@
 
 namespace hospitalVm
 {
+    using hospitalUtilities.SystemEnums;
+
     using System;
     using System.ComponentModel.DataAnnotations;
 

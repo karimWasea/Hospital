@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using hospitalUtilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using hospitalUtilities.SystemEnums;
 
 namespace Hospital.Areas.Identity.Pages.Account
 {
