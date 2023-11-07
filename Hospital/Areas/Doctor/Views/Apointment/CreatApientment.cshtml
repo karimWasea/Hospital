@@ -64,39 +64,13 @@
     </div>
 </div>
 
-<!-- Include SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
 
-<!-- Include SweetAlert JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+@section Scripts{
+    <!-- Include SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
 
-<<script>
-     document.addEventListener('DOMContentLoaded', function () {
-         const saveForm = document.getElementById('saveform');
+    <!-- Include SweetAlert JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
 
-         saveForm.addEventListener('submit', function (event) {
-             event.preventDefault(); // Prevent the default form submission
-
-             Swal.fire({
-                 title: 'Confirm Appointment',
-                 text: 'Are you sure you want to confirm this appointment?',
-                 icon: 'warning',
-                 showCancelButton: true,
-                 confirmButtonText: 'Yes',
-                 cancelButtonText: 'No',
-                 confirmButtonColor: '#3085d6',
-                 cancelButtonColor: '#d33',
-                 customClass: {
-                     confirmButton: 'custom-yes-button-class',
-                     cancelButton: 'custom-no-button-class'
-                 },
-                 buttonsStyling: false
-             }).then((result) => {
-                 if (result.isConfirmed) {
-                     // Submit the form if the user confirms
-                     saveForm.submit();
-                 }
-             });
-         });
-     });
-</script>
+    <<script src="~/js/creatappiontmentdate.js"></script>
+}
