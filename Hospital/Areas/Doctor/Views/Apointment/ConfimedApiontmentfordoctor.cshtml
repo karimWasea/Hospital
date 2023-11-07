@@ -67,11 +67,7 @@
                                asp-route-patientid="@doctor.patientid">
                                 PatientReport
                             </a>
-@*                            <div class="more-info"></div>
-*@
-                           @* <a  asp-route-id="@doctor.id" class="btn btn-sm btn-info not-confirmed-btn">
-                                 vistit nit 
-                            </a>*@
+
                         </td>
                     </tr>
                 }
@@ -83,27 +79,4 @@
  
 
 
-
-<script>
-    // Add event listeners to the "not confirmed" buttons
-    document.querySelectorAll('.not-confirmed-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            // Find the closest row to the clicked button
-            const row = this.closest('.appointment-row');
-
-            // Toggle a CSS class to make the row red
-            row.classList.toggle('not-confirmed-row');
-        });
-    });
-
-    // Simulate a confirmation and change row color back
-    document.querySelectorAll('.confirm-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            // Find the closest row to the clicked button
-            const row = this.closest('.appointment-row');
-
-            // Remove the "not-confirmed-row" class to change the row color back
-            row.classList.remove('not-confirmed-row');
-        });
-    });
-</script>
+<script src="~/js/confimedapiontmentfordoctor.js"></script>

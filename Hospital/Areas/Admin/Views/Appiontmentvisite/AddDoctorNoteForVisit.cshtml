@@ -1,96 +1,13 @@
 ﻿@model hospitalVm.ApointmentVm
 @using System.Security.Claims
+@using hospitalUtilities;
 
 @{
     var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 }
-@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
-@{
-    Layout = "_Layout";
-    ViewData["Title"] = "AddNote";
-}
-
-<partial name="_AlertMessage" />
-
-
-<style>
-    body {
-        background-image: url('/Images/hospital17.jpg');
-        background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-</style>
-<<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #f8f9fa;">
-    <div class="card w-75">
-        <div class="card-body">
-            <h1 class="card-title text-center">Details</h1>
-
-            <!-- Appointment Details -->
-            <p class="card-text">
-                <strong>Patient Name:</strong> @Model.PatientName<br />
-                <strong>Visit Note by Doctor:</strong> @Model.VisiteNotebydoctor<br />
-                <strong>Visit Date:</strong> @Model.CreateDate<br />
-                <strong>Visit Type:</strong> @Model.VisitType<br />
-                <strong>Visit Status:</strong> @Model.VisitStatus<br />
-            </p>
-
-            <!-- Add Notes Form -->
-            <h5 class="card-title text-center mt-3">Add Notes</h5>
-            <form asp-action="AddDoctorNoteForVisit" method="post" id="saveform" enctype="multipart/form-data">
-                <input type="hidden" asp-for="id" />
-                <input asp-for="doctorid" type="hidden" />
-                <input asp-for="DoctorAppointmentVIsitid" type="hidden" />
-                <input asp-for="doctorid" type="hidden" />
-                <input asp-for="patientid" type="hidden" />
-                <input asp-for="id" type="hidden">
-
-                <div class="form-group">
-                    <label asp-for="VisiteNotebydoctor">Doctor's Note:</label>
-                    <textarea asp-for="VisiteNotebydoctor" class="form-control" style="height: 60vh;"></textarea>
-                </div>
 
 
 
-              
-
-
-                <div class="row">
-                    <div class="col-md-6">
-                       @*  @if (userRole == "Admin")
-                        { *
-                            <div>
-                                <a asp-area="Doctor" asp-controller="PatientReport" asp-action="Index" class="btn btn-sm btn-info">All Report</a>
-                            </div>
-                      @*   }
-                        else if (userRole == "Doctor")
-                        { *
-                            <div>
-                                <a asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">All Booking</a>
-                            </div>
-@*                         }
-
- *                   </div>
-                    <div class="col-md-6">
-                        <button type="submit" id="savedata" class="btn btn-primary btn-block">Update</button>
-                    </div>
-                </div>
-
-            </form>
-
-
-            <div>
-
-            </div>
-        </div>
-    </div>
-</div>
- *@
-
-
-
-@* Add your tag helpers and model declarations here *@
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Cloudscribe.Web.Pagination
@@ -101,28 +18,8 @@
     Layout = "_Layout";
 }
 <partial name="_AlertMessage" />
+<link href="~/css/appvisitdoctornote.css" rel="stylesheet" />
 
-<style>
-    body {
-        background-image: url('/Images/hospital17.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-
-    /* Style for the background container */
-    .background-container {
-        background-color: #dff0d8; /* Bootstrap success background color */
-        border: 1px solid #c3e6cb; /* Border color */
-        padding: 20px;
-        border-radius: 5px; /* Rounded corners */
-    }
-
-    /* Style to make the textarea full width */
-    .full-width-textarea {
-        width: 100%;
-    }
-</style>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -172,25 +69,33 @@
                 </form>
                 <div class="row mt-12">
                     <div class="col-md-12">
-                        @*  @if (userRole == "Admin")
-                        { *@
                         <div class="btn-group" style="width: 100%;">
-                            <a asp-area="Admin" asp-controller="Appiontmentvisite"
-                               asp-action="GettAllVistitsByDoctorid"
-                               class="btn btn-primary" style="width: 100%;">All Bookings</a>
+                        @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin))
+                        {
+                            
 
-                            @*   }
-                            else if (userRole == "Doctor")
-                            { *@
+                        }
+
+
+                           
+                                <a asp-area="Admin" asp-controller="Appiontmentvisite"
+                                   asp-action="GettAllVistitsByDoctorid"
+                                   class="btn btn-primary" style="width: 100%;">All Bookings</a>
+                        
+
+
+
+                                @if (User.IsInRole(WebSiteRoles.WebSite_Doctor))
+                                {
 
 
                             <a asp-area="Doctor" asp-controller="PatientReport" asp-action="Index"
                                class="btn btn-primary" style="width: 100%;">Patient Reports</a>
 
 
-                            @*                         }
+                            }                  
 
-                            *@
+                           
 
 
                         </div>
@@ -207,28 +112,5 @@
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var saveForm = document.getElementById("saveform");
-            var saveButton = document.getElementById("savedata");
-
-            saveForm.addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You are about to update the patient's information.",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, update it!",
-                    cancelButtonText: "No, cancel",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // You can also add additional form validation here
-                        saveForm.submit();
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="~/js/appvsitdoctornote.js"></script>
 }

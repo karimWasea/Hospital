@@ -19,7 +19,8 @@
 <form id="search-form" method="get">
     <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input" class="form-control">
 </form>
-
+<a asp-area="Admin" asp-controller="Appiontmentvisite"
+   asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">Bcke to Visits Bookings</a>
 <div class="container mt-4">
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-success table-bordered">
@@ -50,26 +51,26 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                  @*   @if (userRole == "User" 
-                                    )
-                                    { *@
+                                    @if (User.IsInRole(WebSiteRoles.WebSite_patient))
+                                                    
+                                    {
                                          
                             <a asp-controller="PatientReport" asp-action="Details" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Details</a>
                    
-                                  @*   }
+                                    }
                                     else 
- *@
-@*                                     {
+
+                                   {
 
 
- *@
+ 
                                     <a asp-area="Admin" asp-controller="Appiontmentvisite"
                                        asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">All Bookings</a>  
                                        <a asp-controller="PatientReport" asp-action="Save" asp-route-id="@doctor.id" asp-route-DoctorAppointmentVIsitid="@doctor.DoctorAppointmentVIsitid" class="btn btn-sm btn-info">Update</a>
                                                     <a asp-controller="PatientReport" asp-action="Delete" asp-route-id="@doctor.id" class="btn btn-sm btn-info">Delete</a>
                                   
-@*                                     }
- *@                                </div>
+                                     }
+                              </div>
                                
 
                             </div>

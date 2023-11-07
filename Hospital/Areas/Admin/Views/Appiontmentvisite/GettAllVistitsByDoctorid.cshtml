@@ -74,13 +74,7 @@
                        class="btn btn-sm btn-success" style="background-color: gray;">
                         Get ALL Patient History
                     </a>
-               @*      <a asp-route-PatientId="@patient.patientid" class="btn btn-sm btn-success" style="background-color: #your_color;" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetALLpatientHistory" id="Add">
-                        GetALLpatientHistory
-                    </a>
-
-                    <a asp-route-DoctorAppointmentVIsitid="@patient.DoctorAppointmentVIsitid" asp-area="Doctor" class="btn btn-sm btn-success" style="background-color: #your_color;" asp-controller="PatientHistory" asp-action="GetAllPatientReportsbyPatientId" id="Add">
-                        PatientReport
-                    </a> *@
+              
                 </td>
             </tr>
         }
@@ -108,23 +102,6 @@
 </nav>
 
 @section Scripts{
-    <script>
-        // Update table visibility based on search input
-        function updateTableVisibility(searchTerm) {
-            const rows = document.querySelectorAll(".row-style");
-            rows.forEach(row => {
-                const doctorNameCell = row.querySelector("td:nth-child(2)"); // Adjust this selector as needed
-                if (doctorNameCell.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    row.style.display = "table-row";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        }
-
-        const searchInput = document.getElementById("search-input");
-        searchInput.addEventListener("input", function () {
-            updateTableVisibility(this.value);
-        });
-    </script>
+    <script src="~/js/gettallvistitsbydoctorid.js"></script>
+    
 }

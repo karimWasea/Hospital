@@ -28,7 +28,8 @@ else
     <form id="search-form" method="get">
         <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input" class="form-control">
     </form>
-
+    <a asp-area="Admin" asp-controller="Appiontmentvisite"
+       asp-action="GettAllVistitsByDoctorid" class="btn btn-sm btn-info">All Bookings</a>
     <a asp-area="Patient" asp-controller="PatientHistory" asp-action="Save" id="Add">
         <i class="fas fa-plus-circle"></i> Add New Patient History
     </a>
