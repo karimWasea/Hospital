@@ -125,17 +125,7 @@ background-attachment: fixed;
 <label asp-for="IsFollowUp">Is Follow Up:</label>
 <input asp-for="IsFollowUp" type="checkbox"  />
 </div>
-  @*       <div class="form-group glass-input col-4">
-
-<label asp-for="PatientId">patient</label>
-<select asp-for="PatientId" class="form-control" asp-items="@ViewBag.allpatient">
-<option value="">Select Patient </option>
-@foreach (var item in ViewBag.allpatient)
-{
-    <option value="@item.Value" selected>@item.Text</option>
-}
-</select>
-        </div> *@
+ 
                     <div class="form-group glass-input col-4">
                         <label asp-for="HistoryOfPresentIllness">Lab Results:</label>
                         <input asp-for="HistoryOfPresentIllness" class="form-control" />
@@ -165,42 +155,41 @@ background-attachment: fixed;
 </div>
 </div>
 
+@section Scripts{
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-var saveForm = document.getElementById("saveform");
-var saveButton = document.getElementById("savedata");
+    document.addEventListener("DOMContentLoaded", function () {
+        var saveForm = document.getElementById("saveform");
+        var saveButton = document.getElementById("savedata");
 
-saveForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+        saveForm.addEventListener("submit", function (event) {
+            event.preventDefault();
 
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You are about to update the patient's information.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, update it!",
-        cancelButtonText: "No, cancel",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // You can also add additional form validation here
-            saveForm.submit();
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You are about to update the patient's information.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, update it!",
+                cancelButtonText: "No, cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // You can also add additional form validation here
+                    saveForm.submit();
+                }
+            });
+        });
+
+        // After form submission, show a success message if desired
+        var urlParams = new URLSearchParams(window.location.search);
+        var successParam = urlParams.get("success");
+        if (successParam === "true") {
+            Swal.fire({
+                title: "Success!",
+                text: "Patient's information has been updated.",
+                icon: "success"
+            });
         }
     });
-});
-
-// After form submission, show a success message if desired
-var urlParams = new URLSearchParams(window.location.search);
-var successParam = urlParams.get("success");
-if (successParam === "true") {
-    Swal.fire({
-        title: "Success!",
-        text: "Patient's information has been updated.",
-        icon: "success"
-    });
-}
-});
-
-   
-
 </script>
+}

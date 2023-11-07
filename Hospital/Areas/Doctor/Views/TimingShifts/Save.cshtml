@@ -7,65 +7,8 @@
 
                                 @model hospitalVm.timingshiftVm
 
-
-                                <style>
-                                body{
-                                background-image: url('/Images/hospital11.jpg');
-                                }
-                                /* Glass-like style for form elements */
-                                .glass-container {
-                                background-color: rgba(255, 255, 255, 0.2);
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                border-radius: 20px;
-                                padding: 10px;
-                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-                                }
-                                /* Style for the button group */
-                                .button-group {
-                                display: flex;
-                                justify-content: space-between;
-                                margin-top: 20px;
-                                }
-
-                                .button-group .btn {
-                                margin: 0;
-                                }
-
-                                /* Style for form-row divisions */
-                                .form-row {
-                                display: flex;
-                                justify-content: space-between;
-                                margin: 10px 0;
-                                }
-
-                                .glass-input {
-                                background-color: rgba(255, 255, 255, 0.2);
-                                border: none;
-                                border-radius: 5px;
-                                padding: 10px;
-                                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                                width: 100%;
-                                }
-
-                                .glass-select {
-                                background-color: rgba(255, 255, 255, 0.2);
-                                border: none;
-                                border-radius: 5px;
-                                padding: 10px;
-                                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                                width: 100%;
-                                }
-
-                                .glass-button {
-                                background-color: #007bff;
-                                color: #fff;
-                                border: none;
-                                border-radius: 5px;
-                                padding: 10px 20px;
-                                cursor: pointer;
-                                }
-
-                                </style>
+<link href="~/css/timsiftingsave.css" rel="stylesheet" />
+                             
 <partial name="_AlertMessage" />
 
                                 <div class="container mt-5 glass-container col-md-7">
@@ -140,43 +83,7 @@
                                 </div>
                                 </div>
                                 </div>
+                                
+@section Scripts {
 
-                                <script>
-                                document.addEventListener("DOMContentLoaded", function () {
-                                var saveForm = document.getElementById("saveform");
-
-                                saveForm.addEventListener("submit", function (event) {
-                                event.preventDefault();
-
-                                Swal.fire({
-                                title: "Are you sure?",
-                                text: "You are about to update the shift information.",
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonText: "Yes, update it!",
-                                cancelButtonText: "No, cancel",
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                saveForm.submit();
-                                }
-                                }); 
-                                });
-                                });
-
-                                document.addEventListener('DOMContentLoaded', function () {
-                                var startShiftInput = document.querySelector('#startshift');
-                                var endsifitInput = document.querySelector('#Endsifit');
-var durationInput = document.querySelector('#durationInput');
-
-function updateDuration() {
-var startShiftValue = new Date(startShiftInput.value);
-var endsifitValue = new Date(endsifitInput.value);
-var durationMilliseconds = endsifitValue - startShiftValue;
-var durationHours = durationMilliseconds / (1000 * 60 * 60);
-durationInput.value = durationHours.toFixed(2);
-}
-
-startShiftInput.addEventListener('change', updateDuration);
-endsifitInput.addEventListener('change', updateDuration);
-});
-</script>
+<script src="~/js/timesiftingsave.js"></script>}

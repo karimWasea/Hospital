@@ -72,7 +72,7 @@ namespace Hospital.Areas.Doctor.Controllers
             if (id != null )
             {
 
-                var model = await _unitOfWork. Doctor.GetByIdasRegisterdoctor(id);
+                var model = await _unitOfWork.Doctor.GetByIdasconfirmed(id);
                 return View(model);
             }
             else

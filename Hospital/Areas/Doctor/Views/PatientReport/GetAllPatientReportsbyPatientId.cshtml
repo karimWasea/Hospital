@@ -92,7 +92,7 @@
         @for (int i = 1; i <= Model.PageCount; i++)
         {
             <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                <a class "page-link" asp-action="GetAllPatientReportsbyPatientId" asp-route-page="@i">@i</a>
+                <a class ="page-link" asp-action="GetAllPatientReportsbyPatientId" asp-route-page="@i">@i</a>
             </li>
         }
         <li class="page-item @(Model.PageNumber == Model.PageCount ? "disabled" : "")">

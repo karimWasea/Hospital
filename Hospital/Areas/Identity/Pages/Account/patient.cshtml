@@ -5,76 +5,14 @@
     ViewData["Title"] = "Register Patient";
 }
 <h1>@ViewData["Title"]</h1>
+<link href="~/css/patientregester.css" rel="stylesheet" />
 
-<style>
-    
-    body {
-        background-image: url('/Images/hospital.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
- /* Custom CSS styles */
-    .container {
-        text-align: center;
-    }
-
-    h1 {
-        margin-bottom: 20px;
-    }
-
-    .btn-secondary {
-        margin-top: 10px;
-    }
-
-    /* Glass-like style for form elements */
-    .glass-container {
-        background-color: rgba(255, 255, 255, 0.2); /* Adjust the alpha channel for transparency */
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .glass-input {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 5px;
-        padding: 10px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .glass-select {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 5px;
-        padding: 10px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-     Style for the button group
-                .button-group {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 20px;
-                }
-
-                    .button-group .btn {
-                        margin: 0;
-                    }
-
-                /* Style for form-row divisions */
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-        margin: 10px 0;
-    }
-</style>
 
 <partial name="_AlertMessage" model="Model" />
 <div class="container mt-5 glass-container">
 
-    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="glass-form" enctype="multipart/form-data">
+    <form id="registerForm" 
+        asp-route-returnUrl="@Model.ReturnUrl" method="post" class="glass-form" enctype="multipart/form-data">
 
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
         <div class="form-group col-md-5">
@@ -164,15 +102,7 @@
                 </div>
             </div>
         </div>
-        @*   <div class="col-md-6">
-        <div class="form-group">
-        <label asp-for="Input.Gender" class="control-label">Department</label>
-        <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()">
-        <option value="">-- Select Department --</option>
-        </select>
-        <span asp-validation-for="Input.Gender" class="text-danger"></span>
-        </div>
-        </div> *@
+      
         <div class="row mt-3">
             <div class="form-group col-md-6">
                 <button type="submit" id="savedata" class="btn btn-primary">Update</button>
@@ -192,15 +122,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
 @section Scripts {
+    <script src="~/js/patientregester.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <partial name="_ValidationScriptsPartial" />
 }
