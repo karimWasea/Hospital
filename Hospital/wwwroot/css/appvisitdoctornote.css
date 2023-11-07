@@ -1,0 +1,21 @@
+
+body {
+    background-image: url('/Images/hospital17.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Style for the background container */
+.background-container {
+    background-color: #dff0d8; /* Bootstrap success background color */
+    border: 1px solid #c3e6cb; /* Border color */
+    padding: 20px;
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Style to make the textarea full width */
+.full-width-textarea {
+    width: 100%;
+}
+
