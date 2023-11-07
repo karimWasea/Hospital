@@ -220,7 +220,7 @@ namespace Hospital.Areas.Identity.Pages.Account
                 user.PostalCode = Input.PostalCode;
                 user.Dateofbarth = Input.dateofbarth;
                 user.PostalCode = Input.PostalCode;
-                user.statusDoctorInSystem = Cofimationdoctor.Regeseter;
+                user.statusDoctorInSystem = Cofimationdoctor.Confirmed;
 
 
                 //await _userStore.SetUserNameAsync(user, Input.Usename, CancellationToken.None);
@@ -238,7 +238,7 @@ namespace Hospital.Areas.Identity.Pages.Account
 
 
                   
-                            await _userManager.AddToRoleAsync(user, WebSiteRoles.WebSite_User);
+                            await _userManager.AddToRoleAsync(user, WebSiteRoles.WebSite_Doctor);
                             await _userManager.GetUserIdAsync(user);
 
                            

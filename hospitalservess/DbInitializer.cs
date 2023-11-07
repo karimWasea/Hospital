@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace hospitalservess
 {
-    public class DbInitializers : IDbInitializer
+    public class DbInitializers : hospitalIrepreatory.IDbInitializer
     {
 
 

@@ -9,6 +9,9 @@
         public const string WebSite_Employee = "Employee";
         public const string WebSite_Nursing= "Nursing";
         public const string WebSite_User= "User";
+        public const string WebSite_DoctorAndSuperadmin = "DoctorAndSuperadmin";
+        public const string WebSite_DoctorAndPatientandsuperadmin = "DoctorAndPatientandsuperadmin";
+
     }
  
 }

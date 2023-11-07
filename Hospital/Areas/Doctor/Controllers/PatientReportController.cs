@@ -26,7 +26,6 @@ using static System.Reflection.Metadata.BlobBuilder;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class PatientReportController : Controller
     {
@@ -42,7 +41,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
         }
 
-        //  GET: HomeController
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
         public async Task<ActionResult> Index(int? page, string search)
         {
 
@@ -54,7 +53,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        [Authorize(Roles = $"{WebSiteRoles.WebSite_patient} ,{WebSiteRoles.WebSite_Doctor}")]
+        [Authorize(policy: $"{WebSiteRoles.WebSite_DoctorAndPatientandsuperadmin}")]
 
 
         public ActionResult GetAllPatientReportsbyPatientId(string patientid, string ?search, int? page)
@@ -102,7 +101,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        [Authorize(Roles = $"{WebSiteRoles.WebSite_patient} ,{WebSiteRoles.WebSite_Doctor}")]
+        [Authorize(policy: $"{WebSiteRoles.WebSite_DoctorAndPatientandsuperadmin} ")]
 
 
         // GET: HomeController/Details/5
@@ -111,8 +110,9 @@ namespace Hospital.Areas.Doctor.Controllers
             return View(_unitOfWork.genericRepositorypatientreport.GetById(id));
         }
         [HttpGet]
+        [Authorize(policy: $"{WebSiteRoles.WebSite_DoctorAndSuperadmin} ")]
 
-        public    IActionResult Save(  int id, int  DoctorAppointmentVIsitid) 
+        public IActionResult Save(  int id, int  DoctorAppointmentVIsitid) 
         {
 
          var model=   _unitOfWork.Idoctorvist.GetById(DoctorAppointmentVIsitid);
@@ -143,7 +143,8 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
+        [Authorize(policy: $"{WebSiteRoles.WebSite_DoctorAndSuperadmin} ")]
+
         public IActionResult Save(patientreportVm HospitalVm)
 
         {
@@ -212,6 +213,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
+        [Authorize(policy: $"{WebSiteRoles.WebSite_DoctorAndSuperadmin} ")]
 
         public IActionResult Delete(int id)
         {

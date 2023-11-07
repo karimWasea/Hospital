@@ -24,7 +24,6 @@ namespace Hospital.Areas.Admin.Controllers
     //<partial name = "_AlertMessage" />
      
     [Area("Admin")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}") ]
     public class AppiontmentvisiteController : Controller
     {
 
@@ -36,6 +35,8 @@ namespace Hospital.Areas.Admin.Controllers
             _lookupServess=lookupServess;
             _unitOfWork = unitOfWork;
         }
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
+
         public async Task<ActionResult> Index(int? page, string search)
         {
 
@@ -62,8 +63,7 @@ namespace Hospital.Areas.Admin.Controllers
 
 
 
-        [Authorize(Roles = WebSiteRoles.WebSite_patient )]
-        [Authorize(Roles = WebSiteRoles.WebSite_Doctor )]
+        [Authorize(policy: WebSiteRoles.WebSite_DoctorAndPatientandsuperadmin )]
 
 
         public ActionResult GetAllVistitsbyPatientid(string id, string search, int? page)
@@ -111,7 +111,7 @@ namespace Hospital.Areas.Admin.Controllers
 
 
 
-        [Authorize(Roles = $"{WebSiteRoles.WebSite_Doctor}")]
+        [Authorize(policy: WebSiteRoles.WebSite_DoctorAndSuperadmin)]
 
 
         public ActionResult GettAllVistitsByDoctorid(string id, string ? search, int? page)
@@ -163,6 +163,7 @@ namespace Hospital.Areas.Admin.Controllers
         }
 
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
 
 
@@ -187,6 +188,7 @@ namespace Hospital.Areas.Admin.Controllers
 
 
         }
+        [Authorize(policy: WebSiteRoles.WebSite_DoctorAndPatientandsuperadmin)]
 
 
         [HttpPost]
@@ -212,6 +214,8 @@ namespace Hospital.Areas.Admin.Controllers
 
 
         [HttpPost]
+        [Authorize(policy: WebSiteRoles.WebSite_DoctorAndSuperadmin)]
+
 
         public IActionResult AddDoctorNoteForVisit(ApointmentVm HospitalVm)
         {
@@ -231,6 +235,7 @@ namespace Hospital.Areas.Admin.Controllers
 
         }
 
+        [Authorize(policy: WebSiteRoles.WebSite_DoctorAndSuperadmin)]
 
 
         public IActionResult AddDoctorNoteForVisit(int DoctorAppointmentVIsitid)
@@ -239,12 +244,13 @@ namespace Hospital.Areas.Admin.Controllers
         }
 
 
-        
 
 
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
-            public IActionResult ArrivedVisit(int DoctorAppointmentVIsitid)
+
+        public IActionResult ArrivedVisit(int DoctorAppointmentVIsitid)
         {
             var appvm = new ApointmentVm();
              var getbyid= _unitOfWork. Idoctorvist.GetById(DoctorAppointmentVIsitid);
@@ -276,6 +282,7 @@ namespace Hospital.Areas.Admin.Controllers
 
 
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
 
         public IActionResult completed(int DoctorAppointmentVIsitid)
@@ -311,6 +318,7 @@ namespace Hospital.Areas.Admin.Controllers
 
 
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
         public IActionResult  CancelledVisitSt( int DoctorAppointmentVIsitid)
         {
@@ -351,6 +359,7 @@ namespace Hospital.Areas.Admin.Controllers
 
 
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
         public IActionResult Delete(int id )
         {

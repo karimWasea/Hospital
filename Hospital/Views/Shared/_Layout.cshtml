@@ -79,23 +79,11 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                                     <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="Index">Week Shifts</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisit" asp-action="Index">All Visits</a>
                                     <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
-
                                     <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="Index">Patient History</a>
                                     <a class="dropdown-item" asp-area="Doctor" asp-controller="TimingShifts" asp-action="Index">Day Shifts</a>
                                 </div>
                             </li>
                         }
-
-
-
-                   
-                            
-                        
-                            
-
-
-
-
 
 
                             @if(User.IsInRole(WebSiteRoles.WebSite_SuperAdmin) || User.IsInRole(WebSiteRoles.WebSite_Doctor)){
@@ -108,9 +96,11 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                                     <a class="dropdown-item" asp-area="Doctor" asp-controller="Daywork" asp-action="AllDayShifts">All Day Shifts</a>
 
                                             <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">  Doctors</a>
+                                    @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin))
+                                    {
                                     <a class="dropdown-item" asp-area="Doctor" asp-controller="Doctor" asp-action="GetRegisterdoctor">Register Doctors</a>
                             
-                     
+                                    }
                             </div>
                                     </li>
                                 }
@@ -123,8 +113,13 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                                             Doctors Works
                                         </a>
                                         <div class="dropdown-menu bg-info" aria-labelledby="doctorDropdown">
-                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AppointmentVisit" asp-action="GettAllVistitsByDoctorid">All Visits by Doctor</a>
-                                            <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="Index">All Prescriptions</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GettAllVistitsByDoctorid">Doctor  Visits  </a>
+                                    @if (User.IsInRole(WebSiteRoles.WebSite_SuperAdmin))
+                                    {
+                                        <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="Index">All Prescriptions</a>
+
+                                    }
+
                                         </div>
                                     </li>
                                 }
@@ -143,7 +138,7 @@ border-bottom box-shadow mb-3" style="background-color:mediumaquamarine;">
                                     <div class="dropdown-menu bg-info" aria-labelledby="patientDropdown">
                                     <a class="dropdown-item" asp-area="Patient" asp-controller="PatientHistory" asp-action="GetAllPatientHistory">All Patient History</a>
 
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GetAllVistitsbyPatientid">All Patient Visits  </a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Appiontmentvisite" asp-action="GettAllVistitsByDoctorid">All Patient Visits  </a>
                                     <a class="dropdown-item" asp-area="Doctor" asp-controller="PatientReport" asp-action="GetAllPatientReportsbyPatientId">Patient Reports</a>
                                     </div>
                                 </li>

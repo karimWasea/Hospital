@@ -21,7 +21,6 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class DayworkController : Controller
     { // GET: HomeController
@@ -35,7 +34,7 @@ namespace Hospital.Areas.Doctor.Controllers
             _lookupServess = lookupServess;
         }
 
-        //  GET: HomeController
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
         public async Task<ActionResult> Index(string doctorId)
         {
             ViewBag.getdoctorfromapplicationuserid = _lookupServess.getdoctorfromapplicationuserid();
@@ -47,7 +46,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        [Authorize(Roles = $"{WebSiteRoles.WebSite_Doctor}")]
+        [Authorize(policy: $"{WebSiteRoles.WebSite_DoctorAndSuperadmin}")]
 
         public ActionResult  AllDayShifts(int? page)
         {
@@ -60,7 +59,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
         public IActionResult Save([FromBody] List<DoctorDayworkVM> HospitalVm)
         {
 
@@ -111,6 +110,7 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
         }
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
         public IActionResult SaveGET(string id)
         {
@@ -129,7 +129,6 @@ namespace Hospital.Areas.Doctor.Controllers
         }
 
 
-     
 
 
 
@@ -157,6 +156,8 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
+
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
 
         public IActionResult Delete(int id)

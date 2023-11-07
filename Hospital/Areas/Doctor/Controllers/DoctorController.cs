@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin},{WebSiteRoles.WebSite_Doctor}")]
+    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class DoctorController : Controller
     { 
@@ -85,7 +85,6 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
         public async Task<ActionResult> Save(DoctorVm HospitalVm)
         {
             ViewBag.Gender = _lookupServess.Gender();

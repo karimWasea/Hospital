@@ -14,7 +14,6 @@ using System.Drawing.Printing;
 namespace Hospital.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //<partial name = "_AlertMessage" />
 
     [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 

@@ -16,10 +16,10 @@ namespace Hospital.Areas.Patient.Controllers
 {
 
     [Area("Patient")]
-    [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
     public class PatientHistoryController : Controller
-    { // GET: HomeController
+    {
+
         UnitOfWork _unitOfWork;
         lookupServess _lookupServess;
 
@@ -29,6 +29,7 @@ namespace Hospital.Areas.Patient.Controllers
             _unitOfWork = unitOfWork;
             _lookupServess = lookupServess;
         }
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
         public IActionResult Index(int? page, string search)
         {
@@ -38,8 +39,9 @@ namespace Hospital.Areas.Patient.Controllers
             return View(model);
         }
 
-    
 
+
+        [Authorize(policy: $"{WebSiteRoles.WebSite_DoctorAndSuperadmin}")]
 
 
         public ActionResult Details(int id)
@@ -50,7 +52,7 @@ namespace Hospital.Areas.Patient.Controllers
 
 
 
-        [Authorize(Roles = $"{WebSiteRoles.WebSite_patient},{WebSiteRoles.WebSite_Doctor}")]
+        [Authorize(policy:  $"{WebSiteRoles.WebSite_DoctorAndSuperadmin}")]
 
 
         public ActionResult GetALLpatientHistory(string PatientId, int? page, string search)
@@ -63,6 +65,7 @@ namespace Hospital.Areas.Patient.Controllers
             return View(pagedPatients);
         }
 
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -74,9 +77,10 @@ namespace Hospital.Areas.Patient.Controllers
         }
 
 
-    
 
-public async Task<ActionResult> Save(int id, string patientId)
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
+
+        public async Task<ActionResult> Save(int id, string patientId)
     {
         ViewBag.allpatient = _lookupServess. allpatient();
         StringBuilder sb = new StringBuilder();
@@ -103,6 +107,7 @@ public async Task<ActionResult> Save(int id, string patientId)
 
 
     [HttpPost]
+        [Authorize(Roles = $"{WebSiteRoles.WebSite_SuperAdmin}")]
 
         public ActionResult Save(PatientHistoryVm HospitalVm)
         {

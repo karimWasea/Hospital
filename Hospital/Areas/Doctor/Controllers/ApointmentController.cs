@@ -27,6 +27,7 @@ using static System.Reflection.Metadata.BlobBuilder;
 namespace Hospital.Areas.Doctor.Controllers
 {
     [Area("Doctor")]
+    [Authorize(policy: WebSiteRoles.WebSite_DoctorAndPatientandsuperadmin)]
 
     public class ApointmentController : Controller
     {
@@ -121,7 +122,6 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        [Authorize(Policy = "DoctorAndPatientandsuperadmin")]
         //[Authorize(Roles = WebSiteRoles.WebSite_Doctor)]
 
         public async Task<IActionResult> CreatApientment(string id)
@@ -156,7 +156,6 @@ namespace Hospital.Areas.Doctor.Controllers
         }
 
 
-        [Authorize(Policy = "DoctorAndPatientandsuperadmin")]
         //[Authorize(Roles = WebSiteRoles.WebSite_Doctor)]
         [HttpPost]
         // [ValidateAntiForgeryToken]
@@ -203,7 +202,6 @@ namespace Hospital.Areas.Doctor.Controllers
 
 
 
-        [Authorize(Policy = "DoctorAndPatientandsuperadmin")]
 
 
         public IActionResult yourappiontisconfermed()

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using hospitalUtilities.SystemEnums;
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +13,6 @@ using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using hospitalUtilities.SystemEnums;
 
 
 namespace Dataaccesslayer
@@ -100,6 +101,11 @@ namespace Dataaccesslayer
                 PasswordHash = hashedPassword, // Set the hashed password
                 Nationality = string.Empty,
                 PostalCode = string.Empty,
+               LockoutEnd= DateTime.Now,    
+                LockoutEnabled= true,
+                EmailConfirmed= true,
+                PhoneNumberConfirmed= true, 
+                PhoneNumber=string.Empty,
             });
 
 

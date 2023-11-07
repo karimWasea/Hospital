@@ -14,7 +14,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 IServiceCollection serviceCollection = builder.Services.AddDbContext<ApplicationDBcontext>(options =>
     options.UseSqlServer(connectionString));
 
-
+//superAdmin12 @gmail.com
 
 
 
@@ -34,10 +34,18 @@ builder.Services.Configure<IdentityOptions>(options =>
 // In ConfigureServices method
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("DoctorAndPatientandsuperadmin", policy =>
+    options.AddPolicy(WebSiteRoles.WebSite_DoctorAndPatientandsuperadmin, policy =>
     {
         policy.RequireRole(WebSiteRoles.WebSite_patient, WebSiteRoles.WebSite_Doctor,WebSiteRoles.WebSite_SuperAdmin);
+    });  
+    
+    options.AddPolicy(WebSiteRoles.WebSite_DoctorAndSuperadmin, policy =>
+    {
+        policy.RequireRole( WebSiteRoles.WebSite_Doctor,WebSiteRoles.WebSite_SuperAdmin);
     });
+
+
+    
 
     // If you have other policies for "Manager" or other roles, define them here.
 });
