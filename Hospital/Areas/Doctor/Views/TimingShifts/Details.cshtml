@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+@model hospitalVm.timingshiftVm
+<link href="~/css/contacdetsetails.css" rel="stylesheet" />
+
+<h1>Contact Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">contacts</h5>
+        <p class="card-text">
+            <strong>Hospitalname:</strong> @Model.doctorName<br />
+            <strong>phone:</strong> @Model.startshift<br />
+            <strong>Email:</strong> @Model.Endsifit<br />
+            <strong>Email:</strong> @Model.Duration<br />
+            <strong>Email:</strong> @Model.Stutus<br />
+        </p>
+        <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
+    </div>
+</div>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
